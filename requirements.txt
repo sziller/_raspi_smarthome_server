@@ -1,0 +1,15 @@
+### it is necessary to install this code in order to run            ---> bitcoinlib
+# >>> sudo apt install build-essential python3-dev libgmp3-dev
+### it is necessary to install this code in order to run pip with   ---> psycopg2
+# >>> sudo apt-get install libpq-dev
+
+# needs to be added to git!
+
+fastapi             # needed - server framework
+uvicorn             # needed - as a server
+pydantic            # needed - to clean variable formatting
+pytest              # needed - to run tests
+requests            # needed - to format HTTP requests
+sqlalchemy          # needed - for DB handling
+psycopg2            # needed - for DB handling
+# python-multipart    # needed - probably(!) a fastapi dependency (Depends)?

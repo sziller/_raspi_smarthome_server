@@ -6,8 +6,9 @@ FastAPI hints:
 
 import os
 import json
-import urllib
 import time
+import urllib
+import yaml
 import inspect
 import multiprocessing
 from multiprocessing import Process
@@ -17,7 +18,6 @@ from typing import Optional, Dict, cast, Any
 from fastapi import FastAPI, UploadFile, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi import APIRouter
-# from .routers import router_aqua, router_kids
 from fastapi.exceptions import HTTPException
 
 # import server_preparation as prepare
@@ -32,24 +32,11 @@ print("========================")
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
 # -------------------------------------------------------------------------------------------------------
-QUEUE_API_TO_ENGINE = multiprocessing.Queue(100)
-QUEUE_ENGINE_TO_API = multiprocessing.Queue(100)
-
-_hcdd = {
-        'timestamp': False,
-        'timelimit': 13,
-        'warning_heartbeat': 1}
 
 # prepare.fsh()
 
 print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " DEV"}[cnf.isLIVE]))
 
-print("[  START]: Engine as background process")
-# process_engine = Process(target=Engine.ChainRecorderEngine, args=(QUEUE_API_TO_ENGINE,
-#                                                                   QUEUE_ENGINE_TO_API,
-#                                                                   _hcdd))
-# process_engine.start()
-print("[RUNNING]: Engine")
 
 # -------------------------------------------------------------------------------------------------------
 # -                                                                                 ENDED              -
@@ -67,13 +54,19 @@ router_info = {'aquaponics': {'use': True, "prefix": "/aqu0"},
 tags_metadata = [
     
     {"name": "Aquaponics",
-     "description": "Information regarding SmartHome setup's Aquaponic system", 
+     "description": "Information regarding SmartHome setup's Aquaponic system",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
      },
     {"name": "Observatory",
-     "description": "Information regarding SmartHome setup's Observatory hub", 
+     "description": "Information regarding SmartHome setup's Observatory hub",
+     "externalDocs": {
+         "description": "find additional info under: sziller.eu",
+         "url": "http://sziller.eu"}
+     },
+    {"name": "Room_01",
+     "description": "Information regarding SmartHome setup's Room_01 general manager",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
@@ -86,7 +79,9 @@ This is an open project to be shipped someday.
 description = """
 ## SmartHome with no chains attached
 ****
-Why SmartHome... because it lets you sit behind the wheel
+Why My Home My Castle?
+Well... we kinda all know that, don't we?
+MHMC lets you and keeps you in the drivers seat.
 ****
 
 ## Install
@@ -96,16 +91,26 @@ coming soon...
 sziller.eu
 """
 
+fill_in = {"path": cnf.PATH_ERROR_MSG, "fn": "Server_SmartHome.py"}
+with open(cnf.PATH_ERROR_MSG, 'r') as stream:
+    try:
+        parsed_yaml = yaml.safe_load(stream)
+        ERROR = parsed_yaml
+        print("Loaded error messages from {path} - sais {fn}".format(**fill_in))
+    except yaml.YAMLError as exc:
+        print(exc)
+        print("Failed to load error messages from {path} - sais {fn}".format(**fill_in))
+
 server = FastAPI(
     openapi_tags=tags_metadata,
-    # title="SmartHome",
-    # version="v0.0.1",
-    # summary=summary,
-    # description=description,
-    # contact={"name": "SmartHome",
-    #          "email": "szillerke@gmail.com"},
-    # terms_of_service="",
-    # openapi_url="/api/v1/SmartHome.json"
+    title="my Home my Castle",
+    version="v0.0.0",
+    summary=summary,
+    description=description,
+    contact={"name": "MyHomeMyCastle",
+             "email": "szillerke@gmail.com"},
+    terms_of_service="",
+    openapi_url="/api/v0/MyHomeMyCastle.json"
     )
 
 router = APIRouter()

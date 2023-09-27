@@ -6,3 +6,5 @@ WAIT_SERVER = 3
 HEARTBEAT_SERVER = 1
 
 IS_PROCESS_RUNNING = True
+
+PATH_ERROR_MSG = "./xdata/error.yaml"

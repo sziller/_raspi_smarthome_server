@@ -6,7 +6,7 @@ from sh_msg import msg_obsr
 observatory_router = APIRouter()
 
 
-@observatory_router.get("/actual-state")                                                            # GET: v0/actual-state
+@observatory_router.get("/v0/actual-state")                                                            # GET: v0/actual-state
 async def GET_actual_state():
     """=== Function name: GET_actual_state =============================================================================
     description...
@@ -18,5 +18,5 @@ async def GET_actual_state():
                  "signature": b'',
                  "payload": {},
                  "timestamp": timestamp}
-    data = msg_obsr.OBRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_obsr.SrvrToObsrRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()

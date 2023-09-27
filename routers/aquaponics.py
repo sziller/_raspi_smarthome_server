@@ -77,7 +77,7 @@ async def GET_actual_state():
                  "signature": b'',
                  "payload": {},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 
@@ -98,7 +98,7 @@ async def GET_happening_data(style: str):
                  "signature": b'',
                  "payload": {'style': style},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 
@@ -119,7 +119,7 @@ async def GET_settings_data(category: str):
                  "signature": b'',
                  "payload": {'category': category},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 # ----------------------------------------------------------------------------------------- Endpoints:      Control
@@ -145,7 +145,7 @@ async def PUT_timed_happening(style: str, act: str, timing: list[dict]):
                  "signature": b'',
                  "payload": {'style': style, 'act': act, 'timing': timing},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 
@@ -165,7 +165,7 @@ async def POST_instant_event(act: str):
                  "signature": b'',
                  "payload": {'act': act},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 
@@ -189,7 +189,7 @@ async def DELETE_timed_happening(style: str, act: str, timing: list[dict]):
                  "signature": b'',
                  "payload": {'style': style, 'act': act, 'timing': timing},
                  "timestamp": timestamp}
-    data = msg_aqua.APRequest.generate_from_dict(dict_in=data_dict)
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
     return data.as_dict()
 
 # -------------------------------------------------------------------------------------------------------------------

@@ -16,6 +16,8 @@ from typing import Optional, Dict, cast, Any
 
 from fastapi import FastAPI, UploadFile, Request, Depends
 from fastapi.staticfiles import StaticFiles
+from fastapi import APIRouter
+# from .routers import router_aqua, router_kids
 from fastapi.exceptions import HTTPException
 
 # import server_preparation as prepare
@@ -53,13 +55,25 @@ print("[RUNNING]: Engine")
 # -                                                                                 ENDED              -
 # -------------------------------------------------------------------------------------------------------
 
+router_info = {'aquaponics': {'use': True, "prefix": "/aqu0"},
+               'observatory': {'use': True, 'prefix': "/obsr"},
+               'room': {'use': True, "prefix": "/room_01"}
+               }
+
+
 # -------------------------------------------------------------------------------------------------------
 # Server application                                                                        -   START   -
 # -------------------------------------------------------------------------------------------------------
 tags_metadata = [
     
-    {"name": "Architecture",
-     "description": "Iformation regarding SmartHome setup", 
+    {"name": "Aquaponics",
+     "description": "Information regarding SmartHome setup's Aquaponic system", 
+     "externalDocs": {
+         "description": "find additional info under: sziller.eu",
+         "url": "http://sziller.eu"}
+     },
+    {"name": "Observatory",
+     "description": "Information regarding SmartHome setup's Observatory hub", 
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
@@ -82,17 +96,20 @@ coming soon...
 sziller.eu
 """
 
-server = FastAPI(openapi_tags=tags_metadata,
-                 title="SmartHome",
-                 version="v0.0.1",
-                 summary=summary,
-                 description=description,
-                 contact={"name": "SmartHome",
-                          "email": "szillerke@gmail.com",
-                          },
-                 terms_of_service="",
-                 openapi_url="/api/v1/SmartHome.json"
-)
+server = FastAPI(
+    openapi_tags=tags_metadata,
+    # title="SmartHome",
+    # version="v0.0.1",
+    # summary=summary,
+    # description=description,
+    # contact={"name": "SmartHome",
+    #          "email": "szillerke@gmail.com"},
+    # terms_of_service="",
+    # openapi_url="/api/v1/SmartHome.json"
+    )
+
+router = APIRouter()
+
 
 
 # -------------------------------------------------------------------------------------------------------
@@ -114,20 +131,15 @@ server.mount("/documentation", StaticFiles(directory="documentation", html=True)
 # - Endpoints                                                                            Engine records -   START   -
 # -------------------------------------------------------------------------------------------------------------------
 
-
-@server.get("/v1/connected/", tags=["Architecture"])                            # GET: /v1/records_user
-async def GET_connected() -> str:
-    """=== Function name: GET_connected === status: MVP  
-    === by Sziller ==="""
-    cmn = inspect.currentframe().f_code.co_name  # current method name
-    # Authentication and Authorization                                                              AUTH START   -
-    # Authentication and Authorization                                                              AUTH ENDED   -
-    return "Endpoint: {} - online".format(cmn)
-
+from routers.observatory import observatory_router
+from routers.aquaponics import aquaponics_router
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -
 # -------------------------------------------------------------------------------------------------------------------
+
+server.include_router(observatory_router, prefix="/obs", tags=["Observatory"])
+server.include_router(aquaponics_router, prefix="/aqu", tags=["Aquaponics"])
 
 """
 == Install framework

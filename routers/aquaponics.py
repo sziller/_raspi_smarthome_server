@@ -2,9 +2,14 @@ import time
 
 from fastapi import APIRouter
 import inspect
-import config as cfg
+import config as conf
 from sh_msg import msg
 from sh_msg import msg_aqua
+
+if conf.isDIRECT_SETUP:  # Direct outside connection: No Server in the network in front of this API towards Internet
+    pass
+else:  # Indirect outside connection: There IS a Server in the network - forwarding requests, processing answers
+    pass
 
 aquaponics_router = APIRouter()
 process_engine = None
@@ -23,7 +28,7 @@ async def GET_system_main_switch_state():
     ============================================================================================== by Sziller ==="""
     cmn = inspect.currentframe().f_code.co_name  # current method name
     timestamp = time.time()
-    if cfg.IS_PROCESS_RUNNING:
+    if conf.IS_PROCESS_RUNNING:
         return True
     else:
         return False
@@ -38,8 +43,8 @@ async def POST_command_engine_on(message: str = "", hcdd: dict or None = None):
      ============================================================================================== by Sziller ==="""
     cmn = inspect.currentframe().f_code.co_name  # current method name
     timestamp = time.time()
-    if not cfg.IS_PROCESS_RUNNING:
-        cfg.IS_PROCESS_RUNNING = True
+    if not conf.IS_PROCESS_RUNNING:
+        conf.IS_PROCESS_RUNNING = True
         print("ENGINE is running")
     else:
         print("An ENGINE instance is already running, second one was NOT instantiated!")
@@ -54,9 +59,9 @@ async def POST_command_engine_off(message: str = ""):
      ============================================================================================== by Sziller ==="""
     cmn = inspect.currentframe().f_code.co_name  # current method name
     timestamp = time.time()
-    if cfg.IS_PROCESS_RUNNING:
+    if conf.IS_PROCESS_RUNNING:
         print("TERMINATING ENGINE as background process...")
-        cfg.IS_PROCESS_RUNNING = False
+        conf.IS_PROCESS_RUNNING = False
         print("ENGINE stopped")
     else:
         print("No ENGINE instance was running so far, NOTHING happened!")

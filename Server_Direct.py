@@ -19,12 +19,12 @@ from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
 # import server_preparation as prepare
-import config as cnf
+import config as conf
 
 # from SmartHomeEngine import SmartHomeEngine as Engine
 
 print("========================")
-print({True: "=     LIVE SESSION     =", False: "=     DEV  SESSION     ="}[cnf.isLIVE])
+print({True: "=     LIVE SESSION     =", False: "=     DEV  SESSION     ="}[conf.isLIVE])
 print("={:^22}=".format(__name__))
 print("========================")
 
@@ -34,7 +34,7 @@ print("========================")
 
 # prepare.fsh()
 
-print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " DEV"}[cnf.isLIVE]))
+print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " DEV"}[conf.isLIVE]))
 
 
 # -------------------------------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " 
 # Server application                                                                        -   START   -
 # -------------------------------------------------------------------------------------------------------
 
-router_info = cnf.ROUTER_INFO
+router_info = conf.ROUTER_INFO
 
 tags_metadata = [_ for _ in router_info if _["use"]]
 summary = """This is an open project to be shipped someday."""
@@ -65,8 +65,8 @@ Framework enables you to install custom made modules of My Home My Castle.
 sziller.eu
 """
 
-fill_in = {"path": cnf.PATH_ERROR_MSG, "fn": "Server_SmartHome.py"}
-with open(cnf.PATH_ERROR_MSG, 'r') as stream:
+fill_in = {"path": conf.PATH_ERROR_MSG, "fn": "Server_SmartHome.py"}
+with open(conf.PATH_ERROR_MSG, 'r') as stream:
     try:
         parsed_yaml = yaml.safe_load(stream)
         ERROR = parsed_yaml
@@ -77,11 +77,11 @@ with open(cnf.PATH_ERROR_MSG, 'r') as stream:
 
 server = FastAPI(
     openapi_tags=tags_metadata,
-    title="my Home my Castle",
+    title="Aquaponics",
     version="v0.0.0",
     summary=summary,
     description=description,
-    contact={"name": "MyHomeMyCastle",
+    contact={"name": conf.API_SCOPE,
              "email": "szillerke@gmail.com"},
     terms_of_service="",
     openapi_url="/api/v0/MyHomeMyCastle.json"
@@ -98,20 +98,9 @@ server.mount("/documentation", StaticFiles(directory="documentation", html=True)
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   START   -
 # -------------------------------------------------------------------------------------------------------------------
-
-for _ in router_info:  # looping through routing_info as key, value
-    if _['use']:
-        # using an internal rule of our development:
-        # routers are defined under the name: <name>_router in the router files.
-        router_name = _['name'] + "_router"
-        try:
-            # from the module we import <name>.py files.
-            # Py-file names are the keys of the <router_info> dictionary as well.
-            router_obj = getattr(importlib.import_module(_['module']), router_name)  # an APIRouter() instance
-        except (ImportError, AttributeError):
-            raise Exception("Error importing: {}".format(_['name']))
-        # we add the current router instance to our server: (using tags and prefixes)
-        server.include_router(router_obj, tags=[_['name']], prefix=_["prefix"])
+from routers.aquaponics import aquaponics_router
+server.include_router(aquaponics_router, tags=["aquaponics"], prefix="/aqua")
+        
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -

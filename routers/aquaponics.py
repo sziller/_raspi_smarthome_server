@@ -3,6 +3,7 @@ import time
 from fastapi import APIRouter
 import inspect
 import config as cfg
+from sh_msg import msg
 from sh_msg import msg_aqua
 
 aquaponics_router = APIRouter()
@@ -77,8 +78,11 @@ async def GET_actual_state():
                  "signature": b'',
                  "payload": {},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 
 @aquaponics_router.get("/v0/happening-data/{style}")                                          # GET: /v0/happening-data/{style}
@@ -98,8 +102,11 @@ async def GET_happening_data(style: str):
                  "signature": b'',
                  "payload": {'style': style},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 
 @aquaponics_router.get("/v0/settings-data/{category}")                                        # GET: /v0/settings-data/{category}
@@ -119,8 +126,11 @@ async def GET_settings_data(category: str):
                  "signature": b'',
                  "payload": {'category': category},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 # ----------------------------------------------------------------------------------------- Endpoints:      Control
 
@@ -145,8 +155,11 @@ async def PUT_timed_happening(style: str, act: str, timing: list[dict]):
                  "signature": b'',
                  "payload": {'style': style, 'act': act, 'timing': timing},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 
 @aquaponics_router.post("/v0/instant-event")                                                      # POST: /v0/instant-event
@@ -165,8 +178,11 @@ async def POST_instant_event(act: str):
                  "signature": b'',
                  "payload": {'act': act},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 
 @aquaponics_router.delete("/v0/timed-happening")                                                  # DELETE: /v0/timed-happening
@@ -189,8 +205,11 @@ async def DELETE_timed_happening(style: str, act: str, timing: list[dict]):
                  "signature": b'',
                  "payload": {'style': style, 'act': act, 'timing': timing},
                  "timestamp": timestamp}
-    data = msg_aqua.SrvrToAquaRequest.init_by_dict(dict_in=data_dict)
-    return data.as_dict()
+    data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
+    response = msg.ExternalResponseMsg(payload=data.payload,
+                                       message="OK - sais {}".format(cmn),
+                                       timestamp=timestamp)
+    return response.as_dict()
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -

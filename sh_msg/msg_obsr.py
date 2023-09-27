@@ -8,10 +8,11 @@ from .msg import *  # importing base msg object to create subclasses from
 class SrvrToObsrRequest(InternalMsg):
     """=== Message name: SrvrToAquaRequest =============================================================================
     ============================================================================================== by Sziller ==="""
-    def __init__(self, command: str, email: str, signature: bytes, payload: dict, timestamp: float):
-        super(SrvrToObsrRequest, self).__init__(command, payload, timestamp)
+    def __init__(self, command: str, email: str, signature: bytes, payload: dict, timestamp: float, **kwargs):
+        super(SrvrToObsrRequest, self).__init__(payload=payload, command=command, timestamp=timestamp, **kwargs)
         self.command: str               = command
         self.email: str                 = email
         self.signature: bytes or None   = signature
         self.payload: dict              = payload
         self.timestamp: str             = TiFo.format_timestamp_raw(timestamp_raw=timestamp)
+

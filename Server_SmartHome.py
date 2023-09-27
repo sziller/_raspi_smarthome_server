@@ -138,6 +138,7 @@ server.mount("/documentation", StaticFiles(directory="documentation", html=True)
 
 from routers.observatory import observatory_router
 from routers.aquaponics import aquaponics_router
+from routers.room_01 import room01_router
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -
@@ -145,6 +146,7 @@ from routers.aquaponics import aquaponics_router
 
 server.include_router(observatory_router, prefix="/obs", tags=["Observatory"])
 server.include_router(aquaponics_router, prefix="/aqu", tags=["Aquaponics"])
+server.include_router(room01_router, prefix="/r01", tags=["Room_01"])
 
 """
 == Install framework

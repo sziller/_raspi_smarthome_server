@@ -4,10 +4,10 @@ import inspect
 from sh_msg import msg
 from sh_msg import msg_obsr
 
-observatory_router = APIRouter()
+room01_router = APIRouter()
 
 
-@observatory_router.get("/v0/actual-state")                                                            # GET: v0/actual-state
+@room01_router.get("/v0/actual-state")                                                            # GET: v0/actual-state
 async def GET_actual_state():
     """=== Function name: GET_actual_state =============================================================================
     description...

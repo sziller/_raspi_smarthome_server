@@ -1,0 +1,5 @@
+version: "...VERSION..."
+summary: "...SUMMARY..."
+description: "...DESCRIPTION..."
+terms: "...TERMS..."
+url: "/api/v0/{}.json"

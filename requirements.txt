@@ -5,6 +5,7 @@
 
 # needs to be added to git!
 
+assist              # needed for small automated tasks
 pyaml               # needed - yaml file import
 fastapi             # needed - server framework
 uvicorn             # needed - as a server

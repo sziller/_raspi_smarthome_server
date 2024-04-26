@@ -19,7 +19,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi import APIRouter
 
-from SmartHomeServer import server_preparation as prepare
+from shmc_server import server_preparation as prepare
 import config as conf
 
 # from SmartHomeEngine import SmartHomeEngine as Engine
@@ -90,7 +90,7 @@ router = APIRouter()
 # app contains the 'directory' parameter, which must have the actual subdirectory as an argument
 # if you call your basic page 'index.html' it can be accessed directly, without entering the actual filename
 
-server.mount(path="/", app=StaticFiles(directory="public", html=True), name="documentation")
+server.mount(path="/", app=StaticFiles(directory="shmc_public", html=True), name="documentation")
 # http://127.0.0.1:8000
 
 # -------------------------------------------------------------------------------------------------------------------

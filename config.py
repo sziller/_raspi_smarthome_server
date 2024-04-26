@@ -3,8 +3,6 @@ isDIRECT_SETUP = False
 
 NECESSARY_DIRECTORIES = ["./images", "./documentation", "./documents", "./log"]
 
-IP_AQUAPONIA = '10.3.77.1'
-
 WAIT_SERVER = 3
 HEARTBEAT_SERVER = 1
 
@@ -18,7 +16,7 @@ ROUTER_INFO = router_info = [
     {"name": 'wallet',
      "use": False,
      "prefix": "/wllt",
-     "ip": '10.3.77.xx',
+     "ip": '10.xx.xx.xx',
      "zmq_port": 0,
      "module": "shmc_routers.wallet",
      "description": "Information regarding SmartHome setup's BiTCoin wallet",
@@ -28,7 +26,7 @@ ROUTER_INFO = router_info = [
     {"name": 'aquaponics',
      "use": True,
      "prefix": "/aqua",
-     "ip": '10.3.77.xx',
+     "ip": '10.xx.xx.xx',
      "zmq_port": 52008,
      "module": "shmc_routers.aquaponics",
      "description": "Information regarding SmartHome setup's Aquaponic system",
@@ -38,7 +36,7 @@ ROUTER_INFO = router_info = [
     {"name": "observatory",
      "use": True,
      "prefix": "/obsr",
-     "ip": '10.3.77.xx',
+     "ip": '10.xx.xx.xx',
      "zmq_port": 52902,
      'module': "shmc_routers.observatory",
      "description": "Information regarding SmartHome setup's Observatory hub",
@@ -46,12 +44,12 @@ ROUTER_INFO = router_info = [
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
      },
-    {"name": "room_01",
+    {"name": "room",
      "use": True,
-     "prefix": "/r_01",
-     "ip": '10.3.77.xx',
+     "prefix": "/r_{}",
+     "ip": '10.xx.xx.xx',
      "zmq_port": 52903,
-     'module': "shmc_routers.room_01",  # probably 'room' only!
+     'module': "shmc_routers.room",  # probably 'room' only!
      "description": "Information regarding SmartHome setup's Room_01 general manager",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
@@ -69,20 +67,11 @@ DB_ID_TABLE_SCHEDULED   = "scheduledtasks"
 
 DEFAULT_USER_LIST       = [
     # 32char (128bit) hex-string representation of the UUID: double sha256 of the first email-address-string
-    {   # "uuid": 'be7c2ca8de16d871c44bd9d1ef2d0df9',  # is generated once user's email is processed
-        # "uuid": "0163977a-4c17-4caa-9db4-334de7aadf1b",
-        "uuid": "aa",  # uuid - self generated
-        "usr_ln": 'Ladanyi',
-        "usr_fn": 'Sziller',
+    {   "uuid": "aa",  # uuid - self generated
+        "usr_ln": 'Doe',
+        "usr_fn": 'John',
         "pubkey": None,
-        "email_list": 'szillerke@gmail.com',  # last email is the actual one [-1]
+        "email_list": 'JD@gmail.com',  # last email is the actual one [-1]
         "timestamp": 0.0,  # is added when user hits DB
         "authorization": 15},  # binary sum - 11111111 - fully authorized - TBD
-    {   "uuid": "bb",  # uuid - self generated
-        "usr_ln": 'Ladanyi-Molnar',
-        "usr_fn": 'Terez',
-        "pubkey": None,
-        "email_list": 'mterez@gmail.com',  # last email is the actual one [-1]
-        "timestamp": 0.0,
-        "authorization": 3}
     ]

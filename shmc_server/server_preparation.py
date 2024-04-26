@@ -4,7 +4,7 @@ to be extended...
 
 import os
 import yaml
-from SmartHomeMyCastle import DataBaseAlchemy as DBAl
+from shmc_sqlPackage import SQL_interface as SQLi
 import config as conf
 import logging
 
@@ -44,18 +44,17 @@ def server_data(source: str, filename: str = "server_preparation.py"):
             raise(exc)
             
             
-
-def default_users(session_in):
-    """=== Function name: default_users ============================================================================
-
-    :return:
-    ========================================================================================== by Sziller ==="""
-    print("[  START]: Adding default users: {}".format(conf.DATABASE_STYLE))
-    default_user_list = conf.DEFAULT_USER_LIST
-    DBAl.ADD_rows_to_table(
-        primary_key="uuid",
-        data_list=default_user_list,
-        db_table=conf.DB_ID_TABLE_USERS,
-        session_in=session_in)
-    print("[  ENDED]: Adding default users: {}".format(conf.DATABASE_STYLE))
+# def default_users(session_in):
+#     """=== Function name: default_users ============================================================================
+# 
+#     :return:
+#     ========================================================================================== by Sziller ==="""
+#     print("[  START]: Adding default users: {}".format(conf.DATABASE_STYLE))
+#     default_user_list = conf.DEFAULT_USER_LIST
+#     SQLi.ADD_rows_to_table(
+#         primary_key="uuid",
+#         data_list=default_user_list,
+#         db_table=conf.DB_ID_TABLE_USERS,
+#         session_in=session_in)
+#     print("[  ENDED]: Adding default users: {}".format(conf.DATABASE_STYLE))
 

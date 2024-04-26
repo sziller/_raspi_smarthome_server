@@ -6,8 +6,8 @@ import os
 import inspect
 import config as conf
 import zmq
-from shmc_msg import msg
-from shmc_msg import msg_aqua
+from shmc_messages import msg
+from shmc_messages import msg_aqua
 
 if conf.isDIRECT_SETUP:  # Direct outside connection: No Server in the network in front of this API towards Internet
     pass

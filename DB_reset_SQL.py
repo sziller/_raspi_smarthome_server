@@ -2,7 +2,7 @@
 
 """
 import config as conf
-from MyHomeMyCastle import DataBaseAlchemy as DBAl
+from SmartHomeMyCastle import DataBaseAlchemy as DBAl
 
 if __name__ == "__main__":
     print("--- reseting: SQLite ---")

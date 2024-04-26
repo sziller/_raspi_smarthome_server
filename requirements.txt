@@ -7,6 +7,8 @@
 
 assist              # needed for small automated tasks
 pyaml               # needed - yaml file import
+python-dotenv       # needed to read .env
+pyzmq               # socket-like communication to engine processes
 fastapi             # needed - server framework
 uvicorn             # needed - as a server
 pydantic            # needed - to clean variable formatting

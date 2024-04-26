@@ -3,9 +3,16 @@ to be extended...
 """
 
 import os
-import sqlite3 as sql
-from MyHomeMyCastle import DataBaseAlchemy as DBAl
+import yaml
+from SmartHomeMyCastle import DataBaseAlchemy as DBAl
 import config as conf
+import logging
+
+# Setting up logger                                         logger                      -   START   -
+lg = logging.getLogger()
+# Setting up logger                                         logger                      -   ENDED   -
+
+lg.info("START     : {:>85} <<<".format('server_preparation.py'))
 
 
 def fsh():
@@ -21,22 +28,22 @@ def fsh():
     print("[  ENDED]: Necessary FileSystemHierarchy check")
 
 
-def db(db_to_check):
-    """=== Function name: db ======================================================================================
-    Function receives a list of DataBase paths and creates the ones which do not exist.
+def server_data(source: str, filename: str = "server_preparation.py"):
+    """=== Function name: fsh =====================================================================================
+    Check and if missing create File System Hierarchy for Project
     :return:
     ============================================================================================== by Sziller ==="""
-    print("[  START]: Database management")
-    if not os.path.isfile(db_to_check):
-        db_connection = sql.connect(db_to_check)
-        db_cursor = db_connection.cursor()
-        with open(conf.DATABASE_SETUP_SCRIPT) as file:
-            sql_script = file.read()
-        db_cursor.executescript(sql_script)
-        db_cursor.close()
-        db_connection.close()
-    print("[  ENDED]: Database management")
-
+    data = {"path": source, "fn": filename}
+    with open(data["path"], 'r') as stream:
+        try:
+            parsed_yaml = yaml.safe_load(stream)
+            lg.info("prepare   : Loaded server_data from {path} - says {fn}".format(**data))
+            return parsed_yaml
+        except yaml.YAMLError as exc:
+            lg.critical("Failed to load server_data from {path} - says {fn}".format(**data))
+            raise(exc)
+            
+            
 
 def default_users(session_in):
     """=== Function name: default_users ============================================================================

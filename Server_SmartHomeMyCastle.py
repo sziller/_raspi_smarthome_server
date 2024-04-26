@@ -1,32 +1,41 @@
 """
+This is an umbrella server application for the MHMC project. It uses different routers, that neew to be installed
+ alongside the server in <shmc_routers>.
+This server setup can be used for any collection / combination of routers it the MHMC project.
+USE THIS API as entry point whether on an umbrella router or on local terminals.
+
+<shmc_routers> is both a locally kept package for development reasons and also an installable package. 
+
 FastAPI hints:
 - Typing is absolutely necessary in python
 - main scope: initiate global Processes and Objects here
 """
 
-import os
-import json
-import time
-import urllib
-import yaml
+import logging
 import importlib
 # from pydantic import BaseModel as BaMo
-from typing import Optional, Dict, cast, Any
 
-from fastapi import FastAPI, UploadFile, Request, Depends
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi import APIRouter
-from fastapi.exceptions import HTTPException
 
-# import server_preparation as prepare
-import config as cnf
+from SmartHomeServer import server_preparation as prepare
+import config as conf
 
 # from SmartHomeEngine import SmartHomeEngine as Engine
 
-print("========================")
-print({True: "=     LIVE SESSION     =", False: "=     DEV  SESSION     ="}[cnf.isLIVE])
-print("={:^22}=".format(__name__))
-print("========================")
+# Setting up logger                                         logger                      -   START   -
+lg = logging.getLogger()
+logging.basicConfig(filename="./log/srvr_shmc.log", level=logging.NOTSET, filemode="w",
+                    format="%(asctime)s [%(levelname)8s]: %(message)s", datefmt='%y%m%d %H:%M:%S')
+# Setting up logger                                         logger                      -   ENDED   -
+
+lg.warning("START: {:>85} <<<".format('__name__ == "__main__" namespace: Server_SmartHomeMyCastle.py'))
+lg.warning("          : =========================")
+lg.warning({True:  "          : =     LIVE  SESSION     =",
+            False: "          : =      DEV SESSION      ="}[conf.isLIVE])
+lg.warning("          : ={:^23}=".format(__name__))
+lg.warning("          : =========================")
 
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
@@ -34,7 +43,7 @@ print("========================")
 
 # prepare.fsh()
 
-print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " DEV"}[cnf.isLIVE]))
+lg.info("prepare   : Actions taken for {} version.".format({True: "LIVE", False: " DEV"}[conf.isLIVE]))
 
 
 # -------------------------------------------------------------------------------------------------------
@@ -45,46 +54,28 @@ print("[PREPARE]: Actions taken for {} version:".format({True: "LIVE", False: " 
 # Server application                                                                        -   START   -
 # -------------------------------------------------------------------------------------------------------
 
-router_info = cnf.ROUTER_INFO
+lg.info("read data : from: {}".format(conf.PATH_ERROR_MSG))
+ERROR_DATA  = prepare.server_data(source=conf.PATH_ERROR_MSG)
+lg.info("read data : from: {}".format(conf.PATH_SERVER_INFO))
+SERVER_INFO = prepare.server_data(source=conf.PATH_SERVER_INFO)
 
+lg.info("read conf.: ROUTER_INFO")
+router_info = conf.ROUTER_INFO
+
+lg.info("arrange   : tags_metadata")
 tags_metadata = [_ for _ in router_info if _["use"]]
-summary = """This is an open project to be shipped someday."""
-description = """
-## SmartHome with no chains attached
-****
-Why My Home My Castle?
-Well... we kinda all know that, don't we?
-MHMC lets you and keeps you in the drivers seat.
-****
 
-## Install
-My Home My Castle install is described here: sziller.eu
-Framework enables you to install custom made modules of My Home My Castle.
-
-## About
-sziller.eu
-"""
-
-fill_in = {"path": cnf.PATH_ERROR_MSG, "fn": "Server_SmartHome.py"}
-with open(cnf.PATH_ERROR_MSG, 'r') as stream:
-    try:
-        parsed_yaml = yaml.safe_load(stream)
-        ERROR = parsed_yaml
-        print("Loaded error messages from {path} - sais {fn}".format(**fill_in))
-    except yaml.YAMLError as exc:
-        print(exc)
-        print("Failed to load error messages from {path} - sais {fn}".format(**fill_in))
-
+lg.info("init.     : server = FastAPI - using configuration and text data")
 server = FastAPI(
     openapi_tags=tags_metadata,
-    title="my Home my Castle",
-    version="v0.0.0",
-    summary=summary,
-    description=description,
-    contact={"name": "MyHomeMyCastle",
+    title=SERVER_INFO["proj_name"],
+    version=SERVER_INFO["version"],
+    summary=SERVER_INFO["summary"],
+    description=SERVER_INFO["description"],
+    contact={"name": "SmartHomeMyCastle",
              "email": "szillerke@gmail.com"},
-    terms_of_service="",
-    openapi_url="/api/v0/MyHomeMyCastle.json"
+    terms_of_service=SERVER_INFO["terms"],
+    openapi_url=SERVER_INFO["url"].format(SERVER_INFO["proj_nick"])
     )
 
 router = APIRouter()
@@ -93,7 +84,14 @@ router = APIRouter()
 # Server application                                                                        -   ENDED   -
 # -------------------------------------------------------------------------------------------------------
 
-server.mount("/documentation", StaticFiles(directory="documentation", html=True), name="documentation")
+# path: sets the string you must type into the browser, when accessing data. You may want to "act" asif it was in a
+# subdirectory, where it isn't, or show the actual subdirectory if necessary.
+# by entering "/", you ensure the browser finds it under: host:0000/... directly
+# app contains the 'directory' parameter, which must have the actual subdirectory as an argument
+# if you call your basic page 'index.html' it can be accessed directly, without entering the actual filename
+
+server.mount(path="/", app=StaticFiles(directory="public", html=True), name="documentation")
+# http://127.0.0.1:8000
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   START   -
@@ -107,16 +105,19 @@ for _ in router_info:  # looping through routing_info as key, value
         try:
             # from the module we import <name>.py files.
             # Py-file names are the keys of the <router_info> dictionary as well.
-            router_obj = getattr(importlib.import_module(_['module']), router_name)  # an APIRouter() instance
+            router_obj = getattr(importlib.import_module(_['module']), router_name)  # fastapi.router.APIRouter() inst.
+            server.include_router(router_obj, tags=[_['name']], prefix=_["prefix"])
+            lg.info("router    : added '{}' with prefix {}".format(_['name'], _["prefix"]))
         except (ImportError, AttributeError):
-            raise Exception("Error importing: {}".format(_['name']))
+            msg = "router    : could not find '{}'".format(_['name'])
+            lg.error(msg)
+            # raise Exception(msg)
         # we add the current router instance to our server: (using tags and prefixes)
-        server.include_router(router_obj, tags=[_['name']], prefix=_["prefix"])
+        
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -
 # -------------------------------------------------------------------------------------------------------------------
-
 
 """
 == Install framework
@@ -127,10 +128,12 @@ However: If you use it from venv, and want to have it in the venv, you can insta
 
 == Run server
 If you want to run the server in venv: Switch to local virtual environment! Then...
-Run the server allowing reload on changes:
+Run the server allowing reload on changes, either from a terminal:
 
- source ./venv/bin/activate 
- uvicorn Server_SmartHome:server --reload
+ source ./venv/bin/activate
+ uvicorn Server_SmartHomeMyCastle:server --reload
+
+or directly as a python code as shown in the __name__ clause below.
 
 == Swagger
 Use Swagger simplified Frontend to demo, test and dev-use your Endpoints:
@@ -149,3 +152,6 @@ token example:
 CORS needed to be added to the browser
 """
 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("Server_SmartHomeMyCastle:server", host="127.0.0.1", port=8000, reload=True, log_level="debug")

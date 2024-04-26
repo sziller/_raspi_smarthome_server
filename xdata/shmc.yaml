@@ -1,0 +1,25 @@
+proj_name: "Smart Home my Castle"
+proj_nick: "SmartHomeMyCastle"
+version: "v0.0.0"
+summary: "This is an open project to be shipped someday."
+description: " ## SmartHome with no chains attached\n
+****\n
+Why Smart Home My Castle?\n
+Well... we kinda all know that, don't we?\n
+SHMC lets you and keeps you in the drivers seat.\n
+****\n
+SHMC is a modular, self hosted Smart Home Product built with self-sovereignity in mind. It is built-up of the following
+parts:\n
+- self-hosted server with a FastAPI\n
+- self-hosted routers built as RouterAPI\n
+- any SmartHome module you install underneath
+
+## Install\n
+Smart Home My Castle install is described under http://sziller.eu. Visit us to learn more! Framework enables you to
+install custom made modules of Smart Home My Castle.\n
+
+## About\n
+sziller.eu
+"
+terms: "...TERMS..."
+url: "/api/v0/{}.json"

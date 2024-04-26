@@ -1,0 +1,28 @@
+[[TITLE]]
+= Smart Home my Castle
+Szilard Gabor LADANYI <szillerke@gmail.com>
+// include::.asciidoctorconfig[]
+:icons: image
+//:icons: font
+:iconsdir: ./icons
+//:icontype: svg
+:sectnums!:
+:doctype: book
+:author: Szilard Gabor LADANYI
+:hide-uri-scheme: true
+:description: Quickstarter for doc-collection
+:toc: left
+:toclevels: 2
+:toc-title: Table of contents
+:stylesheet: plain.css
+:stylesdir: ./css
+:figure-caption:
+:table-caption!:
+:imagesdir: ./images/
+
+[[TableOfContents]]
+*http://sziller.eu* - *Szilard Gabor LADANYI* - 2022
+
+include::shmc-ch01.adoc[]
+
+Back to the top: <<TableOfContents>>

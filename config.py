@@ -11,13 +11,16 @@ HEARTBEAT_SERVER = 1
 IS_PROCESS_RUNNING = True
 
 PATH_ERROR_MSG = "./xdata/error.yaml"
+PATH_SERVER_INFO = "./xdata/shmc.yaml"
 
+# list necessary router data here:
 ROUTER_INFO = router_info = [
     {"name": 'wallet',
      "use": False,
      "prefix": "/wllt",
-     "ip4": '10.3.77.xx',
-     "module": "routers.wallet",
+     "ip": '10.3.77.xx',
+     "zmq_port": 0,
+     "module": "shmc_routers.wallet",
      "description": "Information regarding SmartHome setup's BiTCoin wallet",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
@@ -25,27 +28,30 @@ ROUTER_INFO = router_info = [
     {"name": 'aquaponics',
      "use": True,
      "prefix": "/aqua",
-     "ip4": '10.3.77.xx',
-     "module": "mhmc_routers.aquaponics",
+     "ip": '10.3.77.xx',
+     "zmq_port": 52008,
+     "module": "shmc_routers.aquaponics",
      "description": "Information regarding SmartHome setup's Aquaponic system",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}},
     {"name": "observatory",
-     "use": False,
+     "use": True,
      "prefix": "/obsr",
      "ip": '10.3.77.xx',
-     'module': "routers.observatory",
+     "zmq_port": 52902,
+     'module': "shmc_routers.observatory",
      "description": "Information regarding SmartHome setup's Observatory hub",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
      },
     {"name": "room_01",
-     "use": False,
+     "use": True,
      "prefix": "/r_01",
      "ip": '10.3.77.xx',
-     'module': "routers.room_01",
+     "zmq_port": 52903,
+     'module': "shmc_routers.room_01",  # probably 'room' only!
      "description": "Information regarding SmartHome setup's Room_01 general manager",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
@@ -53,7 +59,7 @@ ROUTER_INFO = router_info = [
                ]
 
 # DATABASE related parameters:                                                          DB related - START
-DATABASE_NAME           = "./.DB_MyHomeMyCastle.db"
+DATABASE_NAME           = "./.DB_SmartHomeMyCastle.db"
 DATABASE_STYLE          = "SQLite"
 DB_ID_TABLE_IPS         = "restrictedips"
 DB_ID_TABLE_USERS       = "users"

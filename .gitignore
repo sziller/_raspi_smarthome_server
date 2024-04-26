@@ -37,6 +37,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 router_*.py
+*_router.py
 
 # C extensions
 *.so

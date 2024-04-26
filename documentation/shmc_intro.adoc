@@ -1,0 +1,86 @@
+== Project introduction
+=== Motivation
+==== System
+We want to build a modular smart-home system on fully open-source basis. I want to enable full control over ones home.
+A home in this context is regarded as one *sovereign* interconnected system, where - though modular in architecture -
+parts of the infrastructure can intaract with eachother, use each-others measurements, computational results.
+As we deal with brick-and-mortar buildings, at the edge of this project you'll always find mostly physical systems,
+such as:
+
+- sensors
+- appliances
+- switches (relais)
+- enegry sources
+
+==== Control
+We strive to achieve as much *decentralization* and *soverignity* as possible. The user of this project should *never*
+have to rely on 3rd parties.
+
+[IMPORTANT]
+====
+Decentralization is hard to achieve. The user obviously can anytime use 3rd party software if he chooses to. 
+====
+
+=== Technology
+The Project intends to be usable from step 0. Right at the moment you download the server, you should be good to go.
+Then - as you're ready to invest more resources - build up a more complex system module-by-module according to your
+preferences.
+Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment 
+
+Functionality modules::
+We concentrate on residential buildings/ apartments. This choice more-or-less determines the functionality we target.
+Here are some examles we are currently implementing:
+
+* Room climate manager
+** environmental measurements
+** controlling local heating, humidity, lights, other appiances
+* Observatory center at entrance
+** environmental measurements
+** optical measurement
+** image recognition
+** controlling lights, locking systems
+* Food production manager
+* Bitcoin wallet
+**
+* Central heating management
+** reading measurements provided by multiple Nodes
+* Solar energy generation
+
+Hardware modules::
+The project is built with *RaspberryPi* computing hardware (simply: Nodes) in mind.
+We also make use of RaspberryPi related peripherals such as SenseHat, Raspberry Cameras.
+When it comes to Node demand of your setup, you need to consider: Functions may occupy a Node by their own,
+or may share a Node with other modules. We basically create a mesh network of
+Nodes inside a building/ apartment. Nodes are placed in several different locations strategically in the
+building/ apartment. +
+
+
+Meaning setting up a Live Project is not only an IT decision. You need to look at your Floorplan, Energy-bills, Kids,
+Lifestyle. You might actually want to consult an Architect with a technlogical touch.
+
+Software modules::
+Most of the Functions receive their own Python Package. So you can install them as you go along.
+We also encourage you to contribute in the development.
+Here is a grouping of Packages based on their interaction with physical systems:
+
+- *server*: +
+Central Node at the core of your System enabling you to deal with remote communication, with handling shared Databases.
+
+- *Node managing software*: +
+Basic functionality running on Nodes. Client taks, local DB or file handling. Even possible local server tasks.
+
+- *measurement management*: +
+Some Nodes are responsible to measure and to provide measured data to the system.
+
+- *peripheral management*: +
+Some Nodes control Relais, some manage LED displays
+
+- *background Engines*: +
+In case of more complex Functionality specific Engines are running locally - on dedicated Nodes.
+
+Timing::
+The system being a mesh network of uncontrolled size/ number of Nodes, is designed to be a sluggish one.
+In order to be robust, redundant, safe, we prioritize these features over swiftness. We will optimize local processes
+for fast action, speed however will not be a priority when it comes to communication between nodes.
+
+The communication between Nodes may or may not happen over shared Databases, or direct socket connections.

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.22">
+<meta name="description" content="Documentation of the SmartHome my Castle">
+<meta name="author" content="Szilard Gabor LADANYI">
+<title>Smart Home my Castle</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(//fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#000000;
+--secondarycolor:#999999; /* Title - 2*/
+--tertiarycolor:#CCCCCC;
+--sidebarbackground:#CACACA;
+--linkcolor:#0D47A1;
+--linkcoloralternate:#B71C1C;
+--white:#FFFFFF;
+--black:#000000;
+}
+
+/* Text styles */
+
+body{font-family: "Noto Sans",sans-serif;background-color: var(--maincolor);color:var(--black);}
+
+h1{color:var(--primarycolor) !important;font-family:"Noto Sans",sans-serif;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Noto Sans",sans-serif;}
+.title{color:var(--black) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+a{text-decoration: none;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:var(--linkcolor);}
+blockquote{color:var(--secondarycolor) !important}
+.quoteblock{color:var(--black)}
+.quoteblock blockquote:before{color:var(--black)}
+code{color:var(--white);background-color: var(--secondarycolor) !important}
+mark{background-color: var(--tertiarycolor)} /* Text highlighting color */
+
+/* Table styles */
+th{background-color: var(--maincolor);color:var(--black) !important;}
+td{background-color: var(--maincolor);color: var(--black) !important}
+
+
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
+
+</style>
+<style>
+/*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */
+.tabs {
+    margin-bottom: 1.25em;
+}
+
+.tablist > ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tablist > ul li {
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 0.25em 1em;
+    position: relative;
+}
+
+.tablist > ul li:focus-visible {
+    outline: none;
+}
+
+.tablist.ulist,
+.tablist.ulist > ul li {
+    margin: 0;
+}
+
+.tablist.ulist > ul li + li {
+    margin-left: 0.25em;
+}
+
+.tabs .tablist li::after {
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+}
+
+.tabs.is-loading .tablist li:not(:first-child),
+.tabs:not(.is-loading) .tablist li:not(.is-selected) {
+    background-color: #f5f5f5;
+}
+
+.tabs.is-loading .tablist li:first-child::after,
+.tabs:not(.is-loading) .tablist li.is-selected::after {
+    background-color: #fff;
+}
+
+/*
+.tabs:not(.is-loading) .tablist li,
+.tabs:not(.is-loading) .tablist li::after {
+  transition: background-color 200ms ease-in-out;
+}
+*/
+
+.tablist > ul p {
+    line-height: inherit;
+    margin: 0;
+}
+
+.tabpanel {
+    background-color: #fff;
+    padding: 1.25em;
+}
+
+.tablist > ul li,
+.tabpanel {
+    border: 1px solid #dcdcdc;
+}
+
+.tablist > ul li {
+    border-bottom: 0;
+}
+
+.tabs.is-loading .tabpanel + .tabpanel,
+.tabs:not(.is-loading) .tabpanel.is-hidden {
+    display: none;
+}
+
+.tabpanel > :first-child {
+    margin-top: 0;
+}
+
+/* #content is a signature of the Asciidoctor standalone HTML output */
+#content .tabpanel > :last-child,
+#content .tabpanel > :last-child > :last-child,
+#content .tabpanel > :last-child > :last-child > li:last-child > :last-child {
+    margin-bottom: 0;
+}
+
+.tablecontainer {
+    overflow-x: auto;
+}
+
+#content .tablecontainer {
+    margin-bottom: 1.25em;
+}
+
+#content .tablecontainer > table.tableblock {
+    margin-bottom: 0;
+}
+</style>
+</head>
+<body id="TOP" class="book toc2 toc-left">
+<div id="header">
+<h1>Smart Home my Castle</h1>
+<div class="details">
+<span id="author" class="author">Szilard Gabor LADANYI</span><br>
+<span id="email" class="email"><a href="mailto:szillerke@gmail.com">szillerke@gmail.com</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of contents</div>
+<ul class="sectlevel1">
+<li><a href="#shmc:server:intro">1. Project introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_motivation">1.1. Motivation</a></li>
+<li><a href="#_technology">1.2. Technology</a></li>
+</ul>
+</li>
+<li><a href="#readme:shmc">2. _raspi_smarthome_server</a>
+<ul class="sectlevel2">
+<li><a href="#_whom_and_what_for">2.1. whom and what for?</a></li>
+<li><a href="#_how_do_i_get_started">2.2. how do I get started?</a></li>
+<li><a href="#_how_can_you_contribute">2.3. how can you contribute?</a></li>
+<li><a href="#_contact">2.4. contact</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div id="TableOfContents" class="paragraph">
+<p><strong><a href="http://sziller.eu" class="bare">sziller.eu</a></strong> - <strong>Szilard Gabor LADANYI</strong> - 2024</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="shmc:server:intro">1. Project introduction</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_motivation">1.1. Motivation</h3>
+<div class="sect3">
+<h4 id="_system">1.1.1. System</h4>
+<div class="paragraph">
+<p>We want to build a modular smart-home system on fully open-source basis. I want to enable full control over ones home.
+A home in this context is regarded as one <strong>sovereign</strong> interconnected system, where - though modular in architecture -
+parts of the infrastructure can intaract with eachother, use each-others measurements, computational results.
+As we deal with brick-and-mortar buildings, at the edge of this project you&#8217;ll always find mostly physical systems,
+such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sensors</p>
+</li>
+<li>
+<p>appliances</p>
+</li>
+<li>
+<p>switches (relais)</p>
+</li>
+<li>
+<p>enegry sources</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_control">1.1.2. Control</h4>
+<div class="paragraph">
+<p>We strive to achieve as much <strong>decentralization</strong> and <strong>soverignity</strong> as possible. The user of this project should <strong>never</strong>
+have to rely on 3rd parties.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<img src="./icons/important.png" alt="Important">
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Decentralization is hard to achieve. The user obviously can anytime use 3rd party software if he chooses to.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_technology">1.2. Technology</h3>
+<div class="paragraph">
+<p>The Project intends to be usable from step 0. Right at the moment you download the server, you should be good to go.
+Then - as you&#8217;re ready to invest more resources - build up a more complex system module-by-module according to your
+preferences.
+Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Functionality modules</dt>
+<dd>
+<p>We concentrate on residential buildings/ apartments. This choice more-or-less determines the functionality we target.
+Here are some examles we are currently implementing:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Room climate manager</p>
+<div class="ulist">
+<ul>
+<li>
+<p>environmental measurements</p>
+</li>
+<li>
+<p>controlling local heating, humidity, lights, other appiances</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Observatory center at entrance</p>
+<div class="ulist">
+<ul>
+<li>
+<p>environmental measurements</p>
+</li>
+<li>
+<p>optical measurement</p>
+</li>
+<li>
+<p>image recognition</p>
+</li>
+<li>
+<p>controlling lights, locking systems</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Food production manager</p>
+</li>
+<li>
+<p>Bitcoin wallet
+**</p>
+</li>
+<li>
+<p>Central heating management</p>
+<div class="ulist">
+<ul>
+<li>
+<p>reading measurements provided by multiple Nodes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solar energy generation</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Hardware modules</dt>
+<dd>
+<p>The project is built with <strong>RaspberryPi</strong> computing hardware (simply: Nodes) in mind.
+We also make use of RaspberryPi related peripherals such as SenseHat, Raspberry Cameras.
+When it comes to Node demand of your setup, you need to consider: Functions may occupy a Node by their own,
+or may share a Node with other modules. We basically create a mesh network of
+Nodes inside a building/ apartment. Nodes are placed in several different locations strategically in the
+building/ apartment.<br></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Meaning setting up a Live Project is not only an IT decision. You need to look at your Floorplan, Energy-bills, Kids,
+Lifestyle. You might actually want to consult an Architect with a technlogical touch.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Software modules</dt>
+<dd>
+<p>Most of the Functions receive their own Python Package. So you can install them as you go along.
+We also encourage you to contribute in the development.
+Here is a grouping of Packages based on their interaction with physical systems:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>server</strong>:<br>
+Central Node at the core of your System enabling you to deal with remote communication, with handling shared Databases.</p>
+</li>
+<li>
+<p><strong>Node managing software</strong>:<br>
+Basic functionality running on Nodes. Client taks, local DB or file handling. Even possible local server tasks.</p>
+</li>
+<li>
+<p><strong>measurement management</strong>:<br>
+Some Nodes are responsible to measure and to provide measured data to the system.</p>
+</li>
+<li>
+<p><strong>peripheral management</strong>:<br>
+Some Nodes control Relais, some manage LED displays</p>
+</li>
+<li>
+<p><strong>background Engines</strong>:<br>
+In case of more complex Functionality specific Engines are running locally - on dedicated Nodes.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Timing</dt>
+<dd>
+<p>The system being a mesh network of uncontrolled size/ number of Nodes, is designed to be a sluggish one.
+In order to be robust, redundant, safe, we prioritize these features over swiftness. We will optimize local processes
+for fast action, speed however will not be a priority when it comes to communication between nodes.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The communication between Nodes may or may not happen over shared Databases, or direct socket connections.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="readme:shmc">2. _raspi_smarthome_server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the entry point of the SmartHome my Castle development.
+Here&#8217;s how you get it running.</p>
+</div>
+<div class="sect2">
+<h3 id="_whom_and_what_for">2.1. whom and what for?</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Version: v0.0.0</p>
+</li>
+<li>
+<p>Quick summary</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_do_i_get_started">2.2. how do I get started?</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Summary of set up</p>
+</li>
+<li>
+<p>Configuration</p>
+</li>
+<li>
+<p>Dependencies</p>
+</li>
+<li>
+<p>Database configuration</p>
+</li>
+<li>
+<p>How to run tests</p>
+</li>
+<li>
+<p>Deployment instructions</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_can_you_contribute">2.3. how can you contribute?</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Writing tests</p>
+</li>
+<li>
+<p>Code review</p>
+</li>
+<li>
+<p>Other guidelines</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_contact">2.4. contact</h3>
+<div class="paragraph">
+<p>Owner and developer of this Project is Sziller</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://sziller.eu" class="bare">sziller.eu</a></p>
+</li>
+</ul>
+</div>
+<div id="shmc:aqua:intro" class="paragraph">
+<p>Back to <a href="#TOP">Smart Home my Castle</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-04-26 17:59:37 +0200
+</div>
+</div>
+<script>
+;(function () { /*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */
+  'use strict'
+
+  var config = (document.currentScript || {}).dataset || {}
+  var forEach = Array.prototype.forEach
+
+  init(document.querySelectorAll('.tabs'))
+
+  function init (tabsBlocks) {
+    if (!tabsBlocks.length) return
+    forEach.call(tabsBlocks, function (tabs) {
+      var syncIds = tabs.classList.contains('is-sync') ? {} : undefined
+      var tablist = tabs.querySelector('.tablist ul')
+      tablist.setAttribute('role', 'tablist')
+      var start
+      forEach.call(tablist.querySelectorAll('li'), function (tab, idx) {
+        tab.tabIndex = -1
+        tab.setAttribute('role', tab.classList.add('tab') || 'tab')
+        var id, anchor, syncId
+        if (!(id = tab.id) && (anchor = tab.querySelector('a[id]'))) {
+          id = tab.id = anchor.parentNode.removeChild(anchor).id
+        }
+        var panel = id && tabs.querySelector('.tabpanel[aria-labelledby~="' + id + '"]')
+        if (!panel) return idx ? undefined : toggleSelected(tab, true) // invalid state
+        syncIds && (((syncId = tab.textContent.trim()) in syncIds) ? (syncId = undefined) : true) &&
+        (syncIds[(tab.dataset.syncId = syncId)] = tab)
+        idx || (syncIds && (start = { tab: tab, panel: panel })) ? toggleHidden(panel, true) : toggleSelected(tab, true)
+        tab.setAttribute('aria-controls', panel.id)
+        panel.setAttribute('role', 'tabpanel')
+        var onClick = syncId === undefined ? activateTab : activateTabSync
+        tab.addEventListener('click', onClick.bind({ tabs: tabs, tab: tab, panel: panel }))
+      })
+      if (!tabs.closest('.tabpanel')) {
+        forEach.call(tabs.querySelectorAll('.tabpanel table.tableblock'), function (table) {
+          var container = Object.assign(document.createElement('div'), { className: 'tablecontainer' })
+          table.parentNode.insertBefore(container, table).appendChild(table)
+        })
+      }
+      if (start) {
+        var syncGroupId
+        for (var i = 0, lst = tabs.classList, len = lst.length, className; i !== len; i++) {
+          if (!(className = lst.item(i)).startsWith('data-sync-group-id=')) continue
+          tabs.dataset.syncGroupId = syncGroupId = lst.remove(className) || className.slice(19).replace(/\u00a0/g, ' ')
+          break
+        }
+        if (syncGroupId === undefined) tabs.dataset.syncGroupId = syncGroupId = Object.keys(syncIds).sort().join('|')
+        var preferredSyncId = 'syncStorageKey' in config &&
+          window[(config.syncStorageScope || 'local') + 'Storage'].getItem(config.syncStorageKey + '-' + syncGroupId)
+        var tab = preferredSyncId && syncIds[preferredSyncId]
+        tab && Object.assign(start, { tab: tab, panel: document.getElementById(tab.getAttribute('aria-controls')) })
+        toggleSelected(start.tab, true) || toggleHidden(start.panel, false)
+      }
+    })
+    onHashChange()
+    toggleClassOnEach(tabsBlocks, 'is-loading', 'remove')
+    window.setTimeout(toggleClassOnEach.bind(null, tabsBlocks, 'is-loaded', 'add'), 0)
+    window.addEventListener('hashchange', onHashChange)
+  }
+
+  function activateTab (e) {
+    var tab = this.tab
+    var tabs = this.tabs || (this.tabs = tab.closest('.tabs'))
+    var panel = this.panel || (this.panel = document.getElementById(tab.getAttribute('aria-controls')))
+    querySelectorWithSiblings(tabs, '.tablist .tab', 'tab').forEach(function (el) {
+      toggleSelected(el, el === tab)
+    })
+    querySelectorWithSiblings(tabs, '.tabpanel', 'tabpanel').forEach(function (el) {
+      toggleHidden(el, el !== panel)
+    })
+    if (!this.isSync && 'syncStorageKey' in config && 'syncGroupId' in tabs.dataset) {
+      var storageKey = config.syncStorageKey + '-' + tabs.dataset.syncGroupId
+      window[(config.syncStorageScope || 'local') + 'Storage'].setItem(storageKey, tab.dataset.syncId)
+    }
+    if (!e) return
+    var loc = window.location
+    var hashIdx = loc.hash ? loc.href.indexOf('#') : -1
+    if (~hashIdx) window.history.replaceState(null, '', loc.href.slice(0, hashIdx))
+    e.preventDefault()
+  }
+
+  function activateTabSync (e) {
+    activateTab.call(this, e)
+    var thisTabs = this.tabs
+    var thisTab = this.tab
+    var initialY = thisTabs.getBoundingClientRect().y
+    forEach.call(document.querySelectorAll('.tabs'), function (tabs) {
+      if (tabs === thisTabs || tabs.dataset.syncGroupId !== thisTabs.dataset.syncGroupId) return
+      querySelectorWithSiblings(tabs, '.tablist .tab', 'tab').forEach(function (tab) {
+        if (tab.dataset.syncId === thisTab.dataset.syncId) activateTab.call({ tabs: tabs, tab: tab, isSync: true })
+      })
+    })
+    var shiftedBy = thisTabs.getBoundingClientRect().y - initialY
+    if (shiftedBy && (shiftedBy = Math.round(shiftedBy))) window.scrollBy({ top: shiftedBy, behavior: 'instant' })
+  }
+
+  function querySelectorWithSiblings (scope, selector, siblingClass) {
+    var el = scope.querySelector(selector)
+    if (!el) return []
+    var result = [el]
+    while ((el = el.nextElementSibling) && el.classList.contains(siblingClass)) result.push(el)
+    return result
+  }
+
+  function toggleClassOnEach (elements, className, method) {
+    forEach.call(elements, function (el) {
+      el.classList[method](className)
+    })
+  }
+
+  function toggleHidden (el, state) {
+    el.classList[(el.hidden = state) ? 'add' : 'remove']('is-hidden')
+  }
+
+  function toggleSelected (el, state) {
+    el.setAttribute('aria-selected', '' + state)
+    el.classList[state ? 'add' : 'remove']('is-selected')
+    el.tabIndex = state ? 0 : -1
+  }
+
+  function onHashChange () {
+    var id = window.location.hash.slice(1)
+    if (!id) return
+    var tab = document.getElementById(~id.indexOf('%') ? decodeURIComponent(id) : id)
+    if (!(tab && tab.classList.contains('tab'))) return
+    'syncId' in tab.dataset ? activateTabSync.call({ tab: tab }) : activateTab.call({ tab: tab })
+  }
+})()
+</script>
+</body>
+</html>

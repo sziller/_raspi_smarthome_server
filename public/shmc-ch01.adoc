@@ -1,9 +1,0 @@
-== Welcome To My Castle My Home
-
-site still under construction... 
-
-[NOTE]
-====
-====
-
-image::RaspberryPi_GPIOLayout_ModelB.jpg[title="success"]

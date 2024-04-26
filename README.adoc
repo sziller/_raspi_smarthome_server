@@ -1,0 +1,29 @@
+== _raspi_smarthome_server
+This is the entry point of the SmartHome my Castle development.
+Here's how you get it running.
+
+=== whom and what for?
+* Version: v0.0.0
+* Quick summary
+
+=== how do I get started?
+
+* Summary of set up
+* Configuration
+* Dependencies
+* Database configuration
+* How to run tests
+* Deployment instructions
+
+=== how can you contribute?
+
+* Writing tests
+* Code review
+* Other guidelines
+
+
+=== contact
+Owner and developer of this Project is Sziller
+
+* http://sziller.eu
+

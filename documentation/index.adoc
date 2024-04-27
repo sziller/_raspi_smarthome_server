@@ -29,4 +29,6 @@ include::../README.adoc[]
 [[shmc:aqua:intro]]
 //include::.adoc[]
 
+[[shmc:fastapi]]
+include::fastapi_basics.adoc[]
 Back to <<TOP>>

@@ -9,16 +9,16 @@ HEARTBEAT_SERVER = 1
 IS_PROCESS_RUNNING = True
 
 PATH_ERROR_MSG = "./xdata/error.yaml"
-PATH_SERVER_INFO = "./xdata/shmc.yaml"
+PATH_APP_INFO = "./xdata/shmc.yaml"
 
 # list necessary router data here:
-ROUTER_INFO = router_info = [
+APP_ROUTER_INFO = [
     {"name": 'wallet',
      "use": False,
      "prefix": "/wllt",
      "ip": '10.xx.xx.xx',
      "zmq_port": 0,
-     "module": "shmc_routers.wallet",
+     "module": "shmc_routers.wallet_router",
      "description": "Information regarding SmartHome setup's BiTCoin wallet",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
@@ -28,7 +28,7 @@ ROUTER_INFO = router_info = [
      "prefix": "/aqua",
      "ip": '10.xx.xx.xx',
      "zmq_port": 52008,
-     "module": "shmc_routers.aquaponics",
+     "module": "shmc_routers.aquaponics_router",
      "description": "Information regarding SmartHome setup's Aquaponic system",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
@@ -38,19 +38,39 @@ ROUTER_INFO = router_info = [
      "prefix": "/obsr",
      "ip": '10.xx.xx.xx',
      "zmq_port": 52902,
-     'module': "shmc_routers.observatory",
+     'module': "shmc_routers.observatory_router",
      "description": "Information regarding SmartHome setup's Observatory hub",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}
      },
-    {"name": "room",
+    {"name": "Livingroom",
      "use": True,
-     "prefix": "/r_{}",
+     "prefix": "/r_lv",
      "ip": '10.xx.xx.xx',
      "zmq_port": 52903,
-     'module': "shmc_routers.room",  # probably 'room' only!
-     "description": "Information regarding SmartHome setup's Room_01 general manager",
+     'module': "shmc_routers.room_router",  # probably 'room' only!
+     "description": "Information regarding SmartHome setup's Room general manager",
+     "externalDocs": {
+         "description": "find additional info under: sziller.eu",
+         "url": "http://sziller.eu"}},
+    {"name": "Kidsroom",
+     "use": True,
+     "prefix": "/r_ks",
+     "ip": '10.xx.xx.xx',
+     "zmq_port": 52903,
+     'module': "shmc_routers.room_router",  # probably 'room' only!
+     "description": "Information regarding SmartHome setup's Room general manager",
+     "externalDocs": {
+         "description": "find additional info under: sziller.eu",
+         "url": "http://sziller.eu"}},
+    {"name": "Bathroom",
+     "use": True,
+     "prefix": "/r_ba",
+     "ip": '10.xx.xx.xx',
+     "zmq_port": 52903,
+     'module': "shmc_routers.room_router",  # probably 'room' only!
+     "description": "Information regarding SmartHome setup's Room general manager",
      "externalDocs": {
          "description": "find additional info under: sziller.eu",
          "url": "http://sziller.eu"}}

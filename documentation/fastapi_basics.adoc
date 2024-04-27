@@ -1,0 +1,38 @@
+== FastAPI
+=== Install framework
+This should be installed on the system itself, NOT only in virtual environment.
+However: If you use it from venv, and want to have it in the venv, you can install it into the venv!
+
+ pip install "fastapi[all]"
+
+=== Run server
+If you want to run the server in venv: Switch to local virtual environment! Then...
+Run the server allowing reload on changes, either from a terminal:
+
+ source ./venv/bin/activate
+ uvicorn Server_SmartHomeMyCastle:server --reload
+
+or directly as a python code as shown in the __name__ clause below.
+
+as <app> is a sub-api mounted under <server> when starting <server>, <app> also starts.
+API included here is - as of now - mosty describint <app> - the sub-api.
+So to access the docs of <app> you need to add the '/app' prefix.
+
+=== Swagger
+Use Swagger simplified Frontend to demo, test and dev-use default Endpoints:
+
+ http://127.0.0.1:8000/docs
+ http://127.0.0.1:8000/redoc
+ 
+Currently, API of <app> is documanted under:
+
+ http://127.0.0.1:8000/api/docs
+ http://127.0.0.1:8000/api/redoc
+
+=== Online
+
+.token example
+ 
+ {"access_token":"---","expires_in":300,"refresh_expires_in":1800,"refresh_token":"---","token_type":"Bearer","not-before-policy":0,"session_state":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","scope":"email profile"}
+
+also, CORS needed to be added to the browser

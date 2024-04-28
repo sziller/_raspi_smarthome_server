@@ -11,70 +11,88 @@ IS_PROCESS_RUNNING = True
 PATH_ERROR_MSG = "./xdata/error.yaml"
 PATH_APP_INFO = "./xdata/shmc.yaml"
 
+# Routers receive the following parameters passed on startup:
+# {
+# <name>:                               # name of the router - key
+#   {"use": bool,                       # if current router instance is used
+#    "prefix": str,                     # path prefix for current router
+#    "ip": str[xx.xx.xx.xx],            # ip address
+#    "zmq_port": int,                   # if socket comm. allowed to engine, use this port
+#    "arguments": {},                   # dict of {param: arg} pairs for current router instance
+#    "module": str ["xxx.xxx"],         # module out of which "router" obj is instantiated
+#      "description": "Information regarding router",
+#      "externalDocs": {
+#          "description": "find additional info under: sziller.eu",
+#          "url": "http://sziller.eu"},
+# <name-02>: {},
+# <name-03>: {}
+#          }
+
 # list necessary router data here:
-APP_ROUTER_INFO = [
-    {"name": 'wallet',
-     "use": False,
-     "prefix": "/wllt",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 0,
-     "module": "shmc_routers.wallet_router",
-     "description": "Information regarding SmartHome setup's BiTCoin wallet",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}},
-    {"name": 'aquaponics',
-     "use": True,
-     "prefix": "/aqua",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 52008,
-     "module": "shmc_routers.aquaponics_router",
-     "description": "Information regarding SmartHome setup's Aquaponic system",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}},
-    {"name": "observatory",
-     "use": True,
-     "prefix": "/obsr",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 52902,
-     'module': "shmc_routers.observatory_router",
-     "description": "Information regarding SmartHome setup's Observatory hub",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}
-     },
-    {"name": "Livingroom",
-     "use": True,
-     "prefix": "/r_lv",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 52903,
-     'module': "shmc_routers.room_router",  # probably 'room' only!
-     "description": "Information regarding SmartHome setup's Room general manager",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}},
-    {"name": "Kidsroom",
-     "use": True,
-     "prefix": "/r_ks",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 52903,
-     'module': "shmc_routers.room_router",  # probably 'room' only!
-     "description": "Information regarding SmartHome setup's Room general manager",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}},
-    {"name": "Bathroom",
-     "use": True,
-     "prefix": "/r_ba",
-     "ip": '10.xx.xx.xx',
-     "zmq_port": 52903,
-     'module': "shmc_routers.room_router",  # probably 'room' only!
-     "description": "Information regarding SmartHome setup's Room general manager",
-     "externalDocs": {
-         "description": "find additional info under: sziller.eu",
-         "url": "http://sziller.eu"}}
-               ]
+APP_ROUTER_INFO = {
+    'wallet': {
+        "use": False,
+        "prefix": "/wllt",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 0,
+        "arguments": {},
+        "module": "shmc_routers.wallet_router",
+        "description": "Information regarding SmartHome setup's BiTCoin wallet",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "aquaponics": {
+        "use": True,
+        "prefix": "/aqua",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 52008,
+        "arguments": {"nr_of_fish": 10000},
+        "module": "shmc_routers.aquaponics_router",
+        "description": "Information regarding SmartHome setup's Aquaponic system",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "observatory": {
+        "use": True,
+        "prefix": "/obsr",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 52902,
+        "module": "shmc_routers.observatory_router",
+        "description": "Information regarding SmartHome setup's Observatory hub",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "livingroom": {
+        "use": True,
+        "prefix": "/r_lv",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 52903,
+        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "description": "Information regarding SmartHome setup's Room general manager",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "kidsroom": {
+        "use": True,
+        "prefix": "/r_ks",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 52903,
+        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "description": "Information regarding SmartHome setup's Room general manager",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "bathroom": {
+        "use": True,
+        "prefix": "/r_ba",
+        "ip": '10.xx.xx.xx',
+        "zmq_port": 52903,
+        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "description": "Information regarding SmartHome setup's Room general manager",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}}
+    }
 
 # DATABASE related parameters:                                                          DB related - START
 DATABASE_NAME           = "./.DB_SmartHomeMyCastle.db"

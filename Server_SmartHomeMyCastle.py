@@ -22,8 +22,6 @@ FastAPI hints:
 
 import logging
 import importlib
-# from pydantic import BaseModel as BaMo
-from shmc_routers.aquaponics_router import aquaponics_router
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
@@ -67,7 +65,12 @@ lg.info("read conf.: APP_ROUTER_INFO")
 router_info = conf.APP_ROUTER_INFO
 
 lg.info("arrange   : tags_metadata")
-tags_metadata = [_ for _ in router_info if _["use"]]
+tags_metadata = []
+for name, data in router_info.items():
+    if data["use"]:
+        data["name"] = name
+        tags_metadata.append(data)
+# tags_metadata = [data for name, data in router_info.items() if data["use"]]
 
 lg.info("init.     : server = FastAPI - using configuration and text data")
 
@@ -103,39 +106,26 @@ server.mount(path="/", app=StaticFiles(directory="public", html=True), name="pub
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   START   -
 # -------------------------------------------------------------------------------------------------------------------
+ROUTER_OBJECTS = {}
 
-
-for _ in router_info:  # looping through routing_info as key, value
-    if _['use']:
-        # using an internal rule of our development:
-        # routers are defined under the name: <name>_router in the router files.
-        router_name = _['module'].split(sep=".")[1]
+for name, data in router_info.items():  # looping through routing_info as key, value
+    if data['use']:
         try:
-            # from the module we import <name>.py files.
-            # Py-file names are the keys of the <router_info> dictionary as well.
-            router_obj = getattr(importlib.import_module(_['module']), router_name)  # fastapi.router.APIRouter() inst.
-            print("---------------------------")
-            print(router_obj.nr_of_fish)
-            router_obj.nr_of_fish = 77
-            print(router_obj.nr_of_fish)
-            print("---------------------------")
-            tags_in = [_['name']]
-            prefix_in = _["prefix"]
-            app.include_router(router=router_obj, tags=tags_in, prefix=prefix_in)
-            # lg.info("router_obj: {}\ntags_in   : {}\nprefix_in : {}".format(router_obj, tags_in, prefix_in))
-            lg.info("incl.rout.: '{}' as {} - under {}".format(tags_in, router_obj, prefix_in))
+            # we import <module>.py files.
+            router_obj = getattr(importlib.import_module(data['module']), "router")  # fastapi.router.APIRouter() inst.
+            if "arguments" in data and data["arguments"]:
+                for param, arg in data["arguments"].items():
+                    setattr(router_obj, param, arg)
+                lg.info("set router: {} - attributes set".format([name], data["prefix"]))
+            ROUTER_OBJECTS[name] = router_obj
+            lg.info("add router: {} as {}.router() - under {}".format([name], data["module"], data["prefix"]))
+            app.include_router(router=router_obj, tags=[name], prefix=data["prefix"])
+            lg.info("incl.rout.: {}".format(router_obj))
         except (ImportError, AttributeError):
-            msg = "router    : could not find '{}'".format(_['name'])
+            msg = "router    : could not find '{}'".format(name)
             lg.error(msg)
-            # raise Exception(msg)
         # we add the current router instance to our app: (using tags and prefixes)
 
-print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-for k in server.router.routes:
-    if k.name == "shmc":
-        for x, y in k.app.router.__dict__.items():
-            print("{}: {}".format(x, y))
-print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 # for k, v in server.__dict__.items():
 #     print("{}: {}".format(k, v))
 

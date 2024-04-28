@@ -1,6 +1,9 @@
 101:
-  EN: "ERROR - {err:>3}: unknown command passed to Engine: '{cmd}'.\n - sais: {adm} at {fn}"
-  HU: "HIBA - {err}: A Motor ismeretlen parancsot kapott: '{cmd}'.\n - uzeni {adm} a(z) {fn} helyrol"
+  EN: "{err:>3}: unknown command passed to Engine: '{cmd}'.\n - says: {adm} at {fn}"
+  HU: "{err}: A Motor ismeretlen parancsot kapott: '{cmd}'.\n - uzeni {adm} a(z) {fn} helyrol"
 102:
-  EN: "ERROR - {err:>3}: Bad arguments passed to '{cmd}'.\n - sais: {adm} at {fn}"
-  HU: "HIBA - {err:>3}: A '{cmd}' parancs hibas argumentumokat kapott.\n - uzeni {adm} a(z) {fn} helyrol"
+  EN: "{err:>3}: Bad arguments passed to '{cmd}'.\n - says: {adm} at {fn}"
+  HU: "{err:>3}: A '{cmd}' parancs hibas argumentumokat kapott.\n - uzeni {adm} a(z) {fn} helyrol"
+103:
+  EN: "router    :{err:>3} could not find '{rtr}"
+  HU: "router    :{err:>3} nem talalhato: '{rtr}"

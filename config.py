@@ -1,32 +1,38 @@
+"""=== Public config file ==========================================================
+Including settings for the Project, to be changed on or after install.
+Not including sensitive data
+================================================================== by Sziller ==="""
+
+LANGUAGE_CODE = "EN"  # ["HU", "DE"]
+
 isLIVE = True
 isDIRECT_SETUP = False
+IS_PROCESS_RUNNING = True
 
 NECESSARY_DIRECTORIES = ["./images", "./documentation", "./documents", "./log"]
-
-WAIT_SERVER = 3
-HEARTBEAT_SERVER = 1
-
-IS_PROCESS_RUNNING = True
 
 PATH_ERROR_MSG = "./xdata/error.yaml"
 PATH_APP_INFO = "./xdata/shmc.yaml"
 
-# Routers receive the following parameters passed on startup:
-# {
-# <name>:                               # name of the router - key
-#   {"use": bool,                       # if current router instance is used
-#    "prefix": str,                     # path prefix for current router
-#    "ip": str[xx.xx.xx.xx],            # ip address
-#    "zmq_port": int,                   # if socket comm. allowed to engine, use this port
-#    "arguments": {},                   # dict of {param: arg} pairs for current router instance
-#    "module": str ["xxx.xxx"],         # module out of which "router" obj is instantiated
-#      "description": "Information regarding router",
-#      "externalDocs": {
-#          "description": "find additional info under: sziller.eu",
-#          "url": "http://sziller.eu"},
-# <name-02>: {},
-# <name-03>: {}
-#          }
+'''
+Routers receive the following parameters passed on startup:
+{
+    <name>:                               # name of the router - key
+        {   "use": bool,                       # if current router instance is used
+            "prefix": str,                     # path prefix for current router
+            "ip": str[xx.xx.xx.xx],            # ip address
+            "zmq_port": int,                   # if socket comm. allowed to engine, use this port
+            "arguments": {},                   # dict of {param: arg} pairs for current router instance
+            "module": str ["xxx.xxx"],         # module out of which "router" obj is instantiated
+            "description": "Information regarding router",
+                "externalDocs": {
+                    "description": "find additional info under: sziller.eu",
+                    "url": "http://sziller.eu"
+            },
+    <name-02>:
+        {},
+    ...     }
+'''
 
 # list necessary router data here:
 APP_ROUTER_INFO = {
@@ -36,7 +42,7 @@ APP_ROUTER_INFO = {
         "ip": '10.xx.xx.xx',
         "zmq_port": 0,
         "arguments": {},
-        "module": "shmc_routers.wallet_router",
+        "module": "shmc_routers.WalletRouter_class",
         "description": "Information regarding SmartHome setup's BiTCoin wallet",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
@@ -47,7 +53,7 @@ APP_ROUTER_INFO = {
         "ip": '10.xx.xx.xx',
         "zmq_port": 52008,
         "arguments": {"nr_of_fish": 10000},
-        "module": "shmc_routers.aquaponics_router",
+        "module": "shmc_routers.AquaRouter_class",
         "description": "Information regarding SmartHome setup's Aquaponic system",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
@@ -57,7 +63,7 @@ APP_ROUTER_INFO = {
         "prefix": "/obsr",
         "ip": '10.xx.xx.xx',
         "zmq_port": 52902,
-        "module": "shmc_routers.observatory_router",
+        "module": "shmc_routers.ObsrRouter_class",
         "description": "Information regarding SmartHome setup's Observatory hub",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
@@ -67,7 +73,7 @@ APP_ROUTER_INFO = {
         "prefix": "/r_lv",
         "ip": '10.xx.xx.xx',
         "zmq_port": 52903,
-        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
@@ -77,7 +83,7 @@ APP_ROUTER_INFO = {
         "prefix": "/r_ks",
         "ip": '10.xx.xx.xx',
         "zmq_port": 52903,
-        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
@@ -87,7 +93,7 @@ APP_ROUTER_INFO = {
         "prefix": "/r_ba",
         "ip": '10.xx.xx.xx',
         "zmq_port": 52903,
-        "module": "shmc_routers.room_router",  # probably 'room' only!
+        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",

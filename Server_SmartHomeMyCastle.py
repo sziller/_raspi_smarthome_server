@@ -20,6 +20,7 @@ FastAPI hints:
 - main scope: initiate global Processes and Objects here
 """
 
+import os
 import logging
 import importlib
 from fastapi import FastAPI
@@ -28,19 +29,23 @@ from fastapi.staticfiles import StaticFiles
 from shmc_server import server_preparation as prepare
 import config as conf
 
+# Setting up language                                                                   -   START   -
+LNG = conf.LANGUAGE_CODE
+# Setting up language                                                                   -   ENDED   -
 
-# Setting up logger                                         logger                      -   START   -
+# Setting up logger                                                                     -   START   -
 lg = logging.getLogger()
 logging.basicConfig(filename="./log/srvr_shmc.log", level=logging.NOTSET, filemode="w",
                     format="%(asctime)s [%(levelname)8s]: %(message)s", datefmt='%y%m%d %H:%M:%S')
-# Setting up logger                                         logger                      -   ENDED   -
+# Setting up logger                                                                     -   ENDED   -
 
 lg.warning("START: {:>85} <<<".format('__name__ == "__main__" namespace: Server_SmartHomeMyCastle.py'))
-lg.warning("          : =========================")
-lg.warning({True:  "          : =     LIVE  SESSION     =",
-            False: "          : =      DEV SESSION      ="}[conf.isLIVE])
-lg.warning("          : ={:^23}=".format(__name__))
-lg.warning("          : =========================")
+lg.warning("          : ======================================")
+lg.warning({True:  "          : =            LIVE SESSION            =",
+            False: "          : =            DEV  SESSION            ="}[conf.isLIVE])
+lg.warning("          : ={:^36}=".format(__name__))
+lg.info("          : =         user languange: {}         =".format(LNG))
+lg.warning("          : ======================================")
 
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
@@ -57,7 +62,7 @@ lg.info("prepare   : Actions taken for {} version.".format({True: "LIVE", False:
 # -------------------------------------------------------------------------------------------------------
 
 lg.info("read data : from: {}".format(conf.PATH_ERROR_MSG))
-ERROR_DATA  = prepare.server_data(source=conf.PATH_ERROR_MSG)
+ERR  = prepare.server_data(source=conf.PATH_ERROR_MSG)
 lg.info("read data : from: {}".format(conf.PATH_APP_INFO))
 APP_INFO = prepare.server_data(source=conf.PATH_APP_INFO)
 
@@ -94,6 +99,9 @@ server.mount(path="/app", app=app, name="shmc")
 # Server application                                                                        -   ENDED   -
 # -------------------------------------------------------------------------------------------------------
 
+# ATTENTION: mounting StaticFiles over the path you use for your server, will mess up your routing-paths,
+# and "details: not found" message will indicate, you're routing is wrong."
+
 # path: sets the string you must type into the browser, when accessing data. You may want to "act" asif it was in a
 # subdirectory, where it isn't, or show the actual subdirectory if necessary.
 # by entering "/", you ensure the browser finds it under: host:0000/... directly
@@ -111,23 +119,32 @@ ROUTER_OBJECTS = {}
 for name, data in router_info.items():  # looping through routing_info as key, value
     if data['use']:
         try:
-            # we import <module>.py files.
-            router_obj = getattr(importlib.import_module(data['module']), "router")  # fastapi.router.APIRouter() inst.
+            # we import the class named: (change here to modify class name definition)
+            class_name = data['module'].split(sep=".")[1].split(sep="_")[0]
+            # we import the class from the <module>:
+            router_class = getattr(importlib.import_module(data['module']), class_name)
+            # we instantiate it:
+            lg.debug("initiating: <router> from {}".format(os.path.basename(__file__)))
+            router_instance = router_class()
+            # we set arguments for the instance:
             if "arguments" in data and data["arguments"]:
                 for param, arg in data["arguments"].items():
-                    setattr(router_obj, param, arg)
-                lg.info("set router: {} - attributes set".format([name], data["prefix"]))
-            ROUTER_OBJECTS[name] = router_obj
+                    setattr(router_instance, param, arg)
+                    lg.info("set router: {} - attributes set".format([name], data["prefix"]))
+            # collect instances under their names:
+            ROUTER_OBJECTS[name] = router_instance
             lg.info("add router: {} as {}.router() - under {}".format([name], data["module"], data["prefix"]))
-            app.include_router(router=router_obj, tags=[name], prefix=data["prefix"])
-            lg.info("incl.rout.: {}".format(router_obj))
+            # add router instances to the <app> sub-server:
+            app.include_router(router=router_instance, tags=[name], prefix=data["prefix"])
+            lg.info("incl.rout.: {}".format(router_instance))
         except (ImportError, AttributeError):
-            msg = "router    : could not find '{}'".format(name)
+            msg = ERR[103][LNG].format(name)
             lg.error(msg)
-        # we add the current router instance to our app: (using tags and prefixes)
+lg.debug("SUMMARY   : --------------------------------------------------------------------------------")
+lg.debug("listing   : all routers included in <app> sub-server:")
+for k, v in ROUTER_OBJECTS.items():
+    lg.debug("      >>> :{:>12}: {}".format(k, v))
 
-# for k, v in server.__dict__.items():
-#     print("{}: {}".format(k, v))
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -

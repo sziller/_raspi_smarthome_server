@@ -15,10 +15,10 @@ class RoomRouter(APIRouter):
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
     
-    def __init__(self, nr: int = 0):
+    def __init__(self, name: str = ""):
         super().__init__()
         lg.debug("initiated : {} - as object".format(self.ccn))
-        self.nr_of_fish = nr
+        self.name = name
     
         self.add_api_route("/v0/actual-state", self.GET_actual_state, methods=["GET"])
 

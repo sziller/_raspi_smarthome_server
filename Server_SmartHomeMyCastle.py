@@ -145,6 +145,7 @@ lg.debug("listing   : all routers included in <app> sub-server:")
 for k, v in ROUTER_OBJECTS.items():
     lg.debug("      >>> :{:>12}: {}".format(k, v))
 
+lg.warning("running   : SERVER from {}".format(__file__))
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -

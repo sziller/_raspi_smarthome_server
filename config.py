@@ -2,17 +2,28 @@
 Including settings for the Project, to be changed on or after install.
 Not including sensitive data
 ================================================================== by Sziller ==="""
+# Development settings:
+isLIVE: bool                = True
 
+# Language settings:
 LANGUAGE_CODE = "EN"  # ["HU", "DE"]
 
-isLIVE = True
-isDIRECT_SETUP = False
-IS_PROCESS_RUNNING = True
+# Path settings:
+PATH_ROOT: str                  = "."
+PATH_ERROR_MSG: str             = "{}/xdata/error.yaml"
+PATH_APP_INFO: str              = "{}/xdata/shmc.yaml"
 
-NECESSARY_DIRECTORIES = ["./images", "./documentation", "./documents", "./log"]
+NECESSARY_DIRECTORIES: list     = ["./images", "./documentation", "./documents", "./log"]
 
-PATH_ERROR_MSG = "./xdata/error.yaml"
-PATH_APP_INFO = "./xdata/shmc.yaml"
+# Log settings:
+LOG_FORMAT: str                 = "%(asctime)s [%(levelname)8s]: %(message)s"
+LOG_LEVEL: str                  = "DEBUG"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
+LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
+LOG_TIMED: bool                 = True  # True: new log file created - stamp in name, False: no stamp, file overwritten
+LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
+
+# DB settings:
+DB_SESSION_NAME: str            = ".SmartHomeMyCastle.db"
 
 '''
 Routers receive the following parameters passed on startup:
@@ -33,6 +44,9 @@ Routers receive the following parameters passed on startup:
         {},
     ...     }
 '''
+# App settings:
+APP_ID: str                     = "shmc"
+APP_IS_PROCESS_RUNNING: bool    = True
 
 # list necessary router data here:
 APP_ROUTER_INFO = {

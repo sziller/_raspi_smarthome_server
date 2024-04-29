@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 # imports for local Base handling   START                                                   -   START   -
 import random as rnd
-from SalletBasePackage import models
+from shmc_basePackage import models
 # imports for local Base handling   ENDED                                                   -   ENDED   -
 
 Base = declarative_base()

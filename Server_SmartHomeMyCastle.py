@@ -21,25 +21,53 @@ FastAPI hints:
 """
 
 import os
+from time_format import TimeFormat as TiFo
+from dotenv import load_dotenv
 import logging
+import inspect
+import config as conf
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from shmc_server import server_preparation as prepare
-import config as conf
+from shmc_server import session_preparation as prepare
 
-# Setting up language                                                                   -   START   -
-LNG = conf.LANGUAGE_CODE
-# Setting up language                                                                   -   ENDED   -
+# READ BASIC SETTINGS                                                                   -   START   -
+# from .env:
+load_dotenv()
+# from config.py:
+# language settings:
+LNG                 = conf.LANGUAGE_CODE
+# path settings:
+root_path = conf.PATH_ROOT
+err_msg_path = conf.PATH_ERROR_MSG.format(root_path)
+app_inf_path = conf.PATH_APP_INFO.format(root_path)
+fsh_dir_info = conf.NECESSARY_DIRECTORIES
+# log settings:
+log_format = conf.LOG_FORMAT
+log_level = getattr(logging, conf.LOG_LEVEL)
+log_ts = "_{}".format(TiFo.timestamp()) if conf.LOG_TIMED else ""
+log_tf = conf.LOG_TIMEFORMAT
+log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
+# app settings:
+app_id              = conf.APP_ID
+
+# DB settings:
+session_name        = conf.DB_SESSION_NAME
 
 # Setting up logger                                                                     -   START   -
-lg = logging.getLogger()
-logging.basicConfig(filename="./log/srvr_shmc.log", level=logging.NOTSET, filemode="w",
-                    format="%(asctime)s [%(levelname)8s]: %(message)s", datefmt='%y%m%d %H:%M:%S')
+lg = logging.getLogger(__name__)
+# Using config.py data - configurate logger:
+logging.basicConfig(filename=log_filename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
+# initial messages
+lg.warning("FILE: {:>86} <<<".format(__file__))
+lg.warning("LOGGER namespace: {:>74} <<<".format(__name__))
+lg.debug("listing   : config settings:")
+for k, v in {param: arg for param, arg in vars(conf).items() if not param.startswith('__')}.items():
+    lg.debug("{:>20}: {}".format(k, v))
 # Setting up logger                                                                     -   ENDED   -
 
-lg.warning("START: {:>85} <<<".format('__name__ == "__main__" namespace: Server_SmartHomeMyCastle.py'))
+# Main App messages:
 lg.warning("          : ======================================")
 lg.warning({True:  "          : =            LIVE SESSION            =",
             False: "          : =            DEV  SESSION            ="}[conf.isLIVE])
@@ -51,52 +79,55 @@ lg.warning("          : ======================================")
 # - Basic setup                                                                      START              -
 # -------------------------------------------------------------------------------------------------------
 
-lg.info("prepare   : Actions taken for {} version.".format({True: "LIVE", False: " DEV"}[conf.isLIVE]))
+# prepare script running:                                                           -   START   -
+lg.info("read data : from: {}".format(err_msg_path))
+ERR  = prepare.read_yaml_data(source=err_msg_path)
+lg.info("read data : from: {}".format(app_inf_path))
+APP_INFO = prepare.read_yaml_data(source=app_inf_path)
+lg.info("setup fsh : {}".format(fsh_dir_info))
+prepare.fsh(fsh_dir_info)
 
-# -------------------------------------------------------------------------------------------------------
-# -                                                                                 ENDED              -
-# -------------------------------------------------------------------------------------------------------
+# prepare script running:                                                           -   ENDED   -
 
-# -------------------------------------------------------------------------------------------------------
-# Server application                                                                        -   START   -
-# -------------------------------------------------------------------------------------------------------
-
-lg.info("read data : from: {}".format(conf.PATH_ERROR_MSG))
-ERR  = prepare.server_data(source=conf.PATH_ERROR_MSG)
-lg.info("read data : from: {}".format(conf.PATH_APP_INFO))
-APP_INFO = prepare.server_data(source=conf.PATH_APP_INFO)
-
+# server data processing:                                                           -   START   -
 lg.info("read conf.: APP_ROUTER_INFO")
 router_info = conf.APP_ROUTER_INFO
-
 lg.info("arrange   : tags_metadata")
 tags_metadata = []
 for name, data in router_info.items():
     if data["use"]:
         data["name"] = name
         tags_metadata.append(data)
-# tags_metadata = [data for name, data in router_info.items() if data["use"]]
+# server data processing:                                                           -   START   -
+
+# -------------------------------------------------------------------------------------------------------
+# - Basic setup                                                                     ENDED              -
+# -------------------------------------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------------------------------------
+# Server application                                                                        -   START   -
+# -------------------------------------------------------------------------------------------------------
 
 lg.info("init.     : server = FastAPI - using configuration and text data")
 
 server = FastAPI()
-
-app = FastAPI(
-    openapi_tags=tags_metadata,
-    title=APP_INFO["proj_name"],
-    version=APP_INFO["version"],
-    summary=APP_INFO["summary"],
-    description=APP_INFO["description"],
-    contact={"name": "SmartHomeMyCastle",
-             "email": "szillerke@gmail.com"},
-    terms_of_service=APP_INFO["terms"],
-    openapi_url=APP_INFO["url"].format(APP_INFO["proj_nick"])
-    )
-
+app = FastAPI(openapi_tags=tags_metadata,
+              title=APP_INFO["proj_name"],
+              version=APP_INFO["version"],
+              summary=APP_INFO["summary"],
+              description=APP_INFO["description"],
+              contact={"name": "SmartHomeMyCastle",
+                       "email": "szillerke@gmail.com"},
+              terms_of_service=APP_INFO["terms"],
+              openapi_url=APP_INFO["url"].format(APP_INFO["proj_nick"]))
 server.mount(path="/app", app=app, name="shmc")
 
 # -------------------------------------------------------------------------------------------------------
 # Server application                                                                        -   ENDED   -
+# -------------------------------------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------------------------------------
+# StaticFiles                                                                               -   START   -
 # -------------------------------------------------------------------------------------------------------
 
 # ATTENTION: mounting StaticFiles over the path you use for your server, will mess up your routing-paths,
@@ -110,6 +141,10 @@ server.mount(path="/app", app=app, name="shmc")
 
 server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
 # http://127.0.0.1:8000
+
+# -------------------------------------------------------------------------------------------------------
+# StaticFiles                                                                               -   START   -
+# -------------------------------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   START   -
@@ -151,11 +186,7 @@ lg.warning("running   : SERVER from {}".format(__file__))
 # - Endpoints                                                                               Endpoints   -   ENDED   -
 # -------------------------------------------------------------------------------------------------------------------
 
-"""
-
-"""
-
 if __name__ == "__main__":
     import uvicorn
     # <server> is the parent scope. You need to run <server> It includes "/" path to serve Static Pages
-    uvicorn.run("Server_SmartHomeMyCastle:server", host="127.0.0.1", port=12340, reload=True, log_level="debug")
+    uvicorn.run("Server_SmartHomeMyCastle:server", host="127.0.0.1", port=12340)  # do not define logger info!

@@ -12,28 +12,28 @@ import logging
 lg = logging.getLogger()
 # Setting up logger                                         logger                      -   ENDED   -
 
-lg.info("START     : {:>85} <<<".format('server_preparation.py'))
+lg.info("START     : {:>85} <<<".format('session_preparation.py'))
 
 
-def fsh():
+def fsh(dir_list: list[str]):
     """=== Function name: fsh =====================================================================================
     Check and if missing create File System Hierarchy for Project
     :return:
     ============================================================================================== by Sziller ==="""
-    print("[  START]: Necessary FileSystemHierarchy check")
-    for dirname in conf.NECESSARY_DIRECTORIES:
+    lg.debug("fsh check : Necessary FileSystemHierarchy check - START")
+    for dirname in dir_list:
         if not os.path.exists(dirname):
-            print("[  START]: New directory created: {}".format(dirname))
+            lg.warning("fsh update: New directory created: {}".format(dirname))
             os.mkdir(dirname)
-    print("[  ENDED]: Necessary FileSystemHierarchy check")
+    lg.debug("fsh check : Necessary FileSystemHierarchy check - ENDED")
 
 
-def server_data(source: str, filename: str = "server_preparation.py"):
+def read_yaml_data(source: str):
     """=== Function name: fsh =====================================================================================
     Check and if missing create File System Hierarchy for Project
     :return:
     ============================================================================================== by Sziller ==="""
-    data = {"path": source, "fn": filename}
+    data = {"path": source, "fn": os.path.basename(__file__)}
     with open(data["path"], 'r') as stream:
         try:
             parsed_yaml = yaml.safe_load(stream)
@@ -41,7 +41,7 @@ def server_data(source: str, filename: str = "server_preparation.py"):
             return parsed_yaml
         except yaml.YAMLError as exc:
             lg.critical("Failed to load server_data from {path} - says {fn}".format(**data))
-            raise(exc)
+            raise exc
             
             
 # def default_users(session_in):

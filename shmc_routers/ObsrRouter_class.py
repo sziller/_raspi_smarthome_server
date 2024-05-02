@@ -9,39 +9,34 @@ lg = logging.getLogger()
 
 
 class ObsrRouter(ShmcBaseRouter):
-    """Class name: ObservatoryRouter ====================================================================================
+    """Class name: RoomRouter ====================================================================================
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
-    
-    def __init__(self, name: str, alias: str, ip: str = "0.0.0.0", port: int = 0, db_fullname=None, db_style=None):
+
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str = "0.0.0.0",
+                 port: int = 0,
+                 db_fullname=None,
+                 db_style=None):
         super().__init__(name, alias, ip, port, db_fullname, db_style)
         lg.debug("initiated : '{}' router as object {}".format(self.name, self.ccn))
-        
-    def reinit(self):
-        """=== Method name: reinit =====================================================================================
-        to generate initial arguments depending on changed parameters
-        ========================================================================================== by Sziller ==="""
-        pass
-    
+        self.name: str = name
+        self.alias: str = alias
+        self.ip: str = ip
+        self.port: int = port
+        self.db_fullname: (str, None) = db_fullname
+        self.db_style: (str, None) = db_style
+
+    # list of default endpoints for all child Router class-objects                              -   START   -
+
+    # list of default endpoints for all child Router class-objects                              -   ENDED   -
+
     # ---------------------------------------------------------------------------------------------------------------
     # - Endpoints                                                                           Endpoints   -   START   -
     # ---------------------------------------------------------------------------------------------------------------
 
-    async def GET_actual_state(self):
-        """=== Function name: GET_actual_state =============================================================================
-        description...
-        ============================================================================================== by Sziller ==="""
-        cmn = inspect.currentframe().f_code.co_name  # current method name
-        timestamp = time.time()
-        # data_dict = {"command": "GET_actual_state",
-        #              "user_id": "sziller_dev",
-        #              "email": "szillerke@gmail.com",
-        #              "signature": b'',
-        #              "payload": {},
-        #              "timestamp": timestamp}
-        # data = msg_obsr.SrvrToAquaRequest.init_by_dict(**data_dict)
-        # response = msg.ExternalResponseMsg(payload=data.payload,
-        #                                    message="OK - sais {}".format(cmn),
-        #                                    timestamp=timestamp)
-        # return response.as_dict()
-        return True
+    # ---------------------------------------------------------------------------------------------------------------
+    # - Endpoints                                                                           Endpoints   -   ENDED   -
+    # ---------------------------------------------------------------------------------------------------------------

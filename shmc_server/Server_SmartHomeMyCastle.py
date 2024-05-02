@@ -35,6 +35,8 @@ from shmc_server import session_preparation as prepare
 # READ BASIC SETTINGS                                                                   -   START   -
 # from .env:
 load_dotenv()
+# DB settings:
+session_name        = os.getenv("DB_SESSION_NAME")
 # from config.py:
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
@@ -51,9 +53,6 @@ log_tf = conf.LOG_TIMEFORMAT
 log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
 # app settings:
 app_id              = conf.APP_ID
-
-# DB settings:
-session_name        = conf.DB_SESSION_NAME
 
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger(__name__)
@@ -160,12 +159,20 @@ for name, data in router_info.items():  # looping through routing_info as key, v
             router_class = getattr(importlib.import_module(data['module']), class_name)
             # we instantiate it:
             lg.debug("initiating: <router> from {}".format(os.path.basename(__file__)))
-            router_instance = router_class()
+            alias = data["prefix"][1:]
+            sufix = ""
+            if "args" in data and data["args"]["ip"] != "localhost":
+                sufix = "_" + alias.upper()
+            router_instance = router_class(name=name,
+                                           alias=alias,
+                                           db_fullname=os.getenv("DB_FULLNAME{}".format(sufix)),
+                                           db_style=os.getenv("DB_STYLE{}".format(sufix)))
             # we set arguments for the instance:
-            if "arguments" in data and data["arguments"]:
-                for param, arg in data["arguments"].items():
+            if "args" in data and data["args"]:
+                for param, arg in data["args"].items():
                     setattr(router_instance, param, arg)
-                    lg.info("set router: {} - attributes set".format([name], data["prefix"]))
+                    lg.info("set router: '{}' - set: {} : {}".format(name, param, arg))
+                router_instance.reinit()
             # collect instances under their names:
             ROUTER_OBJECTS[name] = router_instance
             lg.info("add router: {} as {}.router() - under {}".format([name], data["module"], data["prefix"]))
@@ -185,8 +192,3 @@ lg.warning("running   : SERVER from {}".format(__file__))
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -
 # -------------------------------------------------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    import uvicorn
-    # <server> is the parent scope. You need to run <server> It includes "/" path to serve Static Pages
-    uvicorn.run("Server_SmartHomeMyCastle:server", host="127.0.0.1", port=12340)  # do not define logger info!

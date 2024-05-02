@@ -2,6 +2,10 @@
 Including settings for the Project, to be changed on or after install.
 Not including sensitive data
 ================================================================== by Sziller ==="""
+import os
+
+HOME = os.path.expanduser("~")  # experimental row to be developed later
+
 # Development settings:
 isLIVE: bool                = True
 
@@ -19,16 +23,13 @@ NECESSARY_DIRECTORIES: list     = ["./images", "./documentation", "./documents",
 LOG_FORMAT: str                 = "%(asctime)s [%(levelname)8s]: %(message)s"
 LOG_LEVEL: str                  = "DEBUG"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
 LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
-LOG_TIMED: bool                 = True  # True: new log file created - stamp in name, False: no stamp, file overwritten
+LOG_TIMED: bool                 = False  # True: new log file created - stamp in name, False: no stamp, file overwritten
 LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
-
-# DB settings:
-DB_SESSION_NAME: str            = ".SmartHomeMyCastle.db"
 
 '''
 Routers receive the following parameters passed on startup:
 {
-    <name>:                               # name of the router - key
+    <name>:                                    # name of the router - key
         {   "use": bool,                       # if current router instance is used
             "prefix": str,                     # path prefix for current router
             "ip": str[xx.xx.xx.xx],            # ip address
@@ -44,6 +45,7 @@ Routers receive the following parameters passed on startup:
         {},
     ...     }
 '''
+
 # App settings:
 APP_ID: str                     = "shmc"
 APP_IS_PROCESS_RUNNING: bool    = True
@@ -53,9 +55,9 @@ APP_ROUTER_INFO = {
     'wallet': {
         "use": False,
         "prefix": "/wllt",
-        "ip": '10.xx.xx.xx',
+        "args": {"ip": '10.3.77.wlt',
+                      "port": 8041},
         "zmq_port": 0,
-        "arguments": {},
         "module": "shmc_routers.WalletRouter_class",
         "description": "Information regarding SmartHome setup's BiTCoin wallet",
         "externalDocs": {
@@ -64,9 +66,9 @@ APP_ROUTER_INFO = {
     "aquaponics": {
         "use": True,
         "prefix": "/aqua",
-        "ip": '10.xx.xx.xx',
         "zmq_port": 52008,
-        "arguments": {"nr_of_fish": 10000},
+        "args": {"ip": '10.3.77.aqu',
+                      "port": 8042},
         "module": "shmc_routers.AquaRouter_class",
         "description": "Information regarding SmartHome setup's Aquaponic system",
         "externalDocs": {
@@ -75,7 +77,8 @@ APP_ROUTER_INFO = {
     "observatory": {
         "use": True,
         "prefix": "/obsr",
-        "ip": '10.xx.xx.xx',
+        "args": {"ip": '10.3.77.obs',
+                      "port": 8043},
         "zmq_port": 52902,
         "module": "shmc_routers.ObsrRouter_class",
         "description": "Information regarding SmartHome setup's Observatory hub",
@@ -85,7 +88,8 @@ APP_ROUTER_INFO = {
     "livingroom": {
         "use": True,
         "prefix": "/r_lv",
-        "ip": '10.xx.xx.xx',
+        "args": {"ip": '10.3.77.lvr',
+                 "port": 8043},
         "zmq_port": 52903,
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
@@ -95,7 +99,8 @@ APP_ROUTER_INFO = {
     "kidsroom": {
         "use": True,
         "prefix": "/r_ks",
-        "ip": '10.xx.xx.xx',
+        "args": {"ip": '10.3.77.kid',
+                      "port": 8041},
         "zmq_port": 52903,
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
@@ -105,7 +110,8 @@ APP_ROUTER_INFO = {
     "bathroom": {
         "use": True,
         "prefix": "/r_ba",
-        "ip": '10.xx.xx.xx',
+        "args": {"ip": '10.3.77.bth',
+                      "port": 8043},
         "zmq_port": 52903,
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
@@ -113,15 +119,6 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}}
     }
-
-# DATABASE related parameters:                                                          DB related - START
-DATABASE_NAME           = "./.DB_SmartHomeMyCastle.db"
-DATABASE_STYLE          = "SQLite"
-DB_ID_TABLE_IPS         = "restrictedips"
-DB_ID_TABLE_USERS       = "users"
-DB_ID_TABLE_DOCUMENTS   = "documents"
-DB_ID_TABLE_SCHEDULED   = "scheduledtasks"
-# DATABASE related parameters:                                                          DB related - ENDED
 
 DEFAULT_USER_LIST       = [
     # 32char (128bit) hex-string representation of the UUID: double sha256 of the first email-address-string

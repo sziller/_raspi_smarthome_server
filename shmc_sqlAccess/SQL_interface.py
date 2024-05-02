@@ -20,10 +20,10 @@ Base = declarative_base()
 # SESSION creation START                                                                    -   START   -
 
 
-def createSession(db_path: str, tables: list or None = None, style: str = "SQLite", base=Base):
+def createSession(db_fullname: str, tables: list or None = None, style: str = "SQLite", base=Base):
     """=== Function name: createSession ================================================================================
     Setting up a session to handle SQL DB operations.
-    :param db_path: str - name of the DB (or the direct path to it - if PostgreSQL)
+    :param db_fullname: str - name of the DB (or the direct path to it - if PostgreSQL)
     :param tables: list - of __table__ parameters of each table-representing-class to be created on session init
     :param style: str - whether "SQLite" or "PostgreSQL" style DB is to be accessed
     :param base: Base object to be used in session creation
@@ -32,9 +32,9 @@ def createSession(db_path: str, tables: list or None = None, style: str = "SQLit
     # Current Function Name
     cfn = inspect.currentframe().f_code.co_name  # current class name
     if style == "SQLite":
-        engine = create_engine('sqlite:///%s' % db_path, echo=False, poolclass=NullPool)
+        engine = create_engine('sqlite:///%s' % db_fullname, echo=False, poolclass=NullPool)
     elif style == "PostGreSQL":
-        engine = create_engine(db_path, echo=False, poolclass=NullPool)
+        engine = create_engine(db_fullname, echo=False, poolclass=NullPool)
     else:
         lg.critical("not found : '{}' is not a valid <style> value! - says {}()".format(style, cfn))
         raise Exception("no valid dialect defined")

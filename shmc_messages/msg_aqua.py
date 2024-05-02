@@ -9,7 +9,7 @@ class SrvrToAquaRequest(InternalMsg):
     """=== Message name: SrvrToAquaRequest =============================================================================
     ============================================================================================== by Sziller ==="""
     def __init__(self, command: str, email: str, signature: bytes, payload: dict, timestamp: float, **kwargs):
-        super(SrvrToAquaRequest, self).__init__(payload=payload, command=command, timestamp=timestamp, **kwargs)
+        super(SrvrToAquaRequest, self).__init__(payload=payload, command=command, timestamp=timestamp, signature=signature, email=email, **kwargs)
         self.command: str               = command
         self.email: str                 = email
         self.signature: bytes or None   = signature

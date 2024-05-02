@@ -1,7 +1,7 @@
 import time
 import logging
 import inspect
-from fastapi import APIRouter
+from shmc_routers._ShmcBaseRouter import ShmcBaseRouter
 from shmc_messages import msg
 from shmc_messages import msg_aqua
 
@@ -12,15 +12,14 @@ lg = logging.getLogger()
 # Setting up logger                                                                     -   ENDED   -
 
 
-class AquaRouter(APIRouter):
+class AquaRouter(ShmcBaseRouter):
     """Class name: AquaponicsRouter ====================================================================================
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
     
-    def __init__(self, nr: int = 0):
-        super().__init__()
-        lg.debug("initiated : {} - as object".format(self.ccn))
-        self.nr_of_fish = nr
+    def __init__(self, name, alias, ip: str = "0.0.0.0", port: int = 0, db_fullname=None, db_style=None):
+        super().__init__(name, alias, ip, port, db_fullname, db_style)
+        lg.debug("initiated : '{}' router as object {}".format(self.name, self.ccn))
         self.IS_PROCESS_RUNNING = True
         
         self.add_api_route("/v0/system-main-switch-state/",     self.GET_system_main_switch_state,  methods=["GET"])
@@ -32,7 +31,7 @@ class AquaRouter(APIRouter):
         self.add_api_route("/v0/timed-happening",               self.PUT_timed_happening,           methods=["PUT"])
         self.add_api_route("/v0/instant-event",                 self.POST_instant_event,            methods=["POST"])
         self.add_api_route("/v0/timed-happening",               self.DELETE_timed_happening,        methods=["DELETE"])
-
+    
     # ---------------------------------------------------------------------------------------------------------------
     # - Endpoints                                                                           Endpoints   -   START   -
     # ---------------------------------------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 import inspect
 
 
+
 class UtxoId:
     divider: str = "_"
     ccn = inspect.currentframe().f_code.co_name

@@ -28,17 +28,26 @@ class MsgObject:
 
 
 class InternalMsg(MsgObject):
-    def __init__(self, payload: dict, command: str, timestamp: float or None = None, **kwargs):
-        super(InternalMsg, self).__init__(payload=payload, timestamp=timestamp, **kwargs)
-        self.command: str       = command
-        self.payload: dict      = payload
-        self.timestamp: float   = timestamp
+    def __init__(self,
+                 payload: dict,
+                 command: str, 
+                 email: str = "", 
+                 signature: (bytes, None) = None, 
+                 timestamp: float or None = None, **kwargs):
+        super(InternalMsg, self).__init__(payload=payload, timestamp=timestamp, email=email, signature=signature, **kwargs)
+        self.command: str               = command
+        self.email: str                 = email
+        self.signature: bytes or None   = signature
+        self.payload: dict              = payload
+        self.timestamp: float           = timestamp
 
 
 class ExternalResponseMsg(MsgObject):
-    def __init__(self, payload: dict, message: str = "", timestamp: float or None = None, **kwargs):
+    def __init__(self,
+                 payload: (None, bool, int, dict, list),
+                 message: str = "", timestamp: float or None = None, **kwargs):
         super(ExternalResponseMsg, self).__init__(payload=payload, timestamp=timestamp, **kwargs)
         self.message: str       = message
-        self.payload: dict      = payload
+        self.payload            = payload
         self.timestamp: float   = timestamp
         

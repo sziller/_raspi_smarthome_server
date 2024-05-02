@@ -4,7 +4,7 @@ to be extended...
 
 import os
 import yaml
-from shmc_sqlPackage import SQL_interface as SQLi
+from shmc_sqlAccess import SQL_interface as SQLi
 import config as conf
 import logging
 

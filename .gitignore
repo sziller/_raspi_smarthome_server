@@ -7,6 +7,7 @@ data/
 data/*.json
 data/*.yaml
 documentation/devkeys.txt
+scripts_prv/
 
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.

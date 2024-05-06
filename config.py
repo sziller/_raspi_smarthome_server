@@ -16,12 +16,14 @@ LANGUAGE_CODE = "EN"  # ["HU", "DE"]
 PATH_ROOT: str                  = "."
 PATH_ERROR_MSG: str             = "{}/xdata/error.yaml"
 PATH_APP_INFO: str              = "{}/xdata/shmc.yaml"
+PATH_STATIC_FROM: str           = "public"
+PATH_STATIC_TO: str             = "/"
 
 NECESSARY_DIRECTORIES: list     = ["./images", "./documentation", "./documents", "./log"]
 
 # Log settings:
 LOG_FORMAT: str                 = "%(asctime)s [%(levelname)8s]: %(message)s"
-LOG_LEVEL: str                  = "DEBUG"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
+LOG_LEVEL: str                  = "WARNING"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
 LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
 LOG_TIMED: bool                 = False  # True: new log file created - stamp in name, False: no stamp, file overwritten
 LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
@@ -56,7 +58,7 @@ APP_ROUTER_INFO = {
         "use": False,
         "prefix": "/wllt",
         "args": {"ip": '10.3.77.wlt',
-                      "port": 8041},
+                 "port": 8041},
         "zmq_port": 0,
         "module": "shmc_routers.WalletRouter_class",
         "description": "Information regarding SmartHome setup's BiTCoin wallet",
@@ -66,33 +68,22 @@ APP_ROUTER_INFO = {
     "aquaponics": {
         "use": True,
         "prefix": "/aqua",
-        "zmq_port": 52008,
         "args": {"ip": '10.3.77.aqu',
-                      "port": 8042},
+                 "port": 8042},
+        "zmq_port": 52008,
         "module": "shmc_routers.AquaRouter_class",
         "description": "Information regarding SmartHome setup's Aquaponic system",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "observatory": {
-        "use": True,
+        "use": False,
         "prefix": "/obsr",
         "args": {"ip": '10.3.77.obs',
-                      "port": 8043},
+                 "port": 8043},
         "zmq_port": 52902,
         "module": "shmc_routers.ObsrRouter_class",
         "description": "Information regarding SmartHome setup's Observatory hub",
-        "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
-    "livingroom": {
-        "use": True,
-        "prefix": "/r_lv",
-        "args": {"ip": '10.3.77.lvr',
-                 "port": 8043},
-        "zmq_port": 52903,
-        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
-        "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
@@ -100,7 +91,18 @@ APP_ROUTER_INFO = {
         "use": True,
         "prefix": "/r_ks",
         "args": {"ip": '10.3.77.kid',
-                      "port": 8041},
+                 "port": 8050},
+        "zmq_port": 52903,
+        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
+        "description": "Information regarding SmartHome setup's Room general manager",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
+    "livingroom": {
+        "use": False,
+        "prefix": "/r_lv",
+        "args": {"ip": '10.3.77.lvr',
+                 "port": 8051},
         "zmq_port": 52903,
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
@@ -108,10 +110,10 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "bathroom": {
-        "use": True,
+        "use": False,
         "prefix": "/r_ba",
         "args": {"ip": '10.3.77.bth',
-                      "port": 8043},
+                 "port": 8052},
         "zmq_port": 52903,
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",

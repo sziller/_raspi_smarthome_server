@@ -24,7 +24,6 @@ import os
 from time_format import TimeFormat as TiFo
 from dotenv import load_dotenv
 import logging
-import inspect
 import config as conf
 import importlib
 from fastapi import FastAPI
@@ -35,16 +34,20 @@ from shmc_server import session_preparation as prepare
 # READ BASIC SETTINGS                                                                   -   START   -
 # from .env:
 load_dotenv()
+# Mount settings:
+mount_script = os.getenv("PATH_MOUNTSHARES")
 # DB settings:
 session_name        = os.getenv("DB_SESSION_NAME")
 # from config.py:
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
 # path settings:
-root_path = conf.PATH_ROOT
-err_msg_path = conf.PATH_ERROR_MSG.format(root_path)
-app_inf_path = conf.PATH_APP_INFO.format(root_path)
-fsh_dir_info = conf.NECESSARY_DIRECTORIES
+fsh_dir_info        = conf.NECESSARY_DIRECTORIES
+root_path           = conf.PATH_ROOT
+err_msg_path        = conf.PATH_ERROR_MSG.format(root_path)
+app_inf_path        = conf.PATH_APP_INFO.format(root_path)
+mount_from          = conf.PATH_STATIC_FROM
+mount_to            = conf.PATH_STATIC_TO
 # log settings:
 log_format = conf.LOG_FORMAT
 log_level = getattr(logging, conf.LOG_LEVEL)
@@ -67,13 +70,20 @@ for k, v in {param: arg for param, arg in vars(conf).items() if not param.starts
 # Setting up logger                                                                     -   ENDED   -
 
 # Main App messages:
-lg.warning("          : ======================================")
-lg.warning({True:  "          : =            LIVE SESSION            =",
-            False: "          : =            DEV  SESSION            ="}[conf.isLIVE])
-lg.warning("          : ={:^36}=".format(__name__))
-lg.info("          : =         user languange: {}         =".format(LNG))
-lg.warning("          : ======================================")
+lg.warning("          : ============================================")
+lg.warning({True:  "          : =               LIVE SESSION               =",
+            False: "          : =               DEV  SESSION               ="}[conf.isLIVE])
+lg.warning("          : ={:^42}=".format(__name__))
+lg.info("          : =            user languange: {}            =".format(LNG))
+lg.warning("          : ============================================")
 
+lg.warning("mount-os  : Local DB-s to server filesystem")
+
+# Run the bash script
+output = os.popen('bash {}'.format(mount_script)).read()
+print("!!!!!!!!!!!!!!!!!!")
+lg.warning(output)
+print("!!!!!!!!!!!!!!!!!!")
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
 # -------------------------------------------------------------------------------------------------------
@@ -139,7 +149,7 @@ server.mount(path="/app", app=app, name="shmc")
 # if you call your basic page 'index.html' it can be accessed directly, without entering the actual filename
 
 server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
-# http://127.0.0.1:8000
+lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))
 
 # -------------------------------------------------------------------------------------------------------
 # StaticFiles                                                                               -   START   -
@@ -158,11 +168,12 @@ for name, data in router_info.items():  # looping through routing_info as key, v
             # we import the class from the <module>:
             router_class = getattr(importlib.import_module(data['module']), class_name)
             # we instantiate it:
-            lg.debug("initiating: <router> from {}".format(os.path.basename(__file__)))
             alias = data["prefix"][1:]
             sufix = ""
             if "args" in data and data["args"]["ip"] != "localhost":
                 sufix = "_" + alias.upper()
+            lg.debug("fetch args: 'alias': {}, 'sufix': {}".format(alias, sufix))
+            lg.debug("initiating: <router> from {}".format(os.path.basename(__file__)))
             router_instance = router_class(name=name,
                                            alias=alias,
                                            db_fullname=os.getenv("DB_FULLNAME{}".format(sufix)),
@@ -171,7 +182,7 @@ for name, data in router_info.items():  # looping through routing_info as key, v
             if "args" in data and data["args"]:
                 for param, arg in data["args"].items():
                     setattr(router_instance, param, arg)
-                    lg.info("set router: '{}' - set: {} : {}".format(name, param, arg))
+                    lg.debug("set router: '{}' - set: {} : {}".format(name, param, arg))
                 router_instance.reinit()
             # collect instances under their names:
             ROUTER_OBJECTS[name] = router_instance

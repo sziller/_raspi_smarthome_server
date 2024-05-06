@@ -13,6 +13,7 @@ import time
 import random as rnd
 from cryptography import HashFunctions as HaFu
 from shmc_basePackage import models
+
 # imports for local Base handling   ENDED                                                   -   ENDED   -
 
 Base = declarative_base()
@@ -78,6 +79,7 @@ class Measurement(Base):
                                                   self.mea_val,
                                                   self.mea_dim,
                                                   self.timestamp)
+
 
 class Utxo(Base):
     """=== Classname: Utxo(Base) =======================================================================================
@@ -192,13 +194,13 @@ class Node(Base):
     Class represents a Node Database Entry who's data is to be stored and processed by the DB
     ============================================================================================== by Sziller ==="""
     __tablename__ = "nodes"
-    alias: str                      = Column("alias", String, primary_key=True)
-    owner: str                      = Column("owner", String)
-    ip: str                         = Column("ip", String)
-    port: int                       = Column("port", Integer)
-    features: dict                  = Column("features", JSON)
-    desc: str                       = Column("desc", String)
-    is_rpc: bool                    = Column("is_rpc", Integer)
+    alias: str = Column("alias", String, primary_key=True)
+    owner: str = Column("owner", String)
+    ip: str = Column("ip", String)
+    port: int = Column("port", Integer)
+    features: dict = Column("features", JSON)
+    desc: str = Column("desc", String)
+    is_rpc: bool = Column("is_rpc", Integer)
 
     def __init__(self,
                  alias: str,
@@ -208,13 +210,13 @@ class Node(Base):
                  features: dict,
                  desc: str,
                  is_rpc: int):
-        self.alias: str     = alias
-        self.owner: str     = owner
-        self.ip: str        = ip
-        self.port: int      = port
+        self.alias: str = alias
+        self.owner: str = owner
+        self.ip: str = ip
+        self.port: int = port
         self.features: dict = features
-        self.desc: str      = desc
-        self.is_rpc: int    = is_rpc
+        self.desc: str = desc
+        self.is_rpc: int = is_rpc
 
     def return_as_dict(self):
         """=== Method name: return_as_dict =============================================================================
@@ -231,5 +233,5 @@ class Node(Base):
         @return: an instance of the class
         ========================================================================================== by Sziller ==="""
         return cls(**d_in)
-    
+
 # CLASS definitions ENDED                                                                   -   ENDED   -

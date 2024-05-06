@@ -2,7 +2,7 @@ import time
 import inspect
 from fastapi import APIRouter
 from shmc_messages import msg
-from shmc_sqlBases import SQL_basesRoom as sqlBroom
+from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
 from shmc_sqlAccess import SQL_interface as sqli
 from sqlalchemy.orm import sessionmaker
 
@@ -87,7 +87,7 @@ class ShmcBaseRouter(APIRouter):
         # request processing ENDED                                                                  -   ENDED   -
 
         # action START                                                                              -   START   -
-        payload = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlBroom.Measurement, session=self.session)
+        payload = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlMeasurement, session=self.session)
         # action ENDED                                                                              -   ENDED   -
 
         # responding START                                                                          -   START   -

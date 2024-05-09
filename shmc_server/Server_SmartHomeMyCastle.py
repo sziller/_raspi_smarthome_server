@@ -181,11 +181,7 @@ for name, data in router_info.items():  # looping through routing_info as key, v
                 for param, arg in data["args"].items():
                     setattr(router_instance, param, arg)
                     lg.debug("set router: '{}' - set: {} : {}".format(name, param, arg))
-                try:
-                    lg.debug("router set: '{}'".format(router_instance))
-                    router_instance.reinit()
-                except:
-                    lg.error("failed    : '{}'".format(router_instance))
+                router_instance.reinit()
                     
             # collect instances under their names:
             ROUTER_OBJECTS[name] = router_instance

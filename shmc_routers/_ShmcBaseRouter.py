@@ -1,10 +1,15 @@
 import time
+import logging
 import inspect
 from fastapi import APIRouter
 from shmc_messages import msg
 from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
 from shmc_sqlAccess import SQL_interface as sqli
 from sqlalchemy.orm import sessionmaker
+
+# Setting up logger                                                                     -   START   -
+lg = logging.getLogger(__name__)
+# Setting up logger                                                                     -   ENDED   -
 
 
 class ShmcBaseRouter(APIRouter):
@@ -38,7 +43,13 @@ class ShmcBaseRouter(APIRouter):
         """=== Method name: reinit =====================================================================================
         to generate initial arguments depending on changed parameters
         ========================================================================================== by Sziller ==="""
-        self.session = sqli.createSession(db_fullname=self.db_fullname, tables=None, style=self.db_style)
+        try:
+            
+            self.session = sqli.createSession(db_fullname=self.db_fullname, tables=None, style=self.db_style)
+            lg.info("session   : created - {}".format(self.session))
+        except:
+            self.session = None
+            lg.error("session   : failed to create! - says {}".format(self.ccn))
 
     async def GET_basic_config(self):
         """=== Endpoint-method name: GET_basic_config ===  

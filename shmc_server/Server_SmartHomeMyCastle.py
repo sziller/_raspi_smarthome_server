@@ -80,8 +80,8 @@ lg.warning("          : ============================================")
 lg.warning("mount-os  : Local DB-s to server filesystem")
 
 # Run the bash script
-output = os.popen('bash {}'.format(mount_script)).read()
-lg.warning(output)
+# output = os.popen('bash {}'.format(mount_script)).read()
+# lg.warning(output)
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
 # -------------------------------------------------------------------------------------------------------

@@ -77,7 +77,7 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "observatory": {
-        "use": False,
+        "use": True,
         "prefix": "/obsr",
         "args": {"ip": '10.3.77.obs',
                  "port": 8043},
@@ -99,7 +99,7 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "livingroom": {
-        "use": False,
+        "use": True,
         "prefix": "/r_lv",
         "args": {"ip": '10.3.77.lvr',
                  "port": 8051},
@@ -110,7 +110,7 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "bathroom": {
-        "use": False,
+        "use": True,
         "prefix": "/r_ba",
         "args": {"ip": '10.3.77.bth',
                  "port": 8052},

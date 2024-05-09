@@ -5,7 +5,6 @@ to be extended...
 import os
 import yaml
 from shmc_sqlAccess import SQL_interface as SQLi
-import config as conf
 import logging
 
 # Setting up logger                                         logger                      -   START   -

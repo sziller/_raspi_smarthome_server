@@ -1,0 +1,11 @@
+[[shmc:access]]
+
+== Node access
+If you want to access any of the Nodes, use ssh.
+Once set up, you ente:
+
+ ssh <username>@<ip-address>
+
+Then you enter the *password* realted to <username>. +
+In the SHMC development we stick to username = `pi` as this is the default Raspberry username.
+

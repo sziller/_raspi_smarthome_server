@@ -211,26 +211,8 @@ class AquaRouter(ShmcBaseRouter):
                                            timestamp=timestamp)
         return response.as_dict()
 
-'''
-@router.post("/send-message")
-async def send_message(message: str):
-    print("-----")
-    print(os.getenv("ZMQ_PORT"))
-    print("-----")
-    context = zmq.Context()
-    socket = context.socket(zmq.REQ)
-    print("-----")
-    print(os.getenv("ZMQ_PORT"))
-    print("-----")
-    socket.connect("tcp://localhost:{}".format(os.getenv("ZMQ_PORT")))
-    socket.send_string(message)
-    response = socket.recv_string()
-
-    socket.close()  # Close the socket after use
-    context.term()  # Terminate the ZeroMQ context
-    return {"message": response}
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Endpoints                                                                               Endpoints   -   ENDED   -
 # -------------------------------------------------------------------------------------------------------------------
-'''
+

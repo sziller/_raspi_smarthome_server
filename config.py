@@ -23,7 +23,7 @@ NECESSARY_DIRECTORIES: list     = ["./images", "./documentation", "./documents",
 
 # Log settings:
 LOG_FORMAT: str                 = "%(asctime)s [%(levelname)8s]: %(message)s"
-LOG_LEVEL: str                  = "WARNING"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
+LOG_LEVEL: str                  = "DEBUG"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
 LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
 LOG_TIMED: bool                 = False  # True: new log file created - stamp in name, False: no stamp, file overwritten
 LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
@@ -34,10 +34,12 @@ Routers receive the following parameters passed on startup:
     <name>:                                    # name of the router - key
         {   "use": bool,                       # if current router instance is used
             "prefix": str,                     # path prefix for current router
-            "ip": str[xx.xx.xx.xx],            # ip address
-            "zmq_port": int,                   # if socket comm. allowed to engine, use this port
-            "arguments": {},                   # dict of {param: arg} pairs for current router instance
-            "module": str ["xxx.xxx"],         # module out of which "router" obj is instantiated
+            "arguments": {
+                        "ip": str[xx.xx.xx.xx],     # ip address
+                        "port": int,                # Engine's DB access port
+                        "zmq_port": int,            # if socket comm. allowed to engine, use this port
+            },                                  # dict of {param: arg} pairs for current router instance
+            "module": str ["xxx.xxx"],          # module out of which "router" obj is instantiated
             "description": "Information regarding router",
                 "externalDocs": {
                     "description": "find additional info under: sziller.eu",
@@ -58,8 +60,8 @@ APP_ROUTER_INFO = {
         "use": False,
         "prefix": "/wllt",
         "args": {"ip": '10.3.77.wlt',
-                 "port": 8041},
-        "zmq_port": 0,
+                 "port": 8041,
+                 "zmq_port": 0},
         "module": "shmc_routers.WalletRouter_class",
         "description": "Information regarding SmartHome setup's BiTCoin wallet",
         "externalDocs": {
@@ -69,8 +71,8 @@ APP_ROUTER_INFO = {
         "use": True,
         "prefix": "/aqua",
         "args": {"ip": '10.3.77.aqu',
-                 "port": 8042},
-        "zmq_port": 52008,
+                 "port": 8042,
+                 "zmq_port": 52008},
         "module": "shmc_routers.AquaRouter_class",
         "description": "Information regarding SmartHome setup's Aquaponic system",
         "externalDocs": {
@@ -79,9 +81,9 @@ APP_ROUTER_INFO = {
     "observatory": {
         "use": True,
         "prefix": "/obsr",
-        "args": {"ip": '10.3.77.obs',
-                 "port": 8043},
-        "zmq_port": 52902,
+        "args": {"ip": '10.3.77.36',
+                 "port": 8043,
+                 "zmq_port": 52902},
         "module": "shmc_routers.ObsrRouter_class",
         "description": "Information regarding SmartHome setup's Observatory hub",
         "externalDocs": {
@@ -90,36 +92,36 @@ APP_ROUTER_INFO = {
     "kidsroom": {
         "use": True,
         "prefix": "/r_ks",
-        "args": {"ip": '10.3.77.kid',
-                 "port": 8050},
-        "zmq_port": 52903,
+        "args": {"ip": '10.3.77.42',
+                 "port": 8050,
+                 "zmq_port": 52903},
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
-    "livingroom": {
+    "floroom": {
         "use": True,
         "prefix": "/r_lv",
-        "args": {"ip": '10.3.77.lvr',
-                 "port": 8051},
-        "zmq_port": 52903,
+        "args": {"ip": '10.3.77.36',
+                 "port": 8051,
+                 "zmq_port": 52903},
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "Information regarding SmartHome setup's Room general manager",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
-    "bathroom": {
-        "use": True,
-        "prefix": "/r_ba",
-        "args": {"ip": '10.3.77.bth',
-                 "port": 8052},
-        "zmq_port": 52903,
-        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
-        "description": "Information regarding SmartHome setup's Room general manager",
-        "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}}
+    # "bathroom": {
+    #     "use": True,
+    #     "prefix": "/r_ba",
+    #     "args": {"ip": '10.3.77.bth',
+    #              "port": 8052,
+    #              "zmq_port": 52903},
+    #     "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
+    #     "description": "Information regarding SmartHome setup's Room general manager",
+    #     "externalDocs": {
+    #         "description": "find additional info under: sziller.eu",
+    #         "url": "http://sziller.eu"}}
     }
 
 DEFAULT_USER_LIST       = [

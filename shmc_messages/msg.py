@@ -6,11 +6,14 @@ class MsgObject:
     """=== Class name: MsgObject ====================================================================================
     Two way communication Object between Server and Engine, Server and Subservers
     ============================================================================================== by Sziller ==="""
-    def __init__(self, payload: dict, timestamp: float or None = None, **kwargs):
+    def __init__(self,
+                 payload: (dict, None),
+                 timestamp: float or None = None,
+                 **kwargs):
         # every communication message Object must have a timestamp defined on init:
         # this is the unique ID of the object on code level
-        self.payload: dict              = payload
-        self.timestamp: float or None   = timestamp
+        self.payload: (dict, None)          = payload
+        self.timestamp: (float, None)       = timestamp
 
     def as_dict(self) -> dict:
         """=== Method name: as_dict ====================================================================================

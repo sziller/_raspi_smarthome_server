@@ -15,4 +15,3 @@ class SrvrToObsrRequest(InternalMsg):
         self.signature: bytes or None   = signature
         self.payload: dict              = payload
         self.timestamp: str             = TiFo.format_timestamp_raw(timestamp_raw=timestamp)
-

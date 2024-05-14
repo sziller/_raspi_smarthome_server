@@ -16,4 +16,7 @@ pytest              # needed - to run tests
 requests            # needed - to format HTTP requests
 sqlalchemy          # needed - for DB handling
 psycopg2            # needed - for DB handling
+passlib             # needed for the auth server
+python-jose         # needed for authentication
+python-multipart
 # python-multipart    # needed - probably(!) a fastapi dependency (Depends)?

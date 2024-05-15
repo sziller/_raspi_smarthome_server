@@ -60,7 +60,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {} - {}".format(cmn, self.nr_of_fish),
+                                           message="OK - says {} - {}".format(cmn, self.nr_of_fish),
                                            timestamp=timestamp)
         return response.as_dict()
 
@@ -112,7 +112,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {}".format(cmn),
+                                           message="OK - says {}".format(cmn),
                                            timestamp=timestamp)
         return response.as_dict()
 
@@ -134,7 +134,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {}".format(cmn),
+                                           message="OK - says {}".format(cmn),
                                            timestamp=timestamp)
         return response.as_dict()
 
@@ -161,7 +161,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {}".format(cmn),
+                                           message="OK - says {}".format(cmn),
                                            timestamp=timestamp)
         return response.as_dict()
 
@@ -182,7 +182,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {}".format(cmn),
+                                           message="OK - says {}".format(cmn),
                                            timestamp=timestamp)
         return response.as_dict()
 
@@ -207,7 +207,7 @@ class AquaRouter(ShmcBaseRouter):
                      "timestamp": timestamp}
         data = msg_aqua.SrvrToAquaRequest.init_by_dict(**data_dict)
         response = msg.ExternalResponseMsg(payload=data.payload,
-                                           message="OK - sais {}".format(cmn),
+                                           message="OK - says {}".format(cmn),
                                            timestamp=timestamp)
         return response.as_dict()
 

@@ -1,6 +1,8 @@
 """ Defining the basic message object to communicate inside SmartHome system
 by Sziller"""
 
+from pydantic import BaseModel
+from typing import Any
 
 class MsgObject:
     """=== Class name: MsgObject ====================================================================================
@@ -54,3 +56,19 @@ class ExternalResponseMsg(MsgObject):
         self.payload            = payload
         self.timestamp: float   = timestamp
         
+
+class MsgModel(BaseModel):
+    """=== Model name: MsgModel(BaseModel) ===============================  
+    Model representing basic messaging inside Backend and towards Frontend  
+    ==================================================== by Sziller ==="""
+    timestamp: float = 0.0
+    payload: Any     = None
+
+
+class ExtRespMsg(MsgModel):
+    """=== Model name: ExtRespMsg(MsgModel) ==============================  
+    Extended Model representing messaging towards Frontend  
+    ==================================================== by Sziller ==="""
+    message: str = ""
+
+    

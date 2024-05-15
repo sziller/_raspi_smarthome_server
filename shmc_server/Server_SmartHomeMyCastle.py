@@ -28,6 +28,9 @@ import config as conf
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from shmc_sqlAccess.SQL_interface import createSession
+from shmc_sqlBases.sql_baseUser import User as sqlUser
+
 
 from shmc_server import session_preparation as prepare
 
@@ -37,7 +40,8 @@ load_dotenv()
 # Mount settings:
 mount_script = os.getenv("PATH_MOUNTSHARES")
 # DB settings:
-session_name        = os.getenv("DB_SESSION_NAME")
+session_name        = os.getenv("DB_FULLNAME_SHMC")
+session_style       = os.getenv("DB_STYLE")
 # from config.py:
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
@@ -105,7 +109,12 @@ for name, data in router_info.items():
     if data["use"]:
         data["name"] = name
         tags_metadata.append(data)
-# server data processing:                                                           -   START   -
+# server data processing:                                                           -   ENDED   -
+
+# server base DB session:                                                           -   START   -
+session_shmc = createSession(db_fullname=session_name, tables=[sqlUser.__table__], style=session_style)
+prepare.user_db(session=session_shmc, user_list=conf.DEFAULT_USER_LIST)
+# server base DB session:                                                           -   ENDED   -
 
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                     ENDED              -

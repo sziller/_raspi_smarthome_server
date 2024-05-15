@@ -4,7 +4,10 @@ to be extended...
 
 import os
 import yaml
+from time_format import TimeFormat
 from shmc_sqlAccess import SQL_interface as SQLi
+from shmc_sqlBases.sql_baseUser import User as sqlUser
+from sqlalchemy.orm import sessionmaker
 import logging
 
 # Setting up logger                                         logger                      -   START   -
@@ -43,17 +46,14 @@ def read_yaml_data(source: str):
             raise exc
             
             
-# def default_users(session_in):
-#     """=== Function name: default_users ============================================================================
-# 
-#     :return:
-#     ========================================================================================== by Sziller ==="""
-#     print("[  START]: Adding default users: {}".format(conf.DATABASE_STYLE))
-#     default_user_list = conf.DEFAULT_USER_LIST
-#     SQLi.ADD_rows_to_table(
-#         primary_key="uuid",
-#         data_list=default_user_list,
-#         db_table=conf.DB_ID_TABLE_USERS,
-#         session_in=session_in)
-#     print("[  ENDED]: Adding default users: {}".format(conf.DATABASE_STYLE))
+def user_db(session: sessionmaker.object_session, user_list: list) -> bool:
+    """
+    
+    :param session: 
+    :param user_list: 
+    :return: 
+    """
+    lg.warning("user db   : entering default users - if not included!")
+    SQLi.ADD_rows_to_table(primary_key="username", data_list=user_list, row_obj=sqlUser, session=session)
+    return True
 

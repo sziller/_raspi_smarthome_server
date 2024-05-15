@@ -35,8 +35,14 @@ class ShmcBaseRouter(APIRouter):
         self.session: (sessionmaker.object_session, None)   = None
     
         # list of default endpoints for all child Router class-objects                              -   START   -
-        self.add_api_route("/v0/basic-config",                  self.GET_basic_config,              methods=["GET"])
-        self.add_api_route("/v0/full-db-data",                  self.GET_full_db_data,              methods=["GET"])
+        self.add_api_route(path="/v0/basic-config",
+                           endpoint=self.GET_basic_config,
+                           response_model=msg.ExtRespMsg,
+                           methods=["GET"])
+        self.add_api_route(path="/v0/full-db-data",
+                           endpoint=self.GET_full_db_data,
+                           response_model=msg.ExtRespMsg,
+                           methods=["GET"])
         # list of default endpoints for all child Router class-objects                              -   ENDED   -
         
     def reinit(self):
@@ -72,9 +78,9 @@ class ShmcBaseRouter(APIRouter):
         # action ENDED                                                                              -   ENDED   -
 
         # responding START                                                                          -   START   -
-        response = msg.ExternalResponseMsg(payload=payload,
-                                           message="OK - sais {} on router: {}".format(cmn, self.ccn),
-                                           timestamp=timestamp)
+        response = msg.ExtRespMsg(payload=payload,
+                                  message="OK - says {} on router: {}".format(cmn, self.ccn),
+                                  timestamp=timestamp)
         return response
         # responding ENDED                                                                          -   ENDED   -
 
@@ -102,8 +108,8 @@ class ShmcBaseRouter(APIRouter):
         # action ENDED                                                                              -   ENDED   -
 
         # responding START                                                                          -   START   -
-        response = msg.ExternalResponseMsg(payload=payload,
-                                           message="OK - sais {} on router: {}".format(cmn, self.ccn),
-                                           timestamp=timestamp)
+        response = msg.ExtRespMsg(payload=payload,
+                                  message="OK - says {} on router: {}".format(cmn, self.ccn),
+                                  timestamp=timestamp)
         return response
         # responding ENDED                                                                          -   ENDED   -

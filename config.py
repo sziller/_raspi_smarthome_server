@@ -56,6 +56,17 @@ APP_IS_PROCESS_RUNNING: bool    = True
 
 # list necessary router data here:
 APP_ROUTER_INFO = {
+    'authorization': {
+        "use": True,
+        "prefix": "/auth",
+        "args": {"ip": '10.3.77.aut',
+                 "port": 8041,
+                 "zmq_port": 0},
+        "module": "shmc_routers.AuthRouter_class",
+        "description": "Information regarding Authorization",
+        "externalDocs": {
+            "description": "find additional info under: sziller.eu",
+            "url": "http://sziller.eu"}},
     'wallet': {
         "use": False,
         "prefix": "/wllt",
@@ -68,7 +79,7 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "aquaponics": {
-        "use": True,
+        "use": False,
         "prefix": "/aqua",
         "args": {"ip": '10.3.77.aqu',
                  "port": 8042,
@@ -101,8 +112,8 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "floroom": {
-        "use": True,
-        "prefix": "/r_lv",
+        "use": False,
+        "prefix": "/r_fl",
         "args": {"ip": '10.3.77.36',
                  "port": 8051,
                  "zmq_port": 52903},
@@ -126,11 +137,26 @@ APP_ROUTER_INFO = {
 
 DEFAULT_USER_LIST       = [
     # 32char (128bit) hex-string representation of the UUID: double sha256 of the first email-address-string
-    {   "uuid": "aa",  # uuid - self generated
-        "usr_ln": 'Doe',
-        "usr_fn": 'John',
-        "pubkey": None,
-        "email_list": 'JD@gmail.com',  # last email is the actual one [-1]
-        "timestamp": 0.0,  # is added when user hits DB
-        "authorization": 15},  # binary sum - 11111111 - fully authorized - TBD
-    ]
+    {"username": "sziller",
+     "psswd_hsh": "$2b$12$0uSgOLr3QOYVyDr8cZoOLe/sGKJPCyGwdgSrujADtD2ipS15XgJ5W",
+     "email": "szillerke@gmail.com",
+     "usr_fn": "Szilard",
+     "usr_ln": "Ladanyi",
+     "auth_code": 63,
+     "pubkey": "",
+     "email_arch": [],
+     "uuid": "01",
+     "timestamp": 0.0,
+     "disabled": False},
+    {"username": "mok",
+     "psswd_hsh": "$2b$12$LDvH8I4wsTqAAvccpkKtzeeIGzIp/LQQ3RodBJw3kyf4UfRX3ta8C",
+     "email": "mterez@gmail.com",
+     "usr_fn": "Terez",
+     "usr_ln": "Molnar",
+     "auth_code": 15,
+     "pubkey": "",
+     "email_arch": [],
+     "uuid": "02",
+     "timestamp": 0.0,
+     "disabled": False}
+]

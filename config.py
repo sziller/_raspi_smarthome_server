@@ -59,7 +59,7 @@ APP_ROUTER_INFO = {
     'authorization': {
         "use": True,
         "prefix": "/auth",
-        "args": {"ip": '10.3.77.aut',
+        "args": {"ip": 'localhost',
                  "port": 8041,
                  "zmq_port": 0},
         "module": "shmc_routers.AuthRouter_class",
@@ -157,6 +157,17 @@ DEFAULT_USER_LIST       = [
      "pubkey": "",
      "email_arch": [],
      "uuid": "02",
+     "timestamp": 0.0,
+     "disabled": False},
+    {"username": "guest",
+     "psswd_hsh": "$2b$12$D9CqfJm.z6h8EXI9uMrcneMidCQBTVNm5gArh5i2r450rpz7UtC9y",
+     "email": "noreply@xxx.com",
+     "usr_fn": "---",
+     "usr_ln": "---",
+     "auth_code": 0,
+     "pubkey": "",
+     "email_arch": [],
+     "uuid": "100",
      "timestamp": 0.0,
      "disabled": False}
 ]

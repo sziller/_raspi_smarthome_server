@@ -40,8 +40,10 @@ load_dotenv()
 # Mount settings:
 mount_script = os.getenv("PATH_MOUNTSHARES")
 # DB settings:
-session_name        = os.getenv("DB_FULLNAME_SHMC")
-session_style       = os.getenv("DB_STYLE")
+session_name_shmc   = os.getenv("DB_FULLNAME_SHMC")
+session_style_shmc  = os.getenv("DB_STYLE_SHMC")
+session_name_auth   = os.getenv("DB_FULLNAME_AUTH")
+session_style_auth  = os.getenv("DB_STYLE_AUTH")
 # from config.py:
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
@@ -62,7 +64,7 @@ log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
 app_id              = conf.APP_ID
 
 # Setting up logger                                                                     -   START   -
-lg = logging.getLogger(__name__)
+lg = logging.getLogger("shmc")
 # Using config.py data - configurate logger:
 logging.basicConfig(filename=log_filename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
 # initial messages
@@ -112,8 +114,12 @@ for name, data in router_info.items():
 # server data processing:                                                           -   ENDED   -
 
 # server base DB session:                                                           -   START   -
-session_shmc = createSession(db_fullname=session_name, tables=[sqlUser.__table__], style=session_style)
-prepare.user_db(session=session_shmc, user_list=conf.DEFAULT_USER_LIST)
+session_shmc = createSession(db_fullname=session_name_shmc, tables=None,                style=session_style_shmc)
+session_auth = createSession(db_fullname=session_name_auth, tables=[sqlUser.__table__], style=session_style_auth)
+prepare.db(session=session_auth, user_list=conf.DEFAULT_USER_LIST)
+session_shmc.close()
+session_auth.close()
+
 # server base DB session:                                                           -   ENDED   -
 
 # -------------------------------------------------------------------------------------------------------
@@ -176,9 +182,9 @@ for name, data in router_info.items():  # looping through routing_info as key, v
             router_class = getattr(importlib.import_module(data['module']), class_name)
             # we instantiate it:
             alias = data["prefix"][1:]
-            sufix = ""
-            if "args" in data and data["args"]["ip"] != "localhost":
-                sufix = "_" + alias.upper()
+            # sufix = ""
+            # if "args" in data and data["args"]["ip"] != "localhost":
+            sufix = "_" + alias.upper()
             lg.debug("fetch args: 'alias': {}, 'sufix': {}".format(alias, sufix))
             lg.debug("initiating: <router> from {}".format(os.path.basename(__file__)))
             router_instance = router_class(name=name,

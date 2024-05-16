@@ -18,10 +18,8 @@ AUTH_TOKEN_EXPIRE_MINS = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
 oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-session = SQLi.createSession(db_fullname=os.getenv("DB_FULLNAME_SHMC"), tables=None, style=os.getenv("DB_STYLE"))
+session = SQLi.createSession(db_fullname=os.getenv("DB_FULLNAME_AUTH"), tables=None, style=os.getenv("DB_STYLE_AUTH"))
 DB = SQLi.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlUser, session=session)
-
-
 
 
 class User(BaseModel):
@@ -130,9 +128,5 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
     return current_user
 
 
-def get_psswd_hash(psswd):
-    return pwd_context.hash(psswd)
 
 
-def check_authorization(auth_code: int, nth_switch: int):
-    return (auth_code & (1 << nth_switch)) != 0

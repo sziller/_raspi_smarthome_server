@@ -1,3 +1,4 @@
+import os.path
 import time
 import logging
 import inspect
@@ -8,8 +9,18 @@ from shmc_sqlAccess import SQL_interface as sqli
 from sqlalchemy.orm import sessionmaker
 
 # Setting up logger                                                                     -   START   -
-lg = logging.getLogger(__name__)
+lg = logging.getLogger("shmc")
 # Setting up logger                                                                     -   ENDED   -
+
+# Hierarchy: (Attention! Endpoint authentication is not Router scope!)
+# Ancestry:                 : example                   : added params              : added methods
+# --------------------------:---------------------------:---------------------------:-----------------
+# Engine connected          : Room, Observer            : zmq-port                  :
+# Default Endpoints v. DB   : simple DB-handler         :                           : default EP-s
+# DB handler                : AuthRouter                : db_fullname, db_style     :
+# Authorized                :                           :                           : authorizer
+# BaseRouter                :                           : name, alias, ip, port     :
+# APIRouter                 : default FastApi class     :                           :
 
 
 class ShmcBaseRouter(APIRouter):
@@ -22,18 +33,103 @@ class ShmcBaseRouter(APIRouter):
                  name: str,
                  alias: str,
                  ip: str = "0.0.0.0",
-                 port: int = 0,
-                 db_fullname: (str, None) = None,
-                 db_style: (str, None) = None):
+                 port: int = 0):
         super().__init__()
-        self.name: str                                      = name
-        self.alias: str                                     = self.name[:4] if alias == "" else alias
-        self.ip: str                                        = ip
-        self.port: int                                      = port
-        self.db_fullname: str                               = db_fullname
-        self.db_style: str                                  = db_style
-        self.session: (sessionmaker.object_session, None)   = None
+        self.name: str                          = name
+        self.alias: str                         = self.name[:4] if alias == "" else alias
+        self.ip: str                            = ip  # ip of remote Engine and Message handler (zmq socket endpoint)
+        self.port: int                          = port  # port remote server runs on - for DB communication
+        
+    def reinit(self):
+        pass
     
+    
+class AuthorizedRouter(ShmcBaseRouter):
+    """=== Class name: ShmcBaseRouter(APIRouter) =======================================================================
+    Autorized Router class for the SHMC development.
+    ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str = "0.0.0.0",
+                 port: int = 0,
+                 auth_dict: dict or None = None):
+        super().__init__(name, alias, ip, port)
+        self.auth_dict: dict = auth_dict
+        
+    def check_authorization(self, auth_code: int, nth_switch: int):
+        """=== Function name: check_authorization ==========================================================================
+        Function decides, whether an authorizatoin code includes certain binary digit.
+        e.g.: 0-1-1-0 = 6   <- auth code
+              3.2.1.0       <- pos.
+        Function (6, 2) checks for position 2. and returns True
+        Function (6, 0) checks for position 0. and returns False
+        ============================================================================================== by Sziller ==="""
+        lg.debug("authorize : using: {}".format(self.auth_dict))
+        return auth_code & (1 << nth_switch) != 0
+    
+
+class DBHandlerRouter(AuthorizedRouter):
+    """=== Class name: DBHandlerRouter(AuthorizedRouter) ===============================================================
+    Router to manage DB related requests
+    Subclass of Autorized Router.
+    ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str = "0.0.0.0",
+                 port: int = 0,
+                 auth_dict: dict or None = None,
+                 db_fullname: str or None = None,
+                 db_style: str or None = None
+                 ):
+        super().__init__(name, alias, ip, port, auth_dict)
+        self.db: list[dict] or None = None
+        self.db_fullname: str       = db_fullname
+        self.db_style: str          = db_style
+    
+    def reinit(self):
+        """=== Method name: reinit =====================================================================================
+        to generate initial arguments depending on changed parameters
+        ========================================================================================== by Sziller ==="""
+        if self.db_fullname:
+            if os.path.isfile(self.db_fullname):
+                lg.info("found DB  : {} - says {}".format(self.db_fullname, self.ccn))
+            else:
+                lg.warning("no DB     : {} - says {}".format(self.db_fullname, self.ccn))
+        else:
+            lg.warning("undefined : database name - says {}".format(self.ccn))
+    
+    def read_db_table(self, row_obj: sqli.Base):
+        """=== Method name: read_db ====================================================================================
+        One time reading of the DB, defined by db_* parameters.
+        Local session fot r this very method is created and closed right after reading out data into self.db
+        ========================================================================================== by Sziller ==="""
+        loc_session = sqli.createSession(db_fullname=self.db_fullname, style=self.db_style, tables=None)
+        self.db = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=row_obj, session=loc_session)
+        loc_session.close()
+
+
+class SkeletonRouter(DBHandlerRouter):
+    """=== Class name: SkeletonRouter(DBHandlerRouter) =================================================================
+    Router to include default Endpoints.
+    Subclass of DBHandlerRouter.
+    ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str                    = "0.0.0.0",
+                 port: int                  = 0,
+                 auth_dict: dict or None    = None,
+                 db_fullname: str or None   = None,
+                 db_style: str or None      = None):
+        super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style)
         # list of default endpoints for all child Router class-objects                              -   START   -
         self.add_api_route(path="/v0/basic-config",
                            endpoint=self.GET_basic_config,
@@ -44,19 +140,7 @@ class ShmcBaseRouter(APIRouter):
                            response_model=msg.ExtRespMsg,
                            methods=["GET"])
         # list of default endpoints for all child Router class-objects                              -   ENDED   -
-        
-    def reinit(self):
-        """=== Method name: reinit =====================================================================================
-        to generate initial arguments depending on changed parameters
-        ========================================================================================== by Sziller ==="""
-        try:
-            
-            self.session = sqli.createSession(db_fullname=self.db_fullname, tables=None, style=self.db_style)
-            lg.info("session   : created - {}".format(self.session))
-        except:
-            self.session = None
-            lg.error("session   : failed to create! - says {}".format(self.ccn))
-
+    
     async def GET_basic_config(self):
         """=== Endpoint-method name: GET_basic_config ===  
         Endpoint returns minimal router data. This method is defined on parent level, thus all shmc routers provide
@@ -74,7 +158,12 @@ class ShmcBaseRouter(APIRouter):
         # request processing ENDED                                                                  -   ENDED   -
 
         # action START                                                                              -   START   -
-        payload = {'name': self.name, 'alias': self.alias, 'ip': self.ip, 'port': self.port, 'db_fullname': self.db_fullname, "db_style": self.db_style}
+        payload = {'name': self.name,
+                   'alias': self.alias,
+                   'ip': self.ip,
+                   'port': self.port,
+                   'db_fullname': self.db_fullname,
+                   "db_style": self.db_style}
         # action ENDED                                                                              -   ENDED   -
 
         # responding START                                                                          -   START   -
@@ -96,15 +185,15 @@ class ShmcBaseRouter(APIRouter):
                      "email": "szillerke@gmail.com",
                      "signature": b'',
                      "payload": {'ip': self.ip,
-                                 'port': self.port,
-                                 "session": self.session
+                                 'port': self.port
                                  },
                      "timestamp": timestamp}
         data = msg.InternalMsg.init_by_dict(**data_dict)
         # request processing ENDED                                                                  -   ENDED   -
 
         # action START                                                                              -   START   -
-        payload = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlMeasurement, session=self.session)
+        session = sqli.createSession(db_fullname=self.db_fullname, tables=None, style=self.db_style)
+        payload = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlMeasurement, session=session)
         # action ENDED                                                                              -   ENDED   -
 
         # responding START                                                                          -   START   -
@@ -113,3 +202,23 @@ class ShmcBaseRouter(APIRouter):
                                   timestamp=timestamp)
         return response
         # responding ENDED                                                                          -   ENDED   -
+
+
+class EngineMngrRouter(SkeletonRouter):
+    """=== Class name: EngineMngrRouter(SkeletonRouter) ================================================================
+    Router to Manage background engines.
+    Subclass of SkeletonRouter.
+    ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str                    = "0.0.0.0",
+                 port: int                  = 0,
+                 auth_dict: dict or None    = None,
+                 db_fullname: str or None   = None,
+                 db_style: str or None      = None,
+                 zmq_port: int              = 0):       # port of remote Message handler (zmq socket endpoint)
+        super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style)
+        self.zmq_port: int          = zmq_port

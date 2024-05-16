@@ -46,7 +46,7 @@ def read_yaml_data(source: str):
             raise exc
             
             
-def user_db(session: sessionmaker.object_session, user_list: list) -> bool:
+def db(session: sessionmaker.object_session, user_list: list) -> bool:
     """
     
     :param session: 

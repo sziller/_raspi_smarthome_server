@@ -1,5 +1,13 @@
-def check_authorization(auth_code: int, nth_switch: int):
-    return auth_code & (1 << nth_switch) != 0
+from passlib.context import CryptContext
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def get_psswd_hash(psswd):
+    return pwd_context.hash(psswd)
+
 
 if __name__ == "__main__":
-    print(check_authorization(21, 0))
+    psswd = "guest"
+    print(psswd)
+    print(get_psswd_hash(psswd=psswd))
+    

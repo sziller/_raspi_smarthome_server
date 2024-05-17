@@ -3,7 +3,7 @@ import zmq
 import time
 import logging
 import inspect
-from shmc_routers._ShmcBaseRouter import EngineMngrRouter
+from shmc_routers._ShmcBaseRouters import EngineMngrRouter
 from shmc_routers.auth import *
 from shmc_messages import msg
 

@@ -1,7 +1,7 @@
 import time
 import logging
 import inspect
-from shmc_routers._ShmcBaseRouter import ShmcBaseRouter
+from shmc_routers._ShmcBaseRouters import ShmcBaseRouter
 from shmc_messages import msg
 from shmc_messages import msg_aqua
 

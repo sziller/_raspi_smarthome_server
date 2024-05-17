@@ -4,7 +4,7 @@ from fastapi import Depends
 from datetime import datetime, timedelta
 import logging
 import inspect
-from shmc_routers._ShmcBaseRouter import DBHandlerRouter
+from shmc_routers._ShmcBaseRouters import DBHandlerRouter
 from shmc_routers.auth import *
 from shmc_messages import msg
 from fastapi.security import OAuth2PasswordRequestForm

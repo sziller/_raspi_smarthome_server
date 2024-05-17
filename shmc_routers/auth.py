@@ -8,19 +8,28 @@ from fastapi.security import OAuth2PasswordBearer
 from shmc_sqlAccess import SQL_interface as SQLi
 from shmc_sqlBases.sql_baseUser import User as sqlUser
 
-
 load_dotenv()
 
 AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY")
 AUTH_ALGO = os.getenv("AUTH_ALGO")
 AUTH_TOKEN_EXPIRE_MINS = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
 
+DB_FULLNAME_AUTH = os.getenv("DB_FULLNAME_AUTH")
+DB_STYLE_AUTH = os.getenv("DB_STYLE_AUTH")
+
 oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-session = SQLi.createSession(db_fullname=os.getenv("DB_FULLNAME_AUTH"), tables=None, style=os.getenv("DB_STYLE_AUTH"))
-DB = SQLi.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlUser, session=session)
 
+def actual_db_state() -> list:
+    """=== Function name: actual_db_state ==============================================================================
+    Function returns the actual state of the Auth database in real time
+    ============================================================================================== by Sziller ==="""
+    loc_session = SQLi.createSession(db_fullname=DB_FULLNAME_AUTH, tables=None, style=DB_STYLE_AUTH)
+    data = SQLi.QUERY_entire_table(ordered_by="timestamp", row_obj=sqlUser, session=loc_session)
+    loc_session.close()
+    return data
+    
 
 class User(BaseModel):
     """=== Model name: User(BaseModel) ===================================  
@@ -111,7 +120,7 @@ async def get_current_user(token: str = Depends(oauth_2_scheme)):
     except JWTError:
         raise credential_exception
 
-    user = get_user_data(db_lines=DB, username=token_data.username)
+    user = get_user_data(db_lines=actual_db_state(), username=token_data.username)
     if user is None:
         raise credential_exception
     return user
@@ -126,7 +135,3 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
-
-
-
-

@@ -1,16 +1,5 @@
-import os.path
-import time
-import logging
-import inspect
-from fastapi import APIRouter
-from shmc_messages import msg
-from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
-from shmc_sqlAccess import SQL_interface as sqli
-from sqlalchemy.orm import sessionmaker
-
-# Setting up logger                                                                     -   START   -
-lg = logging.getLogger("shmc")
-# Setting up logger                                                                     -   ENDED   -
+"""These are Router buliding blocks, responsible to create a Parent router for any usecase we use in SHMC development
+Here is the hierarchical buildup.
 
 # Hierarchy: (Attention! Endpoint authentication is not Router scope!)
 # Ancestry:                 : example                   : added params              : added methods
@@ -21,6 +10,24 @@ lg = logging.getLogger("shmc")
 # Authorized                :                           :                           : authorizer
 # BaseRouter                :                           : name, alias, ip, port     :
 # APIRouter                 : default FastApi class     :                           :
+
+
+=== by Sziller ==="""
+
+import os.path
+import time
+import logging
+import inspect
+from fastapi import APIRouter
+from shmc_messages import msg
+from shmc_routers.auth import *
+from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
+from shmc_sqlAccess import SQL_interface as sqli
+from sqlalchemy.orm import sessionmaker
+
+# Setting up logger                                                                     -   START   -
+lg = logging.getLogger("shmc")
+# Setting up logger                                                                     -   ENDED   -
 
 
 class ShmcBaseRouter(APIRouter):
@@ -41,6 +48,9 @@ class ShmcBaseRouter(APIRouter):
         self.port: int                          = port  # port remote server runs on - for DB communication
         
     def reinit(self):
+        """=== Method name: reinit =====================================================================================
+        Possible script meant to be run right after instantiation.
+        ========================================================================================== by Sziller ==="""
         pass
     
     
@@ -58,7 +68,14 @@ class AuthorizedRouter(ShmcBaseRouter):
                  auth_dict: dict or None = None):
         super().__init__(name, alias, ip, port)
         self.auth_dict: dict = auth_dict
-        
+    
+    def reinit(self):
+        """=== Method name: reinit =====================================================================================
+        Possible script meant to be run right after instantiation.
+        ========================================================================================== by Sziller ==="""
+        super().reinit()
+        pass
+    
     def check_authorization(self, auth_code: int, nth_switch: int):
         """=== Function name: check_authorization ==========================================================================
         Function decides, whether an authorizatoin code includes certain binary digit.
@@ -96,6 +113,7 @@ class DBHandlerRouter(AuthorizedRouter):
         """=== Method name: reinit =====================================================================================
         to generate initial arguments depending on changed parameters
         ========================================================================================== by Sziller ==="""
+        super().reinit()
         if self.db_fullname:
             if os.path.isfile(self.db_fullname):
                 lg.info("found DB  : {} - says {}".format(self.db_fullname, self.ccn))
@@ -141,7 +159,14 @@ class SkeletonRouter(DBHandlerRouter):
                            methods=["GET"])
         # list of default endpoints for all child Router class-objects                              -   ENDED   -
     
-    async def GET_basic_config(self):
+    def reinit(self):
+        """=== Method name: reinit =====================================================================================
+        Possible script meant to be run right after instantiation.
+        ========================================================================================== by Sziller ==="""
+        super().reinit()
+        pass
+    
+    async def GET_basic_config(self, current_user: UserInDB = Depends(get_current_active_user)):
         """=== Endpoint-method name: GET_basic_config ===  
         Endpoint returns minimal router data. This method is defined on parent level, thus all shmc routers provide
         some sort of actual state info under this path.  
@@ -173,7 +198,7 @@ class SkeletonRouter(DBHandlerRouter):
         return response
         # responding ENDED                                                                          -   ENDED   -
 
-    async def GET_full_db_data(self):
+    async def GET_full_db_data(self, current_user: UserInDB = Depends(get_current_active_user)):
         """=== Endpoint-method name: GET_full_db_data ===  
         Endpoint returns the usual response format, where 'payload' is the entire content of the DB  
         === by Sziller ==="""
@@ -222,3 +247,10 @@ class EngineMngrRouter(SkeletonRouter):
                  zmq_port: int              = 0):       # port of remote Message handler (zmq socket endpoint)
         super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style)
         self.zmq_port: int          = zmq_port
+
+    def reinit(self):
+        """=== Method name: reinit =====================================================================================
+        Possible script meant to be run right after instantiation.
+        ========================================================================================== by Sziller ==="""
+        super().reinit()
+        pass

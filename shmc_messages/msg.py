@@ -9,13 +9,13 @@ class MsgObject:
     Two way communication Object between Server and Engine, Server and Subservers
     ============================================================================================== by Sziller ==="""
     def __init__(self,
-                 payload: (dict, None),
-                 timestamp: float or None = None,
+                 payload: Any,
+                 timestamp: float   = 0.0,
                  **kwargs):
         # every communication message Object must have a timestamp defined on init:
         # this is the unique ID of the object on code level
-        self.payload: (dict, None)          = payload
-        self.timestamp: (float, None)       = timestamp
+        self.payload: Any                   = payload
+        self.timestamp: float               = timestamp
 
     def as_dict(self) -> dict:
         """=== Method name: as_dict ====================================================================================
@@ -33,28 +33,35 @@ class MsgObject:
 
 
 class InternalMsg(MsgObject):
+    """
+    :param instant: bool -  if True:    we wait for the Engine to process the call, and return Engine response to API:
+                                        Request-Response message management.
+                            if False:   we return a default answer to API, in oorder not to block socket data flow.:
+                                        Fire-and-Forget message management.
+    """
     def __init__(self,
-                 payload: dict,
-                 command: str, 
-                 email: str = "", 
-                 signature: (bytes, None) = None, 
-                 timestamp: float or None = None, **kwargs):
-        super(InternalMsg, self).__init__(payload=payload, timestamp=timestamp, email=email, signature=signature, **kwargs)
-        self.command: str               = command
+                 payload: Any,
+                 timestamp: float   = 0.0,
+                 synced: bool       = True,
+                 email: str         = "",
+                 signature: bytes   = b'',
+                 command: str       = "",
+                 **kwargs):
+        super(InternalMsg, self).__init__(payload=payload, timestamp=timestamp, **kwargs)
+        self.synced: bool               = synced
         self.email: str                 = email
         self.signature: bytes or None   = signature
-        self.payload: dict              = payload
-        self.timestamp: float           = timestamp
+        self.command: str = command
 
 
 class ExternalResponseMsg(MsgObject):
     def __init__(self,
-                 payload: (None, bool, int, dict, list),
-                 message: str = "", timestamp: float or None = None, **kwargs):
+                 payload: Any,
+                 timestamp: float   = 0.0,
+                 message: str       = "",
+                 **kwargs):
         super(ExternalResponseMsg, self).__init__(payload=payload, timestamp=timestamp, **kwargs)
         self.message: str       = message
-        self.payload            = payload
-        self.timestamp: float   = timestamp
         
 
 class MsgModel(BaseModel):

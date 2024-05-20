@@ -42,7 +42,7 @@ class InternalMsg(MsgObject):
     def __init__(self,
                  payload: Any,
                  timestamp: float   = 0.0,
-                 synced: bool       = True,
+                 synced: bool       = False,
                  email: str         = "",
                  signature: bytes   = b'',
                  command: str       = "",

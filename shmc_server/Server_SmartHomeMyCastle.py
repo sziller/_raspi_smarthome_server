@@ -28,6 +28,7 @@ import config as conf
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from shmc_sqlAccess.SQL_interface import createSession
 from shmc_sqlBases.sql_baseUser import User as sqlUser
 
@@ -161,7 +162,22 @@ server.mount(path="/app", app=app, name="shmc")
 # app contains the 'directory' parameter, which must have the actual subdirectory as an argument
 # if you call your basic page 'index.html' it can be accessed directly, without entering the actual filename
 
-server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
+
+# Route handler for the root URL
+@app.get("/")
+async def read_index():
+    # Get the path to the index.html file
+    index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "index.html")
+    # Check if the file exists
+    if os.path.exists(index_path):
+        # Return the index.html file as a response
+        return FileResponse(index_path)
+    else:
+        # Return a simple message if index.html does not exist
+        return {"message": "index.html not found"}
+
+server.mount(path="/static", app=StaticFiles(directory="public", html=True), name="static")
+# server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
 lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))
 
 # -------------------------------------------------------------------------------------------------------

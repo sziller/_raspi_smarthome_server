@@ -1,8 +1,12 @@
 == About the Development
 .Intoduction
+[.text-center]
 ****
-SmartHome my Castle is a decentralized SmartHome Framework: +
+*SmartHome my Castle* is a decentralized SmartHome framework: +
 Decentralized, open-source, self-sufficient, modular, independent.
+
+Check out the Backend documentation under: +
+https://shmc.sziller.eu/app/docs
 ****
 
 === Motivation

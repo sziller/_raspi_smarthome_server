@@ -1,7 +1,7 @@
 import time
 import logging
 import inspect
-from shmc_routers._ShmcBaseRouters import ShmcBaseRouter
+from shmc_routers._ShmcBaseRouters import EngineMngrRouter
 from shmc_messages import msg
 from shmc_messages import msg_aqua
 
@@ -12,16 +12,25 @@ lg = logging.getLogger()
 # Setting up logger                                                                     -   ENDED   -
 
 
-class AquaRouter(ShmcBaseRouter):
+class AquaRouter(EngineMngrRouter):
     """Class name: AquaponicsRouter ====================================================================================
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
     
-    def __init__(self, name, alias, ip: str = "0.0.0.0", port: int = 0, db_fullname=None, db_style=None):
-        super().__init__(name, alias, ip, port, db_fullname, db_style)
+    def __init__(self,
+                 name: str,
+                 alias: str,
+                 ip: str                        = "0.0.0.0",
+                 port: int                      = 0,
+                 auth_dict: dict or None        = None,
+                 db_fullname: str or None       = None,
+                 db_style: str or None          = None,
+                 zmq_port: int                  = 0):
+        super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style, zmq_port)
         lg.debug("initiated : '{}' router as object {}".format(self.name, self.ccn))
         self.IS_PROCESS_RUNNING = True
         
+        # list of default endpoints for all child Router class-objects                              -   START   -
         self.add_api_route("/v0/system-main-switch-state/",     self.GET_system_main_switch_state,  methods=["GET"])
         self.add_api_route("/v0/actual-state",                  self.GET_actual_state,              methods=["GET"])
         self.add_api_route("/v0/command-engine-ON/{message}",   self.POST_command_engine_on,        methods=["POST"])

@@ -45,7 +45,7 @@ session_name_shmc   = os.getenv("DB_FULLNAME_SHMC")
 session_style_shmc  = os.getenv("DB_STYLE_SHMC")
 session_name_auth   = os.getenv("DB_FULLNAME_AUTH")
 session_style_auth  = os.getenv("DB_STYLE_AUTH")
-# from .config.py:
+# from config.py:
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
 # path settings:
@@ -66,7 +66,7 @@ app_id              = conf.APP_ID
 
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger("shmc")
-# Using .config.py data - configurate logger:
+# Using config.py data - configurate logger:
 logging.basicConfig(filename=log_filename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
 # initial messages
 lg.warning("FILE: {:>86} <<<".format(__file__))

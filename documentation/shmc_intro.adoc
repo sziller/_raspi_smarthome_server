@@ -1,11 +1,19 @@
-== Project introduction
+== About the Development
+.Intoduction
+****
+SmartHome my Castle is a decentralized SmartHome Framework: +
+Decentralized, open-source, self-sufficient, modular, independent.
+****
+
 === Motivation
 ==== System
-We want to build a modular smart-home system on fully open-source basis. I want to enable full control over ones home.
-A home in this context is regarded as one *sovereign* interconnected system, where - though modular in architecture -
+We - at https://sziller.eu - want to build a modular smart-home system on fully open-source basis. Our goal is to 
+enable full control over Your home: providing You with the necessary framework to develop a truly custom-made
+intelligent home, enabling self developed solutions, or rely on a *community developed* solutions.
+A _Home_ in this context is regarded as one *sovereign* interconnected system, where - though modular in architecture -
 parts of the infrastructure can intaract with eachother, use each-others measurements, computational results.
 As we deal with brick-and-mortar buildings, at the edge of this project you'll always find mostly physical systems,
-such as:
+(peripherals) such as:
 
 - sensors
 - appliances
@@ -13,16 +21,17 @@ such as:
 - enegry sources
 
 ==== Control
-We strive to achieve as much *decentralization* and *soverignity* as possible. The user of this project should *never*
-have to rely on 3rd parties.
+We strive to achieve as much *decentralization* and *soverignity* as possible. The User of this project - You -
+should *never* have to rely on 3rd parties.
 
 [IMPORTANT]
 ====
-Decentralization is hard to achieve. The user obviously can anytime use 3rd party software if he chooses to. 
+Decentralization is hard to achieve. You obviously *can* anytime use 3rd party software if you choose to. +
+*The point is: you do NOT HAVE TO!*
 ====
 
 === Technology
-The Project intends to be usable from step 0. Right at the moment you download the server, you should be good to go.
+The Project intends to be usable from step 0. Right at the moment You download the server, You should be good to go.
 Then - as you're ready to invest more resources - build up a more complex system module-by-module according to your
 preferences.
 Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment 
@@ -50,13 +59,14 @@ Hardware modules::
 The project is built with *RaspberryPi* computing hardware (simply: Nodes) in mind.
 We also make use of RaspberryPi related peripherals such as SenseHat, Raspberry Cameras.
 When it comes to Node demand of your setup, you need to consider: Functions may occupy a Node by their own,
-or may share a Node with other modules. We basically create a mesh network of
-Nodes inside a building/ apartment. Nodes are placed in several different locations strategically in the
-building/ apartment. +
+or may share a Node with other modules. We basically create a mesh network of Nodes inside a building/ apartment.
+Nodes are placed in several different locations strategically in the building/ apartment. +
 
-
-Meaning setting up a Live Project is not only an IT decision. You need to look at your Floorplan, Energy-bills, Kids,
-Lifestyle. You might actually want to consult an Architect with a technlogical touch.
+[IMPORTANT]
+====
+Thus, setting up a Live Project is not only an IT decision. You need to look at your floorplan, energy-bills,
+building-construction, kids, lifestyle. You might actually want to consult an Architect with a technlogical touch.
+====
 
 Software modules::
 Most of the Functions receive their own Python Package. So you can install them as you go along.

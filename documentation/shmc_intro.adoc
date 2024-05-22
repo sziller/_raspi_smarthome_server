@@ -7,6 +7,9 @@ Decentralized, open-source, self-sufficient, modular, independent.
 
 Check out the Backend documentation under: +
 https://shmc.sziller.eu/app/docs[window=read-later]
+
+Check out project repositories under: +
+https://github.com/sziller[window=read-later]
 ****
 
 === Motivation

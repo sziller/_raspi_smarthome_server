@@ -79,7 +79,7 @@ APP_ROUTER_INFO = {
             "description": "find additional info under: sziller.eu",
             "url": "http://sziller.eu"}},
     "aquaponics": {
-        "use": False,
+        "use": True,
         "prefix": "/aqua",
         "args": {"ip": '10.3.77.aqu',
                  "port": 8042,

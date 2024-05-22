@@ -25,6 +25,7 @@ from time_format import TimeFormat as TiFo
 from dotenv import load_dotenv
 import logging
 import config as conf
+import config_prv as conf_prv
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -117,7 +118,7 @@ for name, data in router_info.items():
 # server base DB session:                                                           -   START   -
 session_shmc = createSession(db_fullname=session_name_shmc, tables=None,                style=session_style_shmc)
 session_auth = createSession(db_fullname=session_name_auth, tables=[sqlUser.__table__], style=session_style_auth)
-prepare.db(session=session_auth, user_list=conf.DEFAULT_USER_LIST)
+prepare.db(session=session_auth, user_list=conf_prv.DEFAULT_USER_LIST)
 session_shmc.close()
 session_auth.close()
 
@@ -164,8 +165,14 @@ server.mount(path="/app", app=app, name="shmc")
 
 
 # Route handler for the root URL
+server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
+
 @app.get("/")
 async def read_index():
+    """
+
+    :return: 
+    """
     # Get the path to the index.html file
     index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "index.html")
     # Check if the file exists
@@ -176,7 +183,6 @@ async def read_index():
         # Return a simple message if index.html does not exist
         return {"message": "index.html not found"}
 
-server.mount(path="/static", app=StaticFiles(directory="public", html=True), name="static")
 # server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
 lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))
 

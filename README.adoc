@@ -1,9 +1,11 @@
 == _raspi_smarthome_server
 This is the entry point of the SmartHome my Castle development.
-Here's how you get it running.
+Find a detailed description of SmartHome my Castle under:
+
+https://shmc.sziller.eu
 
 === repository
-Find actual project under:
+Find actual project repo under:
 https://github.com/sziller/_raspi_smarthome_server
 
 === whom and what for?

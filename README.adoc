@@ -1,5 +1,6 @@
 == _raspi_smarthome_server
 This is the entry point of the SmartHome my Castle development.
+
 Find a detailed description of SmartHome my Castle under:
 
 https://shmc.sziller.eu

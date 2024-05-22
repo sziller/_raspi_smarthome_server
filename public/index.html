@@ -239,10 +239,13 @@ Decentralized, open-source, self-sufficient, modular, independent.</p>
 </div>
 <div class="sect2">
 <h3 id="_motivation">1.1. Motivation</h3>
-<div class="sect3">
-<h4 id="_system">1.1.1. System</h4>
 <div class="paragraph">
-<p>We - at <a href="https://sziller.eu" class="bare">sziller.eu</a> - want to build a modular smart-home system on fully open-source basis. Our goal is to
+<p>Soverignity will have to be achieved on two different levels:</p>
+</div>
+<div class="sect3">
+<h4 id="_system_level">1.1.1. System level</h4>
+<div class="paragraph">
+<p>We - at <a href="https://sziller.eu" class="bare">sziller.eu</a> - want to build a modular smart-home <em>system</em> on fully open-source basis. Our goal is to
 enable full control over Your home: providing You with the necessary framework to develop a truly custom-made
 intelligent home, enabling self developed solutions, or rely on a <strong>community developed</strong> solutions.
 A <em>Home</em> in this context is regarded as one <strong>sovereign</strong> interconnected system, where - though modular in architecture -
@@ -268,7 +271,7 @@ As we deal with brick-and-mortar buildings, at the edge of this project you&#821
 </div>
 </div>
 <div class="sect3">
-<h4 id="_control">1.1.2. Control</h4>
+<h4 id="_control_level">1.1.2. Control level</h4>
 <div class="paragraph">
 <p>We strive to achieve as much <strong>decentralization</strong> and <strong>soverignity</strong> as possible. The User of this project - You -
 should <strong>never</strong> have to rely on 3rd parties.</p>
@@ -281,7 +284,7 @@ should <strong>never</strong> have to rely on 3rd parties.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Decentralization is hard to achieve. You obviously <strong>can</strong> anytime use 3rd party software if you choose to.<br>
+<p>Soverignity is hard to achieve. You obviously <strong>can</strong> anytime use 3rd party software if you choose to.<br>
 <strong>The point is: you do NOT HAVE TO!</strong></p>
 </div>
 </td>
@@ -298,12 +301,12 @@ Then - as you&#8217;re ready to invest more resources - build up a more complex 
 preferences.
 Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Functionality modules</dt>
-<dd>
+<div class="sect3">
+<h4 id="_functionality_modules">1.2.1. Functionality modules</h4>
+<div class="paragraph">
 <p>We concentrate on residential buildings/ apartments. This choice more-or-less determines the functionality we target.
 Here are some examles we are currently implementing:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -342,8 +345,14 @@ Here are some examles we are currently implementing:</p>
 <p>Food production manager</p>
 </li>
 <li>
-<p>Bitcoin wallet
-**</p>
+<p>Bitcoin wallet</p>
+<div class="ulist">
+<ul>
+<li>
+<p>possible monetization of your resources</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>Central heating management</p>
@@ -360,16 +369,15 @@ Here are some examles we are currently implementing:</p>
 </li>
 </ul>
 </div>
-</dd>
-<dt class="hdlist1">Hardware modules</dt>
-<dd>
+</div>
+<div class="sect3">
+<h4 id="_hardware_modules">1.2.2. Hardware modules</h4>
+<div class="paragraph">
 <p>The project is built with <strong>RaspberryPi</strong> computing hardware (simply: Nodes) in mind.
 We also make use of RaspberryPi related peripherals such as SenseHat, Raspberry Cameras.
 When it comes to Node demand of your setup, you need to consider: Functions may occupy a Node by their own,
 or may share a Node with other modules. We basically create a mesh network of Nodes inside a building/ apartment.
 Nodes are placed in several different locations strategically in the building/ apartment.<br></p>
-</dd>
-</dl>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -386,13 +394,14 @@ building-construction, kids, lifestyle. You might actually want to consult an Ar
 </tr>
 </table>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Software modules</dt>
-<dd>
+</div>
+<div class="sect3">
+<h4 id="_software_modules">1.2.3. Software modules</h4>
+<div class="paragraph">
 <p>Most of the Functions receive their own Python Package. So you can install them as you go along.
 We also encourage you to contribute in the development.
 Here is a grouping of Packages based on their interaction with physical systems:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -414,10 +423,8 @@ Some Nodes control Relais, some manage LED displays</p>
 <li>
 <p><strong>background Engines</strong>:<br>
 In case of more complex Functionality specific Engines are running locally - on dedicated Nodes.</p>
-</li>
-</ul>
-</div>
-</dd>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">Timing</dt>
 <dd>
 <p>The system being a mesh network of uncontrolled size/ number of Nodes, is designed to be a sluggish one.
@@ -426,8 +433,12 @@ for fast action, speed however will not be a priority when it comes to communica
 </dd>
 </dl>
 </div>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>The communication between Nodes may or may not happen over shared Databases, or direct socket connections.</p>
+</div>
 </div>
 </div>
 </div>

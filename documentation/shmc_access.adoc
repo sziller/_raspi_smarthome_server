@@ -8,4 +8,3 @@ Once set up, you ente:
 
 Then you enter the *password* realted to <username>. +
 In the SHMC development we stick to username = `pi` as this is the default Raspberry username.
-

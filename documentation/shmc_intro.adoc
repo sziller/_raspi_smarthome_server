@@ -10,7 +10,7 @@ https://shmc.sziller.eu/app/docs[window=read-later]
 ****
 
 === Motivation
-Soverignity will have to be achieved on two different levels:
+Sovereignty will have to be achieved on two different levels:
 
 ==== System level
 We - at https://sziller.eu - want to build a modular smart-home _system_ on fully open-source basis. Our goal is to 
@@ -27,12 +27,12 @@ As we deal with brick-and-mortar buildings, at the edge of this project you'll a
 - enegry sources
 
 ==== Control level
-We strive to achieve as much *decentralization* and *soverignity* as possible. The User of this project - You -
+We strive to achieve as much *decentralization* and *sovereignty* as possible. The User of this project - You -
 should *never* have to rely on 3rd parties.
 
 [IMPORTANT]
 ====
-Soverignity is hard to achieve. You obviously *can* anytime use 3rd party software if you choose to. +
+Sovereignty is hard to achieve. You obviously *can* anytime use 3rd party software if you choose to. +
 *The point is: you do NOT HAVE TO!*
 ====
 

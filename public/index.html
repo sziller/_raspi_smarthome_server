@@ -187,7 +187,7 @@ table {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of contents</div>
 <ul class="sectlevel1">
-<li><a href="#shmc:server:intro">1. Project introduction</a>
+<li><a href="#shmc:server:intro">1. About the Development</a>
 <ul class="sectlevel2">
 <li><a href="#_motivation">1.1. Motivation</a></li>
 <li><a href="#_technology">1.2. Technology</a></li>
@@ -195,10 +195,11 @@ table {
 </li>
 <li><a href="#readme:shmc">2. _raspi_smarthome_server</a>
 <ul class="sectlevel2">
-<li><a href="#_whom_and_what_for">2.1. whom and what for?</a></li>
-<li><a href="#_how_do_i_get_started">2.2. how do I get started?</a></li>
-<li><a href="#_how_can_you_contribute">2.3. how can you contribute?</a></li>
-<li><a href="#_contact">2.4. contact</a></li>
+<li><a href="#_repository">2.1. repository</a></li>
+<li><a href="#_whom_and_what_for">2.2. whom and what for?</a></li>
+<li><a href="#_how_do_i_get_started">2.3. how do I get started?</a></li>
+<li><a href="#_how_can_you_contribute">2.4. how can you contribute?</a></li>
+<li><a href="#_contact">2.5. contact</a></li>
 </ul>
 </li>
 <li><a href="#shmc:fastapi">3. FastAPI</a>
@@ -221,18 +222,29 @@ table {
 </div>
 </div>
 <div class="sect1">
-<h2 id="shmc:server:intro">1. Project introduction</h2>
+<h2 id="shmc:server:intro">1. About the Development</h2>
 <div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Intoduction</div>
+<div class="paragraph">
+<p>SmartHome my Castle is a decentralized SmartHome Framework:<br>
+Decentralized, open-source, self-sufficient, modular, independent.</p>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_motivation">1.1. Motivation</h3>
 <div class="sect3">
 <h4 id="_system">1.1.1. System</h4>
 <div class="paragraph">
-<p>We want to build a modular smart-home system on fully open-source basis. I want to enable full control over ones home.
-A home in this context is regarded as one <strong>sovereign</strong> interconnected system, where - though modular in architecture -
+<p>We - at <a href="https://sziller.eu" class="bare">sziller.eu</a> - want to build a modular smart-home system on fully open-source basis. Our goal is to
+enable full control over Your home: providing You with the necessary framework to develop a truly custom-made
+intelligent home, enabling self developed solutions, or rely on a <strong>community developed</strong> solutions.
+A <em>Home</em> in this context is regarded as one <strong>sovereign</strong> interconnected system, where - though modular in architecture -
 parts of the infrastructure can intaract with eachother, use each-others measurements, computational results.
 As we deal with brick-and-mortar buildings, at the edge of this project you&#8217;ll always find mostly physical systems,
-such as:</p>
+(peripherals) such as:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -254,8 +266,8 @@ such as:</p>
 <div class="sect3">
 <h4 id="_control">1.1.2. Control</h4>
 <div class="paragraph">
-<p>We strive to achieve as much <strong>decentralization</strong> and <strong>soverignity</strong> as possible. The user of this project should <strong>never</strong>
-have to rely on 3rd parties.</p>
+<p>We strive to achieve as much <strong>decentralization</strong> and <strong>soverignity</strong> as possible. The User of this project - You -
+should <strong>never</strong> have to rely on 3rd parties.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -265,7 +277,8 @@ have to rely on 3rd parties.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Decentralization is hard to achieve. The user obviously can anytime use 3rd party software if he chooses to.</p>
+<p>Decentralization is hard to achieve. You obviously <strong>can</strong> anytime use 3rd party software if you choose to.<br>
+<strong>The point is: you do NOT HAVE TO!</strong></p>
 </div>
 </td>
 </tr>
@@ -276,7 +289,7 @@ have to rely on 3rd parties.</p>
 <div class="sect2">
 <h3 id="_technology">1.2. Technology</h3>
 <div class="paragraph">
-<p>The Project intends to be usable from step 0. Right at the moment you download the server, you should be good to go.
+<p>The Project intends to be usable from step 0. Right at the moment You download the server, You should be good to go.
 Then - as you&#8217;re ready to invest more resources - build up a more complex system module-by-module according to your
 preferences.
 Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment</p>
@@ -349,15 +362,25 @@ Here are some examles we are currently implementing:</p>
 <p>The project is built with <strong>RaspberryPi</strong> computing hardware (simply: Nodes) in mind.
 We also make use of RaspberryPi related peripherals such as SenseHat, Raspberry Cameras.
 When it comes to Node demand of your setup, you need to consider: Functions may occupy a Node by their own,
-or may share a Node with other modules. We basically create a mesh network of
-Nodes inside a building/ apartment. Nodes are placed in several different locations strategically in the
-building/ apartment.<br></p>
+or may share a Node with other modules. We basically create a mesh network of Nodes inside a building/ apartment.
+Nodes are placed in several different locations strategically in the building/ apartment.<br></p>
 </dd>
 </dl>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<img src="./icons/important.png" alt="Important">
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Meaning setting up a Live Project is not only an IT decision. You need to look at your Floorplan, Energy-bills, Kids,
-Lifestyle. You might actually want to consult an Architect with a technlogical touch.</p>
+<p>Thus, setting up a Live Project is not only an IT decision. You need to look at your floorplan, energy-bills,
+building-construction, kids, lifestyle. You might actually want to consult an Architect with a technlogical touch.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="dlist">
 <dl>
@@ -409,18 +432,30 @@ for fast action, speed however will not be a priority when it comes to communica
 <h2 id="readme:shmc">2. _raspi_smarthome_server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is the entry point of the SmartHome my Castle development.
-Here&#8217;s how you get it running.</p>
+<p>This is the entry point of the SmartHome my Castle development.</p>
+</div>
+<div class="paragraph">
+<p>Find a detailed description of SmartHome my Castle under:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://shmc.sziller.eu" class="bare">shmc.sziller.eu</a></p>
 </div>
 <div class="sect2">
-<h3 id="_whom_and_what_for">2.1. whom and what for?</h3>
+<h3 id="_repository">2.1. repository</h3>
+<div class="paragraph">
+<p>Find actual project repo under:
+<a href="https://github.com/sziller/_raspi_smarthome_server" class="bare">github.com/sziller/_raspi_smarthome_server</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_whom_and_what_for">2.2. whom and what for?</h3>
 <div class="paragraph">
 <p><em>Version: v0.0.0</em><br>
 Modular open-source SmartHome application for self-sovereign</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how_do_i_get_started">2.2. how do I get started?</h3>
+<h3 id="_how_do_i_get_started">2.3. how do I get started?</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -445,7 +480,7 @@ Modular open-source SmartHome application for self-sovereign</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how_can_you_contribute">2.3. how can you contribute?</h3>
+<h3 id="_how_can_you_contribute">2.4. how can you contribute?</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -461,7 +496,7 @@ Modular open-source SmartHome application for self-sovereign</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_contact">2.4. contact</h3>
+<h3 id="_contact">2.5. contact</h3>
 <div class="paragraph">
 <p>Owner and developer of this Project is Sziller</p>
 </div>

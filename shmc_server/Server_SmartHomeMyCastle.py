@@ -66,6 +66,7 @@ log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
 app_id              = conf.APP_ID
 
 # Setting up logger                                                                     -   START   -
+if not os.path.exists(log_filename): os.mkdir(log_filename)
 lg = logging.getLogger("shmc")
 # Using config.py data - configurate logger:
 logging.basicConfig(filename=log_filename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
@@ -90,19 +91,18 @@ lg.warning("mount-os  : Local DB-s to server filesystem")
 # Run the bash script
 # output = os.popen('bash {}'.format(mount_script)).read()
 # lg.warning(output)
-# -------------------------------------------------------------------------------------------------------
-# - Basic setup                                                                      START              -
-# -------------------------------------------------------------------------------------------------------
 
 # prepare script running:                                                           -   START   -
+lg.info("setup fsh : {}".format(fsh_dir_info))
+prepare.fsh(fsh_dir_info)
 lg.info("read data : from: {}".format(err_msg_path))
 ERR  = prepare.read_yaml_data(source=err_msg_path)
 lg.info("read data : from: {}".format(app_inf_path))
 APP_INFO = prepare.read_yaml_data(source=app_inf_path)
-lg.info("setup fsh : {}".format(fsh_dir_info))
-prepare.fsh(fsh_dir_info)
-
 # prepare script running:                                                           -   ENDED   -
+# -------------------------------------------------------------------------------------------------------
+# - Basic setup                                                                      START              -
+# -------------------------------------------------------------------------------------------------------
 
 # server data processing:                                                           -   START   -
 lg.info("read conf.: APP_ROUTER_INFO")

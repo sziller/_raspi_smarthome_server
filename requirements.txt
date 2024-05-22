@@ -5,7 +5,7 @@
 
 # needs to be added to git!
 
-sziller_assist              # needed for small automated tasks
+sziller_assist      # needed for small automated tasks
 pyaml               # needed - yaml file import
 python-dotenv       # needed to read .env
 pyzmq               # socket-like communication to engine processes
@@ -18,5 +18,4 @@ sqlalchemy          # needed - for DB handling
 psycopg2            # needed - for DB handling
 passlib             # needed for the auth server
 python-jose         # needed for authentication
-python-multipart
-# python-multipart    # needed - probably(!) a fastapi dependency (Depends)?
+python-multipart    # needed - probably(!) a fastapi dependency (Depends)?

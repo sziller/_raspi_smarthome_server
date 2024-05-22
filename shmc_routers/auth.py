@@ -103,11 +103,12 @@ def authenticate_user(db_lines, username: str, psswd: str) -> UserInDB or False:
 
 
 async def get_current_user(token: str = Depends(oauth_2_scheme)):
-    """
-    
-    :param token: 
-    :return: 
-    """
+    """=== Function name: get_current_user =============================================================================
+    Function - as dependency - checks Bearer token. Raises exceptions if Token doesn't fit.
+    :param token: JWT token
+    :return: the valid user represented by the Token
+    ======================================================================================== by Sziller & Tim ==="""
+    # creating default Error message:
     credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Couldnt validate",
                                          headers={"WWW-Authenticate": "Bearer"})
     try:
@@ -115,7 +116,6 @@ async def get_current_user(token: str = Depends(oauth_2_scheme)):
         username: str = payload.get("sub")
         if username is None:
             raise credential_exception
-
         token_data = TokenData(username=username)
     except JWTError:
         raise credential_exception
@@ -127,11 +127,14 @@ async def get_current_user(token: str = Depends(oauth_2_scheme)):
 
 
 async def get_current_active_user(current_user: UserInDB = Depends(get_current_user)):
-    """
-    
-    :param current_user: 
-    :return: 
-    """
+    """=== Function name: get_current_active_user ======================================================================
+    Function - as dependency - checks if user is disabled, raises exception for disabled user.
+    :param current_user: user to be checked
+    :return: the same user
+    ======================================================================================== by Sziller & Tim ==="""
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+if __name__ == "__main__":
+    pass

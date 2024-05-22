@@ -2,10 +2,13 @@
 This is the entry point of the SmartHome my Castle development.
 Here's how you get it running.
 
+=== repository
+Find actual project under:
+https://github.com/sziller/_raspi_smarthome_server
+
 === whom and what for?
 _Version: v0.0.0_ +
 Modular open-source SmartHome application for self-sovereign  
-
 
 === how do I get started?
 

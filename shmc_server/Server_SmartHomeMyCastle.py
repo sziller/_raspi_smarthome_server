@@ -167,21 +167,21 @@ server.mount(path="/app", app=app, name="shmc")
 # Route handler for the root URL
 server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
 
-@app.get("/")
-async def read_index():
-    """
-
-    :return: 
-    """
-    # Get the path to the index.html file
-    index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "index.html")
-    # Check if the file exists
-    if os.path.exists(index_path):
-        # Return the index.html file as a response
-        return FileResponse(index_path)
-    else:
-        # Return a simple message if index.html does not exist
-        return {"message": "index.html not found"}
+# @app.get("/")
+# async def read_index():
+#     """
+# 
+#     :return: 
+#     """
+#     # Get the path to the index.html file
+#     index_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public", "index.html")
+#     # Check if the file exists
+#     if os.path.exists(index_path):
+#         # Return the index.html file as a response
+#         return FileResponse(index_path)
+#     else:
+#         # Return a simple message if index.html does not exist
+#         return {"message": "index.html not found"}
 
 # server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
 lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))

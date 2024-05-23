@@ -66,7 +66,7 @@ APP_ROUTER_INFO = {
         "description": "Information regarding Authorization",
         "externalDocs": {
             "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "url": "https://shmc.sziller.eu"}},
     'wallet': {
         "use": False,
         "prefix": "/wllt",
@@ -74,10 +74,12 @@ APP_ROUTER_INFO = {
                  "port": 8041,
                  "zmq_port": 0},
         "module": "shmc_routers.WalletRouter_class",
-        "description": "Information regarding SmartHome setup's BiTCoin wallet",
+        "description": "If you run a Wallet instance in the SHMC framework - use these endpoints. "
+                       "Instance name matches the path-prefix assigned to Router. "
+                       "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "description": "or visit the git repo: _rasp_wallet",
+            "url": "https://github.com/sziller"}},
     "aquaponics": {
         "use": True,
         "prefix": "/aqua",
@@ -85,10 +87,12 @@ APP_ROUTER_INFO = {
                  "port": 8042,
                  "zmq_port": 52008},
         "module": "shmc_routers.AquaRouter_class",
-        "description": "Information regarding SmartHome setup's Aquaponic system",
+        "description": "If you run an Aquaponics Engine instance in the SHMC framework - use these endpoints. "
+                       "Instance name matches the path-prefix assigned to Router. "
+                       "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "description": "or visit the git repo: _rasp_aquaponics",
+            "url": "https://github.com/sziller"}},
     "observatory": {
         "use": True,
         "prefix": "/obsr",
@@ -96,10 +100,12 @@ APP_ROUTER_INFO = {
                  "port": 8043,
                  "zmq_port": 52902},
         "module": "shmc_routers.ObsrRouter_class",
-        "description": "Information regarding SmartHome setup's Observatory hub",
+        "description": "If you run an Observatory Engine instance in the SHMC framework - use these endpoints. "
+                       "Instance name matches the path-prefix assigned to Router. "
+                       "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "description": "or visit the git repo: _rasp_observatory",
+            "url": "https://github.com/sziller"}},
     "kidsroom": {
         "use": True,
         "prefix": "/r_ks",
@@ -107,10 +113,12 @@ APP_ROUTER_INFO = {
                  "port": 8050,
                  "zmq_port": 52903},
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
-        "description": "Information regarding SmartHome setup's Room general manager",
+        "description": "If you run a RoomManager Engine instance in the SHMC framework - use these endpoints. "
+                       "Instance name matches the path-prefix assigned to Router. "
+                       "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "description": "or visit the git repo: _rasp_roommanager",
+            "url": "https://github.com/sziller"}},
     "floroom": {
         "use": False,
         "prefix": "/r_fl",
@@ -118,10 +126,12 @@ APP_ROUTER_INFO = {
                  "port": 8051,
                  "zmq_port": 52903},
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
-        "description": "Information regarding SmartHome setup's Room general manager",
+        "description": "If you run a RoomManager Engine instance in the SHMC framework - use these endpoints. "
+                       "Instance name matches the path-prefix assigned to Router. "
+                       "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
-            "description": "find additional info under: sziller.eu",
-            "url": "http://sziller.eu"}},
+            "description": "or visit the git repo: _rasp_roommanager",
+            "url": "https://github.com/sziller"}},
     # "bathroom": {
     #     "use": True,
     #     "prefix": "/r_ba",
@@ -132,6 +142,6 @@ APP_ROUTER_INFO = {
     #     "description": "Information regarding SmartHome setup's Room general manager",
     #     "externalDocs": {
     #         "description": "find additional info under: sziller.eu",
-    #         "url": "http://sziller.eu"}}
+    #         "url": "https://shmc.sziller.eu"}}
     }
 

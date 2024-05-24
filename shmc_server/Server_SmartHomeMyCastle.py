@@ -64,6 +64,7 @@ log_tf = conf.LOG_TIMEFORMAT
 log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
 # app settings:
 app_id              = conf.APP_ID
+# READ BASIC SETTINGS                                                                   -   ENDED   -
 
 # Setting up logger                                                                     -   START   -
 if not os.path.exists(log_filename): os.mkdir(log_filename)

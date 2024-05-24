@@ -28,8 +28,21 @@ LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfil
 LOG_TIMED: bool                 = False  # True: new log file created - stamp in name, False: no stamp, file overwritten
 LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
 
+
+# App settings:
+APP_ID: str                     = "shmc"
+APP_IS_PROCESS_RUNNING: bool    = True
+
+# ---------------------------------------------------------------------------------------------------
+# SERVER build-up                                                                       -   START   -
+# ---------------------------------------------------------------------------------------------------
+# Configure your Server.
+
+# List necessary Routers here.
+# Routers are passed as dictionary items.
+# Routers receive the following parameters passed on startup:
 '''
-Routers receive the following parameters passed on startup:
+
 {
     <name>:                                    # name of the router - key
         {   "use": bool,                       # if current router instance is used
@@ -38,7 +51,7 @@ Routers receive the following parameters passed on startup:
                         "ip": str[xx.xx.xx.xx],     # ip address
                         "port": int,                # Engine's DB access port
                         "zmq_port": int,            # if socket comm. allowed to engine, use this port
-            },                                  # dict of {param: arg} pairs for current router instance
+            },                                      # dict of {param: arg} pairs for current router instance
             "module": str ["xxx.xxx"],          # module out of which "router" obj is instantiated
             "description": "Information regarding router",
                 "externalDocs": {
@@ -50,11 +63,6 @@ Routers receive the following parameters passed on startup:
     ...     }
 '''
 
-# App settings:
-APP_ID: str                     = "shmc"
-APP_IS_PROCESS_RUNNING: bool    = True
-
-# list necessary router data here:
 APP_ROUTER_INFO = {
     'authorization': {
         "use": True,
@@ -145,3 +153,6 @@ APP_ROUTER_INFO = {
     #         "url": "https://shmc.sziller.eu"}}
     }
 
+# ---------------------------------------------------------------------------------------------------
+# SERVER build-up                                                                       -   ENDED   -
+# ---------------------------------------------------------------------------------------------------

@@ -24,10 +24,10 @@ NECESSARY_DIRECTORIES: list     = ["./images", "./documentation", "./documents",
 # Log settings:
 LOG_FORMAT: str                 = "%(asctime)s [%(levelname)8s]: %(message)s"
 LOG_LEVEL: str                  = "DEBUG"  # NOTSET=0, DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
-LOG_FILENAME: str               = "{}/log/srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
+LOG_PATH: str                   = "{}/log/"
+LOG_FILENAME: str               = "{}srvr-shmc{}.log"  # location of logfile. 1st {} = ROOT_PATH, 2nd {} timestamp
 LOG_TIMED: bool                 = False  # True: new log file created - stamp in name, False: no stamp, file overwritten
 LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
-
 
 # App settings:
 APP_ID: str                     = "shmc"

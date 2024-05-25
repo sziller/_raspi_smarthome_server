@@ -29,7 +29,6 @@ import config_prv as conf_prv
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from shmc_sqlAccess.SQL_interface import createSession
 from shmc_sqlBases.sql_baseUser import User as sqlUser
 
@@ -61,16 +60,17 @@ log_format = conf.LOG_FORMAT
 log_level = getattr(logging, conf.LOG_LEVEL)
 log_ts = "_{}".format(TiFo.timestamp()) if conf.LOG_TIMED else ""
 log_tf = conf.LOG_TIMEFORMAT
-log_filename = conf.LOG_FILENAME.format(root_path, log_ts)
+log_path = conf.LOG_PATH.format(root_path)
+log_fullfilename = conf.LOG_FILENAME.format(log_path, log_ts)
 # app settings:
 app_id              = conf.APP_ID
 # READ BASIC SETTINGS                                                                   -   ENDED   -
 
 # Setting up logger                                                                     -   START   -
-if not os.path.exists(log_filename): os.mkdir(log_filename)
+if not os.path.exists(log_path): os.mkdir(log_path)
 lg = logging.getLogger("shmc")
 # Using config.py data - configurate logger:
-logging.basicConfig(filename=log_filename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
+logging.basicConfig(filename=log_fullfilename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
 # initial messages
 lg.warning("FILE: {:>86} <<<".format(__file__))
 lg.warning("LOGGER namespace: {:>74} <<<".format(__name__))
@@ -188,7 +188,7 @@ server.mount(path="/", app=StaticFiles(directory="public", html=True), name="pub
 lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))
 
 # -------------------------------------------------------------------------------------------------------
-# StaticFiles                                                                               -   START   -
+# StaticFiles                                                                               -   ENDED   -
 # -------------------------------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------------------------------------

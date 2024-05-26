@@ -31,6 +31,7 @@ LOG_TIMEFORMAT: str             = "%y%m%d %H:%M:%S"
 
 # App settings:
 APP_ID: str                     = "shmc"
+APP_PATH: str                   = "/app"
 APP_IS_PROCESS_RUNNING: bool    = True
 
 # ---------------------------------------------------------------------------------------------------

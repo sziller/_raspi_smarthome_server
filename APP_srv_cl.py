@@ -2,7 +2,7 @@
 
 """=== App-interface to start SmartHomeMyCastle Server =======================================
 Call this python script as:
-python3 App_Server_inst.py
+python3 APP_srv_cl.py
 ============================================================================ by Sziller ==="""
 
 import os
@@ -27,9 +27,7 @@ def app_server(**data_passed):
     lg.info("          : =         user languange: {}         =".format(data_passed["lng"]))
     lg.warning("          : ======================================")
     server = ShmcServer.Server()
-    for param, arg in data_passed.items():
-        setattr(server, param, arg)
-        print("param: {:>20} : {}".format(param, getattr(server, param)))
+    for param, arg in data_passed.items(): setattr(server, param, arg)
     server.process()
     server.serve_forever()
     pass
@@ -47,8 +45,8 @@ if __name__ == "__main__":
     log_level = getattr(logging, conf.LOG_LEVEL)
     log_ts = "_{}".format(TiFo.timestamp()) if conf.LOG_TIMED else ""
     log_tf = conf.LOG_TIMEFORMAT
-    root_path = conf.PATH_ROOT
-    log_path = conf.LOG_PATH.format(root_path)
+    path_root = conf.PATH_ROOT
+    log_path = conf.LOG_PATH.format(path_root)
     log_fullfilename = conf.LOG_FILENAME.format(log_path, log_ts)
     
     # Setting up logger                                                                     -   START   -
@@ -69,6 +67,7 @@ if __name__ == "__main__":
     # Setting up logger                                                                     -   ENDED   -
 
     kwargs_server = {
+        "app_path": conf.APP_PATH,
         "srv_ip": os.getenv("SRV_IP"),
         "srv_port": int(os.getenv("SRV_PORT")),
         "session_name_shmc": os.getenv("DB_FULLNAME_SHMC"),
@@ -77,14 +76,13 @@ if __name__ == "__main__":
         "session_style_auth": os.getenv("DB_STYLE_AUTH"),
         "lng": conf.LANGUAGE_CODE,
         "fsh_dir_info": conf.NECESSARY_DIRECTORIES,
-        "root_path": conf.PATH_ROOT,
-        "err_msg_path": conf.PATH_ERROR_MSG.format(conf.PATH_ROOT),
-        "app_inf_path": conf.PATH_APP_INFO.format(conf.PATH_ROOT),
-        "mount_from": conf.PATH_STATIC_FROM,
-        "mount_to": conf.PATH_STATIC_TO,
+        "path_root": conf.PATH_ROOT,
+        "path_err_msg": conf.PATH_ERROR_MSG.format(conf.PATH_ROOT),
+        "path_app_doc": conf.PATH_APP_INFO.format(conf.PATH_ROOT),
+        "path_mount_static_from": conf.PATH_STATIC_FROM,
+        "path_mount_static_to": conf.PATH_STATIC_TO,
         "router_info": conf.APP_ROUTER_INFO
         }
     
     app_server(**kwargs_server)
     
-

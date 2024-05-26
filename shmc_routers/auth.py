@@ -63,12 +63,12 @@ class TokenData(BaseModel):
     username: str or None   = None
 
 
-def verify_psswd(plain_psswd, psswd_hsh):
+def verify_psswd(plain_psswd: str, psswd_hsh: str) -> bool:
     """=== Function name: verify_psswd =================================================================================
-    
-    :param plain_psswd: 
-    :param psswd_hsh: 
-    :return: 
+    Quick routine to check if password matches it's alleged hash.
+    :param plain_psswd: str - psswd to be verified
+    :param psswd_hsh: str - hash to check against
+    :return: boolean - True for match, False if doesn't
     ============================================================================================== by Sziller ==="""
     return pwd_context.verify(plain_psswd, psswd_hsh)
 

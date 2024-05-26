@@ -49,21 +49,22 @@ session_style_auth  = os.getenv("DB_STYLE_AUTH")
 # language settings:
 LNG                 = conf.LANGUAGE_CODE
 # path settings:
-fsh_dir_info        = conf.NECESSARY_DIRECTORIES
-root_path           = conf.PATH_ROOT
-err_msg_path        = conf.PATH_ERROR_MSG.format(root_path)
-app_inf_path        = conf.PATH_APP_INFO.format(root_path)
-mount_from          = conf.PATH_STATIC_FROM
-mount_to            = conf.PATH_STATIC_TO
+fsh_dir_info                    = conf.NECESSARY_DIRECTORIES
+path_root                       = conf.PATH_ROOT
+path_err_msg                    = conf.PATH_ERROR_MSG.format(path_root)
+path_app_doc                    = conf.PATH_APP_INFO.format(path_root)
+path_mount_static_from          = conf.PATH_STATIC_FROM
+path_mount_static_to            = conf.PATH_STATIC_TO
 # log settings:
 log_format = conf.LOG_FORMAT
 log_level = getattr(logging, conf.LOG_LEVEL)
 log_ts = "_{}".format(TiFo.timestamp()) if conf.LOG_TIMED else ""
 log_tf = conf.LOG_TIMEFORMAT
-log_path = conf.LOG_PATH.format(root_path)
+log_path = conf.LOG_PATH.format(path_root)
 log_fullfilename = conf.LOG_FILENAME.format(log_path, log_ts)
 # app settings:
 app_id              = conf.APP_ID
+app_path            = conf.APP_PATH
 # READ BASIC SETTINGS                                                                   -   ENDED   -
 
 # Setting up logger                                                                     -   START   -
@@ -96,10 +97,10 @@ lg.warning("mount-os  : Local DB-s to server filesystem")
 # prepare script running:                                                           -   START   -
 lg.info("setup fsh : {}".format(fsh_dir_info))
 prepare.fsh(fsh_dir_info)
-lg.info("read data : from: {}".format(err_msg_path))
-ERR  = prepare.read_yaml_data(source=err_msg_path)
-lg.info("read data : from: {}".format(app_inf_path))
-APP_INFO = prepare.read_yaml_data(source=app_inf_path)
+lg.info("read data : from: {}".format(path_err_msg))
+err_msg  = prepare.read_yaml_data(source=path_err_msg)
+lg.info("read data : from: {}".format(path_app_doc))
+APP_INFO = prepare.read_yaml_data(source=path_app_doc)
 # prepare script running:                                                           -   ENDED   -
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
@@ -145,7 +146,7 @@ app = FastAPI(openapi_tags=tags_metadata,
                        "email": "szillerke@gmail.com"},
               terms_of_service=APP_INFO["terms"],
               openapi_url=APP_INFO["url"].format(APP_INFO["proj_nick"]))
-server.mount(path="/app", app=app, name="shmc")
+server.mount(path=app_path, app=app, name="shmc")
 
 # -------------------------------------------------------------------------------------------------------
 # Server application                                                                        -   ENDED   -
@@ -185,7 +186,7 @@ server.mount(path="/", app=StaticFiles(directory="public", html=True), name="pub
 #         return {"message": "index.html not found"}
 
 # server.mount(path="/", app=StaticFiles(directory="public", html=True), name="public")
-lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(mount_from, mount_to))
+lg.warning("mount-srvr: StaticDeta from '{}' to '{}'".format(path_mount_static_from, path_mount_static_to))
 
 # -------------------------------------------------------------------------------------------------------
 # StaticFiles                                                                               -   ENDED   -
@@ -228,7 +229,7 @@ for name, data in router_info.items():  # looping through routing_info as key, v
             app.include_router(router=router_instance, tags=[name], prefix=data["prefix"])
             lg.info("incl.rout.: {}".format(router_instance))
         except (ImportError, AttributeError):
-            msg = ERR[103][LNG].format(name)
+            msg = err_msg[103][LNG].format(name)
             lg.error(msg)
 lg.debug("SUMMARY   : --------------------------------------------------------------------------------")
 lg.debug("listing   : all routers included in <app> sub-server:")

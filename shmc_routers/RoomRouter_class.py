@@ -1,11 +1,6 @@
-import time
 import logging
 import inspect
 from shmc_routers._ShmcBaseRouters import EngineMngrRouter
-
-from shmc_sqlAccess import SQL_interface as sqli
-from shmc_messages import msg
-from shmc_messages import msg_room
 
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger()

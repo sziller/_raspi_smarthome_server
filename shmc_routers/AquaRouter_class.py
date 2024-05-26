@@ -3,7 +3,7 @@ import logging
 import inspect
 from shmc_routers._ShmcBaseRouters import EngineMngrRouter
 from shmc_messages import msg
-from shmc_messages import msg_aqua
+from obsolete import msg_aqua
 
 IS_PROCESS_RUNNING = True
 

@@ -193,7 +193,7 @@ table {
 <li><a href="#_technology">1.2. Technology</a></li>
 </ul>
 </li>
-<li><a href="#readme:shmc">2. _raspi_smarthome_server</a>
+<li><a href="#readme:shmc">2. README: _raspi_smarthome_server</a>
 <ul class="sectlevel2">
 <li><a href="#_repository">2.1. repository</a></li>
 <li><a href="#_whom_and_what_for">2.2. whom and what for?</a></li>
@@ -448,16 +448,95 @@ for fast action, speed however will not be a priority when it comes to communica
 </div>
 </div>
 <div class="sect1">
-<h2 id="readme:shmc">2. _raspi_smarthome_server</h2>
+<h2 id="readme:shmc">2. README: _raspi_smarthome_server</h2>
 <div class="sectionbody">
+<div class="sidebarblock text-center">
+<div class="content">
+<div class="title">TLDR</div>
 <div class="paragraph">
-<p>This is the entry point of the SmartHome my Castle development.</p>
+<p>This is the Software application of the SmartHome my Castle development.</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<img src="./icons/important.png" alt="Important">
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Keep in mind! As the development can be used in different scopes, you may not have to deal with most of the factors we
+list below.<br>
+E.g.:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Locally run Engine only Installations, will not need any connection settings.</p>
+</li>
+<li>
+<p>If you do not allow remote access, you can completelly avoid dealing with world-facing security, port forwarding, etc.</p>
+</li>
+<li>
+<p>If you only run the Development with one Hardware only, you wont have to deal with the Local Network.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Find a detailed description of SmartHome my Castle under:</p>
+<p>When setting up your SmartHome using the Entire feature set of the SmartHome my Castle Development, proceed as listed
+below:</p>
+</div>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p>Design your smart home setup, based on building architecture, building hardware conditions, set of physical systems
+you want to monitor or controll. Ideally, you should consult your Building Architect and Construction Engineer to
+incorporate relevant decisions right from the beginning of the building design process.</p>
+</li>
+<li>
+<p>Install computer hardware, sensors, robots where they are needed, where these can work optimally. They sould be
+practically accessible to you, but not necessarly to unauthorized, unwarranted or even incompetent people.
+Mind necessary power supply, network connection, WiFi coverge, Provider-router access, cooling/ ventillation, etc.<br>
+Make sure the is network connection possible between system parts on hardware level/ router level.</p>
+</li>
+<li>
+<p>Establish IT connection between parts of the Development, and connection between development and the outside world.
+Mind your DHCP, set up logical IP settings, Port system. Check necessary Port forwarding, check Internet connectivity.
+Allow secure connection using HTTPS.<br>
+Install OS' onto RaspberryPis. Install necessary hardware mounted and controlled by Nodes.
+Enable and prepare SSH connections. (needed for both local connection and GitHub repo access):
+Create secure keypairs, use password protected keys.</p>
+</li>
+<li>
+<p>Download, install and run necessary software (e.g.: Server with routers, Message Handlers, Engines)
+To to so, clone repos, setup git environments.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<img src="./icons/important.png" alt="Important">
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This README section of the document only deals with <strong><em>Point D</em></strong> - the software part of the Development.
+It is necessary to handle the software in the context of the entire system, as highlighted here at
+<a href="https://shmc.sziller.eu" class="bare">shmc.sziller.eu</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p><a href="https://shmc.sziller.eu" class="bare">shmc.sziller.eu</a></p>
+<p>Find a detailed description of SmartHome my Castle under:
+<a href="https://shmc.sziller.eu" class="bare">shmc.sziller.eu</a></p>
 </div>
 <div class="sect2">
 <h3 id="_repository">2.1. repository</h3>
@@ -475,27 +554,63 @@ Modular open-source SmartHome application for self-sovereign</p>
 </div>
 <div class="sect2">
 <h3 id="_how_do_i_get_started">2.3. how do I get started?</h3>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+<div class="sect3">
+<h4 id="_summary_of_set_up">2.3.1. Summary of set up</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration">2.3.2. Configuration</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependencies">2.3.3. Dependencies</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_database_configuration">2.3.4. Database configuration</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_to_run_tests">2.3.5. How to run tests</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deployment_instructions">2.3.6. Deployment instructions</h4>
+<div class="paragraph">
+<p>tbd&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_entry_point">2.3.7. Entry Point</h4>
+<div class="paragraph">
+<p>Use one of the following Pyhton3 scripts to run the Server:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Summary of set up</p>
+<p><code>APP_srv_cl</code> - instantiating a wrapped-class to run the server</p>
 </li>
 <li>
-<p>Configuration</p>
-</li>
-<li>
-<p>Dependencies</p>
-</li>
-<li>
-<p>Database configuration</p>
-</li>
-<li>
-<p>How to run tests</p>
-</li>
-<li>
-<p>Deployment instructions</p>
+<p><code>APP_srv_fn</code> - a function based server start - more of a tutorial style code-branch</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>All <code>config.py</code> and <code>.env</code> contents are compatible with both Entry-Points.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -509,7 +624,10 @@ Modular open-source SmartHome application for self-sovereign</p>
 <p>Code review</p>
 </li>
 <li>
-<p>Other guidelines</p>
+<p>Comments on architecture or development decisions</p>
+</li>
+<li>
+<p>Possible refactoring ideas</p>
 </li>
 </ul>
 </div>
@@ -522,7 +640,7 @@ Modular open-source SmartHome application for self-sovereign</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://sziller.eu" class="bare">sziller.eu</a></p>
+<p><a href="https://sziller.eu" class="bare">sziller.eu</a></p>
 </li>
 </ul>
 </div>

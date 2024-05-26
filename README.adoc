@@ -1,8 +1,52 @@
-== _raspi_smarthome_server
-This is the entry point of the SmartHome my Castle development.
+== README: _raspi_smarthome_server
+
+.TLDR
+[.text-center]
+****
+This is the Software application of the SmartHome my Castle development.
+****
+
+[IMPORTANT]
+====
+Keep in mind! As the development can be used in different scopes, you may not have to deal with most of the factors we
+list below. +
+E.g.:
+
+- Locally run Engine only Installations, will not need any connection settings.
+- If you do not allow remote access, you can completelly avoid dealing with world-facing security, port forwarding, etc.
+- If you only run the Development with one Hardware only, you wont have to deal with the Local Network. 
+====
+
+When setting up your SmartHome using the Entire feature set of the SmartHome my Castle Development, proceed as listed
+below:
+
+.... Design your smart home setup, based on building architecture, building hardware conditions, set of physical systems
+you want to monitor or controll. Ideally, you should consult your Building Architect and Construction Engineer to 
+incorporate relevant decisions right from the beginning of the building design process.
+
+.... Install computer hardware, sensors, robots where they are needed, where these can work optimally. They sould be
+practically accessible to you, but not necessarly to unauthorized, unwarranted or even incompetent people.
+Mind necessary power supply, network connection, WiFi coverge, Provider-router access, cooling/ ventillation, etc. +
+Make sure the is network connection possible between system parts on hardware level/ router level.
+
+.... Establish IT connection between parts of the Development, and connection between development and the outside world.
+Mind your DHCP, set up logical IP settings, Port system. Check necessary Port forwarding, check Internet connectivity.
+Allow secure connection using HTTPS. + 
+Install OS' onto RaspberryPis. Install necessary hardware mounted and controlled by Nodes.
+Enable and prepare SSH connections. (needed for both local connection and GitHub repo access):
+Create secure keypairs, use password protected keys.
+
+.... Download, install and run necessary software (e.g.: Server with routers, Message Handlers, Engines) 
+To to so, clone repos, setup git environments. 
+
+[IMPORTANT]
+====
+This README section of the document only deals with *_Point D_* - the software part of the Development.
+It is necessary to handle the software in the context of the entire system, as highlighted here at 
+https://shmc.sziller.eu. 
+====
 
 Find a detailed description of SmartHome my Castle under:
-
 https://shmc.sziller.eu
 
 === repository
@@ -14,23 +58,44 @@ _Version: v0.0.0_ +
 Modular open-source SmartHome application for self-sovereign  
 
 === how do I get started?
+tbd...
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+==== Summary of set up
+tbd...
+
+==== Configuration
+tbd...
+
+==== Dependencies
+Not much, other than what's listed above. 
+Run it on a Linux system, mind requirements, and use the `lib` directory to install additional packages.
+
+==== Database configuration
+tbd...
+
+==== How to run tests
+tbd...
+
+==== Deployment instructions
+tbd...
+
+==== Entry Point
+Use one of the following Pyhton3 scripts to run the Server:
+
+* `APP_srv_cl` - instantiating a wrapped-class to run the server
+* `APP_srv_fn` - a function based server start - more of a tutorial style code-branch
+
+All `config.py` and `.env` contents are compatible with both Entry-Points.
 
 === how can you contribute?
 
 * Writing tests
 * Code review
-* Other guidelines
-
+* Comments on architecture or development decisions
+* Possible refactoring ideas
 
 === contact
 Owner and developer of this Project is Sziller
 
-* http://sziller.eu
+* https://sziller.eu
 

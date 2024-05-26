@@ -8,7 +8,7 @@ python3 APP_srv_fn.py
 import os
 import uvicorn
 from dotenv import load_dotenv
-from shmc_server import Server_SmartHomeMyCastle
+from shmc_server import serverFunction_SHMC
 
 
 if __name__ == "__main__":

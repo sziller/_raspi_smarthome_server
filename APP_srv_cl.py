@@ -11,7 +11,7 @@ import logging
 import config as conf
 from dotenv import load_dotenv
 from time_format import TimeFormat as TiFo
-from shmc_server import ShmcServer
+from shmc_server import serverClass_SHMC
 
 
 def app_server(**data_passed):

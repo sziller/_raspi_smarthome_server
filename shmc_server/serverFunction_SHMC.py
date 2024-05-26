@@ -21,6 +21,7 @@ FastAPI hints:
 """
 
 import os
+import yaml
 from time_format import TimeFormat as TiFo
 from dotenv import load_dotenv
 import logging
@@ -30,10 +31,60 @@ import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from shmc_sqlAccess.SQL_interface import createSession
+from shmc_sqlAccess import SQL_interface as SQLi
 from shmc_sqlBases.sql_baseUser import User as sqlUser
+from sqlalchemy.orm import sessionmaker
+# from shmc_server import session_preparation as prepare
+
+# -------------------------------------------------------------------------------------------------------------------
+# - Additional functions                                                                                -   START   -
+# -------------------------------------------------------------------------------------------------------------------
 
 
-from shmc_server import session_preparation as prepare
+def fsh(dir_list: list[str]):
+    """=== Function name: fsh =====================================================================================
+    Check and if missing create File System Hierarchy for Project
+    :return:
+    ============================================================================================== by Sziller ==="""
+    lg.debug("fsh check : Necessary FileSystemHierarchy check - START")
+    for dirname in dir_list:
+        if not os.path.exists(dirname):
+            lg.warning("fsh update: New directory created: {}".format(dirname))
+            os.mkdir(dirname)
+    lg.debug("fsh check : Necessary FileSystemHierarchy check - ENDED")
+
+
+def read_yaml_data(source: str):
+    """=== Function name: fsh =====================================================================================
+    Check and if missing create File System Hierarchy for Project
+    :return:
+    ============================================================================================== by Sziller ==="""
+    data = {"path": source, "fn": os.path.basename(__file__)}
+    with open(data["path"], 'r') as stream:
+        try:
+            parsed_yaml = yaml.safe_load(stream)
+            lg.info("prepare   : Loaded server_data from {path} - says {fn}".format(**data))
+            return parsed_yaml
+        except yaml.YAMLError as exc:
+            lg.critical("Failed to load server_data from {path} - says {fn}".format(**data))
+            raise exc
+
+
+def db(session: sessionmaker.object_session, user_list: list) -> bool:
+    """
+
+    :param session: 
+    :param user_list: 
+    :return: 
+    """
+    lg.warning("user db   : entering default users - if not included!")
+    SQLi.ADD_rows_to_table(primary_key="username", data_list=user_list, row_obj=sqlUser, session=session)
+    return True
+
+# -------------------------------------------------------------------------------------------------------------------
+# - Additional functions                                                                                -   ENDED   -
+# -------------------------------------------------------------------------------------------------------------------
+
 
 # READ BASIC SETTINGS                                                                   -   START   -
 # from .env:
@@ -96,11 +147,11 @@ lg.warning("mount-os  : Local DB-s to server filesystem")
 
 # prepare script running:                                                           -   START   -
 lg.info("setup fsh : {}".format(fsh_dir_info))
-prepare.fsh(fsh_dir_info)
+fsh(fsh_dir_info)
 lg.info("read data : from: {}".format(path_err_msg))
-err_msg  = prepare.read_yaml_data(source=path_err_msg)
+err_msg  = read_yaml_data(source=path_err_msg)
 lg.info("read data : from: {}".format(path_app_doc))
-APP_INFO = prepare.read_yaml_data(source=path_app_doc)
+APP_INFO = read_yaml_data(source=path_app_doc)
 # prepare script running:                                                           -   ENDED   -
 # -------------------------------------------------------------------------------------------------------
 # - Basic setup                                                                      START              -
@@ -120,7 +171,7 @@ for name, data in router_info.items():
 # server base DB session:                                                           -   START   -
 session_shmc = createSession(db_fullname=session_name_shmc, tables=None,                style=session_style_shmc)
 session_auth = createSession(db_fullname=session_name_auth, tables=[sqlUser.__table__], style=session_style_auth)
-prepare.db(session=session_auth, user_list=conf_prv.DEFAULT_USER_LIST)
+db(session=session_auth, user_list=conf_prv.DEFAULT_USER_LIST)
 session_shmc.close()
 session_auth.close()
 

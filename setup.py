@@ -10,7 +10,12 @@ from setuptools import setup
 setup(
     name='smarthome_server',  # package name, used at pip or tar.
     version='0.0.0',  # version Nr.... whatever
-    packages=["shmc_server", "shmc_basePackage", "shmc_slqAccess", "shmc_sqlBases"],
+    packages=["shmc_basePackage",
+              "shmc_messages",
+              "shmc_routers",
+              "shmc_server",
+              "shmc_slqAccess",
+              "shmc_sqlBases"],
     include_package_data=True,
     url='shmc.sziller.eu',  # if url is used at all
     license='',  # ...

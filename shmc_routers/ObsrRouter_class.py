@@ -4,7 +4,7 @@ import time
 import logging
 import inspect
 from shmc_routers._ShmcBaseRouters import EngineMngrRouter
-from shmc_routers.auth import *
+from shmc_routers._AuthPrimitives import *
 from shmc_messages import msg
 
 # Setting up logger                                                                     -   START   -

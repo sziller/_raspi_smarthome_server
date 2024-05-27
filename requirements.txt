@@ -5,17 +5,18 @@
 
 # needs to be added to git!
 
-sziller_assist      # needed for small automated tasks
-pyaml               # needed - yaml file import
-python-dotenv       # needed to read .env
-pyzmq               # socket-like communication to engine processes
 fastapi             # needed - server framework
-uvicorn             # needed - as a server
+passlib             # needed for the auth server
+psycopg2            # needed - for DB handling
+pyaml               # needed - yaml file import
 pydantic            # needed - to clean variable formatting
 pytest              # needed - to run tests
-requests            # needed - to format HTTP requests
-sqlalchemy          # needed - for DB handling
-psycopg2            # needed - for DB handling
-passlib             # needed for the auth server
+python-dotenv       # needed to read .env
 python-jose         # needed for authentication
 python-multipart    # needed - probably(!) a fastapi dependency (Depends)?
+pyzmq               # socket-like communication to engine processes
+requests            # needed - to format HTTP requests
+sqlalchemy          # needed - for DB handling
+uvicorn             # needed - as a server
+
+sziller_assist      # needed for small automated tasks

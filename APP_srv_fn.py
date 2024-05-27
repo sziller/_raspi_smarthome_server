@@ -15,5 +15,5 @@ if __name__ == "__main__":
     load_dotenv()
     # <server> is the parent scope. You need to run <server> It includes "/" path to serve Static Pages
     # do not define logger info!
-    uvicorn.run(Server_SmartHomeMyCastle.server,    host=os.getenv("SRV_IP"), port=int(os.getenv("SRV_PORT")))
+    uvicorn.run(serverFunction_SHMC.server,    host=os.getenv("SRV_IP"), port=int(os.getenv("SRV_PORT")))
     

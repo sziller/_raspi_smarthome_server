@@ -20,7 +20,7 @@ import logging
 import inspect
 from fastapi import APIRouter
 from shmc_messages import msg
-from shmc_routers.auth import *
+from shmc_routers._AuthPrimitives import *
 from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
 from shmc_sqlAccess import SQL_interface as sqli
 from sqlalchemy.orm import sessionmaker

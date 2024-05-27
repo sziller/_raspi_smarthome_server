@@ -14,8 +14,8 @@ LANGUAGE_CODE = "EN"  # ["HU", "DE"]
 
 # Path settings:
 PATH_ROOT: str                  = "."
-PATH_ERROR_MSG: str             = "{}/xdata/error.yaml"
-PATH_APP_INFO: str              = "{}/xdata/shmc.yaml"
+PATH_ERROR_MSG: str             = "{}/shmc_basePackage/xdata/error.yaml"
+PATH_APP_INFO: str              = "{}/shmc_basePackage/xdata/shmc.yaml"
 PATH_STATIC_FROM: str           = "public"
 PATH_STATIC_TO: str             = "/"
 

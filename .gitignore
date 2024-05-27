@@ -154,7 +154,6 @@ __pypackages__/
 # Environments - sensitive info
 venv/.env
 .venv
-.env*
 .env
 env/
 venv/

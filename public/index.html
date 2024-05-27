@@ -193,21 +193,22 @@ table {
 <li><a href="#_technology">1.2. Technology</a></li>
 </ul>
 </li>
-<li><a href="#readme:shmc">2. README: _raspi_smarthome_server</a>
+<li><a href="#shmc:functions">2. Function modules</a></li>
+<li><a href="#readme:shmc">3. README: _raspi_smarthome_server</a>
 <ul class="sectlevel2">
-<li><a href="#_repository">2.1. repository</a></li>
-<li><a href="#_whom_and_what_for">2.2. whom and what for?</a></li>
-<li><a href="#_how_do_i_get_started">2.3. how do I get started?</a></li>
-<li><a href="#_how_can_you_contribute">2.4. how can you contribute?</a></li>
-<li><a href="#_contact">2.5. contact</a></li>
+<li><a href="#_repository">3.1. repository</a></li>
+<li><a href="#_whom_and_what_for">3.2. whom and what for?</a></li>
+<li><a href="#_how_do_i_get_started">3.3. how do I get started?</a></li>
+<li><a href="#_how_can_you_contribute">3.4. how can you contribute?</a></li>
+<li><a href="#_contact">3.5. contact</a></li>
 </ul>
 </li>
-<li><a href="#shmc:fastapi">3. FastAPI</a>
+<li><a href="#shmc:fastapi">4. FastAPI</a>
 <ul class="sectlevel2">
-<li><a href="#_install_framework">3.1. Install framework</a></li>
-<li><a href="#_run_server">3.2. Run server</a></li>
-<li><a href="#_swagger">3.3. Swagger</a></li>
-<li><a href="#_online">3.4. Online</a></li>
+<li><a href="#_install_framework">4.1. Install framework</a></li>
+<li><a href="#_run_server">4.2. Run server</a></li>
+<li><a href="#_swagger">4.3. Swagger</a></li>
+<li><a href="#_online">4.4. Online</a></li>
 </ul>
 </li>
 </ul>
@@ -307,10 +308,14 @@ Thus, the entire SmrtHome my Castle Project is organized to be modular regarding
 </div>
 <div class="sect3">
 <h4 id="_functionality_modules">1.2.1. Functionality modules</h4>
-<div class="paragraph">
-<p>We concentrate on residential buildings/ apartments. This choice more-or-less determines the functionality we target.
+<div class="dlist">
+<dl>
+<dt class="hdlist1">HINT</dt>
+<dd>
+<p>find detailed list here: &lt;&lt;&gt;&gt;
+We concentrate on residential buildings/ apartments.
+This choice more-or-less determines the functionality we target.
 Here are some examles we are currently implementing:</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
@@ -372,6 +377,9 @@ Here are some examles we are currently implementing:</p>
 <p>Solar energy generation</p>
 </li>
 </ul>
+</div>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -448,7 +456,64 @@ for fast action, speed however will not be a priority when it comes to communica
 </div>
 </div>
 <div class="sect1">
-<h2 id="readme:shmc">2. README: _raspi_smarthome_server</h2>
+<h2 id="shmc:functions">2. Function modules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As of now, the following repositories are being developed. If you cannot access some, that means, these are not opened
+up for public development yet. Please be patient!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Aquaponics:<br>
+Complex food production unit</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>_aquaponics</strong>: <a href="https://github.com/sziller/_aquaponics" class="bare">github.com/sziller/_aquaponics</a></p>
+</li>
+<li>
+<p><strong>_aquaponics_server</strong>: <a href="https://github.com/sziller/_aquaponics_server" class="bare">github.com/sziller/_aquaponics_server</a></p>
+</li>
+<li>
+<p><strong>_aquaponics_app</strong>: <a href="https://github.com/sziller/_aquaponics_app" class="bare">github.com/sziller/_aquaponics_app</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Raspi Observatory:<br>
+Entrance controlling system</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>_raspi_observatory</strong>: <a href="https://github.com/sziller/_raspi_observatory" class="bare">github.com/sziller/_raspi_observatory</a></p>
+</li>
+<li>
+<p><strong>_raspi_observatory_server</strong>: <a href="https://github.com/sziller/_raspi_observatory_server" class="bare">github.com/sziller/_raspi_observatory_server</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Raspi RoomManager:<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>_raspi_roommanager</strong>: <a href="https://github.com/sziller/_raspi_roommanager" class="bare">github.com/sziller/_raspi_roommanager</a></p>
+</li>
+<li>
+<p><strong>_raspi_roommanager_server</strong>: <a href="https://github.com/sziller/_raspi_roommanager_server" class="bare">github.com/sziller/_raspi_roommanager_server</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="readme:shmc">3. README: _raspi_smarthome_server</h2>
 <div class="sectionbody">
 <div class="sidebarblock text-center">
 <div class="content">
@@ -539,21 +604,21 @@ It is necessary to handle the software in the context of the entire system, as h
 <a href="https://shmc.sziller.eu" class="bare">shmc.sziller.eu</a></p>
 </div>
 <div class="sect2">
-<h3 id="_repository">2.1. repository</h3>
+<h3 id="_repository">3.1. repository</h3>
 <div class="paragraph">
 <p>Find actual project repo under:
 <a href="https://github.com/sziller/_raspi_smarthome_server" class="bare">github.com/sziller/_raspi_smarthome_server</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_whom_and_what_for">2.2. whom and what for?</h3>
+<h3 id="_whom_and_what_for">3.2. whom and what for?</h3>
 <div class="paragraph">
 <p><em>Version: v0.0.0</em><br>
 Modular open-source SmartHome application for self-sovereign</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how_do_i_get_started">2.3. how do I get started?</h3>
+<h3 id="_how_do_i_get_started">3.3. how do I get started?</h3>
 <div class="paragraph">
 <p>You will need to rename and update the following files:</p>
 </div>
@@ -571,44 +636,44 @@ Modular open-source SmartHome application for self-sovereign</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_summary_of_set_up">2.3.1. Summary of set up</h4>
+<h4 id="_summary_of_set_up">3.3.1. Summary of set up</h4>
 <div class="paragraph">
 <p>tbd&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_configuration">2.3.2. Configuration</h4>
+<h4 id="_configuration">3.3.2. Configuration</h4>
 <div class="paragraph">
 <p>tbd&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dependencies">2.3.3. Dependencies</h4>
+<h4 id="_dependencies">3.3.3. Dependencies</h4>
 <div class="paragraph">
 <p>Not much, other than what&#8217;s listed above.
 Run it on a Linux system, mind requirements, and use the <code>lib</code> directory to install additional packages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_database_configuration">2.3.4. Database configuration</h4>
+<h4 id="_database_configuration">3.3.4. Database configuration</h4>
 <div class="paragraph">
 <p>tbd&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_how_to_run_tests">2.3.5. How to run tests</h4>
+<h4 id="_how_to_run_tests">3.3.5. How to run tests</h4>
 <div class="paragraph">
 <p>tbd&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_deployment_instructions">2.3.6. Deployment instructions</h4>
+<h4 id="_deployment_instructions">3.3.6. Deployment instructions</h4>
 <div class="paragraph">
 <p>tbd&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_entry_point">2.3.7. Entry Point</h4>
+<h4 id="_entry_point">3.3.7. Entry Point</h4>
 <div class="paragraph">
 <p>Use one of the following Pyhton3 scripts to run the Server:</p>
 </div>
@@ -628,7 +693,7 @@ Run it on a Linux system, mind requirements, and use the <code>lib</code> direct
 </div>
 </div>
 <div class="sect2">
-<h3 id="_how_can_you_contribute">2.4. how can you contribute?</h3>
+<h3 id="_how_can_you_contribute">3.4. how can you contribute?</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -647,7 +712,7 @@ Run it on a Linux system, mind requirements, and use the <code>lib</code> direct
 </div>
 </div>
 <div class="sect2">
-<h3 id="_contact">2.5. contact</h3>
+<h3 id="_contact">3.5. contact</h3>
 <div class="paragraph">
 <p>Owner and developer of this Project is Sziller</p>
 </div>
@@ -662,10 +727,10 @@ Run it on a Linux system, mind requirements, and use the <code>lib</code> direct
 </div>
 </div>
 <div class="sect1">
-<h2 id="shmc:fastapi">3. FastAPI</h2>
+<h2 id="shmc:fastapi">4. FastAPI</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_install_framework">3.1. Install framework</h3>
+<h3 id="_install_framework">4.1. Install framework</h3>
 <div class="paragraph">
 <p>This should be installed on the system itself, NOT only in virtual environment.
 However: If you use it from venv, and want to have it in the venv, you can install it into the venv!</p>
@@ -677,7 +742,7 @@ However: If you use it from venv, and want to have it in the venv, you can insta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_run_server">3.2. Run server</h3>
+<h3 id="_run_server">4.2. Run server</h3>
 <div class="paragraph">
 <p>If you want to run the server in venv: Switch to local virtual environment! Then&#8230;&#8203;</p>
 </div>
@@ -726,7 +791,7 @@ So to access the docs of &lt;app&gt; you need to add the '/app' prefix.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_swagger">3.3. Swagger</h3>
+<h3 id="_swagger">4.3. Swagger</h3>
 <div class="paragraph">
 <p>Use Swagger simplified Frontend to demo, test and dev-use default Endpoints:<br>
 (substitute IP:PORT to match your <code>.env</code> settings, under <em>SRV_IP</em> and <em>SRV_PORT</em>)</p>
@@ -748,7 +813,7 @@ http://127.0.0.1:8000/api/redoc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_online">3.4. Online</h3>
+<h3 id="_online">4.4. Online</h3>
 <div class="listingblock">
 <div class="title">token example</div>
 <div class="content">
@@ -766,7 +831,7 @@ Back to <a href="#TOP">Smart Home my Castle</a></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-04-27 22:57:46 +0200
+Last updated 2024-05-27 21:57:25 +0200
 </div>
 </div>
 <script>

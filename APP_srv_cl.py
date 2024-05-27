@@ -26,7 +26,7 @@ def app_server(**data_passed):
     lg.warning("          : ={:^36}=".format(__name__))
     lg.info("          : =         user languange: {}         =".format(data_passed["lng"]))
     lg.warning("          : ======================================")
-    server = ShmcServer.Server()
+    server = serverClass_SHMC.Server()
     for param, arg in data_passed.items(): setattr(server, param, arg)
     server.process()
     server.serve_forever()

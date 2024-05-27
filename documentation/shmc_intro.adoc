@@ -46,7 +46,9 @@ preferences.
 Thus, the entire SmrtHome my Castle Project is organized to be modular regarding both development and deployment 
 
 ==== Functionality modules
-We concentrate on residential buildings/ apartments. This choice more-or-less determines the functionality we target.
+HINT:: find detailed list here: <<>>
+We concentrate on residential buildings/ apartments.
+This choice more-or-less determines the functionality we target.
 Here are some examles we are currently implementing:
 
 * Room climate manager

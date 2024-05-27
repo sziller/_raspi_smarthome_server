@@ -1,0 +1,19 @@
+[[shmc:functions]]
+== Function modules
+As of now, the following repositories are being developed. If you cannot access some, that means, these are not opened
+up for public development yet. Please be patient!
+
+* Aquaponics: +
+Complex food production unit
+** *_aquaponics*: https://github.com/sziller/_aquaponics
+** *_aquaponics_server*: https://github.com/sziller/_aquaponics_server
+** *_aquaponics_app*: https://github.com/sziller/_aquaponics_app
+
+* Raspi Observatory: +
+Entrance controlling system
+** *_raspi_observatory*: https://github.com/sziller/_raspi_observatory
+** *_raspi_observatory_server*: https://github.com/sziller/_raspi_observatory_server
+
+* Raspi RoomManager: +
+** *_raspi_roommanager*: https://github.com/sziller/_raspi_roommanager
+** *_raspi_roommanager_server*: https://github.com/sziller/_raspi_roommanager_server

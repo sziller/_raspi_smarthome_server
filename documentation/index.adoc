@@ -23,6 +23,9 @@ Szilard Gabor LADANYI <szillerke@gmail.com>
 [[shmc:server:intro]]
 include::shmc_intro.adoc[]
 
+[[shmc:server:details]]
+include::shmc_function_modules.adoc[]
+
 [[readme:shmc]]
 include::../README.adoc[]
 

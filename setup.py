@@ -18,13 +18,13 @@ setup(
               "shmc_sqlBases"],
     include_package_data=True,
     url='shmc.sziller.eu',  # if url is used at all
-    license='',  # ...
-    author='sziller',  # well obvious
-    author_email='szillerke@gmail.com',  # well obvious
-    description='ServerPackage SmartHomeMyCastle',  # well obvious
+    license='MIT',  # ???
+    author='sziller',
+    author_email='szillerke@gmail.com',
+    description='ServerPackage SmartHomeMyCastle',
     install_requires=["fastapi",
                       "passlib",
-                      "psycopg2",
+                      "psycopg2-binary",
                       "pyaml",
                       "pydantic",
                       "pytest",
@@ -36,4 +36,11 @@ setup(
                       "sqlalchemy",
                       "uvicorn"],  # ATTENTION! Wheel file needed, depending on environment
     dependency_links=[],  # if dependent on external projects
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.10',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
+    python_requires='>=3.10',  # Specify minimum Python version requirement.
 )

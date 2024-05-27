@@ -62,7 +62,7 @@ You will need to rename and update the following files:
 
 * `temp-config.py` must be renamed to `config.py`!
 * `temp-config_prv.py` must be renamed to `config_prv`!
-* `.env-temp` must be renamed to `.env`
+* `.temp-env` must be renamed to `.env`
 
 ==== Summary of set up
 tbd...

@@ -1,3 +1,7 @@
+"""
+Kudos to Tim and his YT authentication and authorization tutorials!
+"""
+
 import os
 from dotenv import load_dotenv
 from passlib.context import CryptContext

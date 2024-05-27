@@ -1,0 +1,36 @@
+# These are server .env settings!
+
+#     SSSS  EEEEE  RRRR   V   V  EEEEE  RRRR
+#    S      E      R   R  V   V  E      R   R
+#     SSS   EEE    RRRR    V V   EEE    RRRR
+#        S  E      R R     V V   E      R R
+#    SSSS   EEEEE  R  RR    V    EEEEE  R  RR
+
+# MOUNT settings:                                                                       mount       - START
+# MOUNT settings:                                                                       mount       - ENDED
+
+# SERVER settings:                                                                      server      - START
+SRV_IP="xx.xx.xx.xx"
+SRV_PORT=8000
+# SERVER settings:                                                                      server      - ENDED
+
+# Authorization SERVER settings:                                                        server      - START
+AUTH_SECRET_KEY="xxxx"
+AUTH_ALGO="HS256"
+AUTH_TOKEN_EXPIRE_MINS=xx
+# Authorization SERVER settings:                                                        server      - ENDED
+
+# DATABASE related parameters:                                                          DB related  - START
+DB_FULLNAME_SHMC=".SmartHomeMyCastle.db"
+DB_STYLE_SHMC="SQLite"
+# Authentication and authorization:
+DB_FULLNAME_AUTH=".Auth.db"
+DB_STYLE_AUTH="SQLite"
+# Aquaponics:
+DB_FULLNAME_AQUA="/home/<user>/<path>/.aquaponics.db"
+DB_STYLE_AQUA="SQLite"
+# DATABASE related parameters:                                                          DB related  - ENDED
+
+# Endpoint authorization:                                                                   -   START   -
+
+# Endpoint authorization:                                                                   -   ENDED   -

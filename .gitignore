@@ -162,8 +162,6 @@ ENV/
 env.bak/
 venv.bak/
 
-config.py
-
 
 # mypy
 .mypy_cache/
@@ -181,7 +179,8 @@ cython_debug/
 
 # misc:
 .env-production
-*_prv.py
+config.py
+config_prv.py
 
 # Project specific files:
 /shmc_routers/*Router_class.py

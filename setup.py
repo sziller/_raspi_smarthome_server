@@ -14,7 +14,7 @@ setup(
               "shmc_messages",
               "shmc_routers",
               "shmc_server",
-              "shmc_slqAccess",
+              "shmc_sqlAccess",
               "shmc_sqlBases"],
     include_package_data=True,
     url='shmc.sziller.eu',  # if url is used at all

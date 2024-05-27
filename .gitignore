@@ -36,7 +36,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
+MANIFEST.in
 router_*.py
 *_router.py
 
@@ -162,6 +162,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# config.py
+
+
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -178,7 +181,7 @@ cython_debug/
 
 # misc:
 .env-production
-*_prv.py
+# *_prv.py
 
 # Project specific files:
 /shmc_routers/*Router_class.py

@@ -68,9 +68,9 @@ APP_ROUTER_INFO = {
     'authorization': {
         "use": True,
         "prefix": "/auth",
-        "args": {"ip": 'localhost',
-                 "port": 8041,
-                 "zmq_port": 0},
+        "args": {"ip": 'localhost',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
         "module": "shmc_routers.AuthRouter_class",
         "description": "Information regarding Authorization",
         "externalDocs": {
@@ -79,9 +79,9 @@ APP_ROUTER_INFO = {
     'wallet': {
         "use": False,
         "prefix": "/wllt",
-        "args": {"ip": '10.3.77.wlt',
-                 "port": 8041,
-                 "zmq_port": 0},
+        "args": {"ip": '192.168.01.wlt',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
         "module": "shmc_routers.WalletRouter_class",
         "description": "If you run a Wallet instance in the SHMC framework - use these endpoints. "
                        "Instance name matches the path-prefix assigned to Router. "
@@ -92,9 +92,9 @@ APP_ROUTER_INFO = {
     "aquaponics": {
         "use": True,
         "prefix": "/aqua",
-        "args": {"ip": '10.3.77.aqu',
-                 "port": 8042,
-                 "zmq_port": 52008},
+        "args": {"ip": '192.168.01.aqu',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
         "module": "shmc_routers.AquaRouter_class",
         "description": "If you run an Aquaponics Engine instance in the SHMC framework - use these endpoints. "
                        "Instance name matches the path-prefix assigned to Router. "
@@ -105,9 +105,9 @@ APP_ROUTER_INFO = {
     "observatory": {
         "use": True,
         "prefix": "/obsr",
-        "args": {"ip": '10.3.77.36',
-                 "port": 8043,
-                 "zmq_port": 52902},
+        "args": {"ip": '192.168.01.obs',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
         "module": "shmc_routers.ObsrRouter_class",
         "description": "If you run an Observatory Engine instance in the SHMC framework - use these endpoints. "
                        "Instance name matches the path-prefix assigned to Router. "
@@ -118,9 +118,9 @@ APP_ROUTER_INFO = {
     "kidsroom": {
         "use": True,
         "prefix": "/r_ks",
-        "args": {"ip": '10.3.77.42',
-                 "port": 8050,
-                 "zmq_port": 52903},
+        "args": {"ip": '192.168.01.rks',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
         "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
         "description": "If you run a RoomManager Engine instance in the SHMC framework - use these endpoints. "
                        "Instance name matches the path-prefix assigned to Router. "
@@ -131,27 +131,16 @@ APP_ROUTER_INFO = {
     "floroom": {
         "use": False,
         "prefix": "/r_fl",
-        "args": {"ip": '10.3.77.36',
-                 "port": 8051,
-                 "zmq_port": 52903},
-        "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
+        "args": {"ip": '192.168.01.rfl',  # fill in your IP
+                 "port": 0,  # fill in your PORT
+                 "zmq_port": 0},  # fill in your PORT
+        "module": "shmc_routers.RoomRouter_class",
         "description": "If you run a RoomManager Engine instance in the SHMC framework - use these endpoints. "
                        "Instance name matches the path-prefix assigned to Router. "
                        "ATTENTION: you need authentication to access the Background Engine!",
         "externalDocs": {
             "description": "or visit the git repo: _rasp_roommanager",
-            "url": "https://github.com/sziller"}},
-    # "bathroom": {
-    #     "use": True,
-    #     "prefix": "/r_ba",
-    #     "args": {"ip": '10.3.77.bth',
-    #              "port": 8052,
-    #              "zmq_port": 52903},
-    #     "module": "shmc_routers.RoomRouter_class",  # probably 'room' only!
-    #     "description": "Information regarding SmartHome setup's Room general manager",
-    #     "externalDocs": {
-    #         "description": "find additional info under: sziller.eu",
-    #         "url": "https://shmc.sziller.eu"}}
+            "url": "https://github.com/sziller"}}
     }
 
 # ---------------------------------------------------------------------------------------------------

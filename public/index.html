@@ -572,7 +572,8 @@ Modular open-source SmartHome application for self-sovereign</p>
 <div class="sect3">
 <h4 id="_dependencies">2.3.3. Dependencies</h4>
 <div class="paragraph">
-<p>tbd&#8230;&#8203;</p>
+<p>Not much, other than what&#8217;s listed above.
+Run it on a Linux system, mind requirements, and use the <code>lib</code> directory to install additional packages.</p>
 </div>
 </div>
 <div class="sect3">
@@ -665,28 +666,57 @@ However: If you use it from venv, and want to have it in the venv, you can insta
 <div class="sect2">
 <h3 id="_run_server">3.2. Run server</h3>
 <div class="paragraph">
-<p>If you want to run the server in venv: Switch to local virtual environment! Then&#8230;&#8203;
-Run the server allowing reload on changes, either from a terminal:</p>
+<p>If you want to run the server in venv: Switch to local virtual environment! Then&#8230;&#8203;</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>activate virtual environment</p>
 <div class="literalblock">
 <div class="content">
-<pre>source ./venv/bin/activate
-uvicorn Server_SmartHomeMyCastle:server --reload</pre>
+<pre>source ./venv/bin/activate</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>or directly as a python code as shown in the <em>name</em> clause below.</p>
+</li>
+<li>
+<p>Run the server, picking one of the EntryPoints&#8230;&#8203;</p>
+<div class="ulist">
+<ul>
+<li>
+<p>&#8230;&#8203;either from a terminal, allowing reload on changes:</p>
+<div class="literalblock">
+<div class="content">
+<pre>uvicorn serverClass_SHMC:server --reload
+uvicorn serverFunction_SHMC:server --reload</pre>
+</div>
+</div>
+</li>
+<li>
+<p>&#8230;&#8203;or by running one of the Python wrapper scripts:</p>
+<div class="literalblock">
+<div class="content">
+<pre>pyhton3 APP_srv_cl.py
+pyhton3 APP_srv_fn.py</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>as &lt;app&gt; is a sub-api mounted under &lt;server&gt; when starting &lt;server&gt;, &lt;app&gt; also starts.
 API included here is - as of now - mosty describint &lt;app&gt; - the sub-api.
-So to access the docs of &lt;app&gt; you need to add the '/app' prefix.</p>
+So to access the docs of &lt;app&gt; you need to add the '/app' prefix.<br>
+(or redefine in <code>config.py</code> under <em>APP_PATH</em>)</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_swagger">3.3. Swagger</h3>
 <div class="paragraph">
-<p>Use Swagger simplified Frontend to demo, test and dev-use default Endpoints:</p>
+<p>Use Swagger simplified Frontend to demo, test and dev-use default Endpoints:<br>
+(substitute IP:PORT to match your <code>.env</code> settings, under <em>SRV_IP</em> and <em>SRV_PORT</em>)</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -706,10 +736,11 @@ http://127.0.0.1:8000/api/redoc</pre>
 </div>
 <div class="sect2">
 <h3 id="_online">3.4. Online</h3>
-<div class="literalblock">
+<div class="listingblock">
 <div class="title">token example</div>
 <div class="content">
-<pre>{"access_token":"---","expires_in":300,"refresh_expires_in":1800,"refresh_token":"---","token_type":"Bearer","not-before-policy":0,"session_state":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","scope":"email profile"}</pre>
+<pre>{"access_token":"---","expires_in":300,"refresh_expires_in":1800,"refresh_token":"---","token_type":"Bearer",
+"not-before-policy":0,"session_state":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","scope":"email profile"}</pre>
 </div>
 </div>
 <div class="paragraph">

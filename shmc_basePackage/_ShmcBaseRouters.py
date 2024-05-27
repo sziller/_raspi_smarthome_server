@@ -20,10 +20,9 @@ import logging
 import inspect
 from fastapi import APIRouter
 from shmc_messages import msg
-from shmc_routers._AuthPrimitives import *
+from shmc_basePackage._AuthPrimitives import *
 from shmc_sqlBases.sql_baseMeasurement import Measurement as sqlMeasurement
 from shmc_sqlAccess import SQL_interface as sqli
-from sqlalchemy.orm import sessionmaker
 
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger("shmc")

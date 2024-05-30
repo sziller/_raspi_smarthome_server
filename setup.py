@@ -14,8 +14,8 @@ setup(
               "shmc_messages",
               "shmc_routers",
               "shmc_server",
-              "shmc_sqlAccess",
-              "shmc_sqlBases"],
+              "sql_access",
+              "sql_bases"],
     include_package_data=True,
     url='shmc.sziller.eu',  # if url is used at all
     license='MIT',  # ???

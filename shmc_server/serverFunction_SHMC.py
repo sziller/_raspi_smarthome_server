@@ -30,9 +30,9 @@ import config_prv as conf_prv
 import importlib
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from shmc_sqlAccess.SQL_interface import createSession
-from shmc_sqlAccess import SQL_interface as SQLi
-from shmc_sqlBases.sql_baseUser import User as sqlUser
+from sql_access.sql_interface import createSession
+from sql_access import sql_interface as SQLi
+from sql_bases.sqlbase_user.sqlbase_user import User as sqlUser
 from sqlalchemy.orm import sessionmaker
 # from shmc_server import session_preparation as prepare
 

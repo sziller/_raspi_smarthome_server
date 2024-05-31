@@ -11,7 +11,7 @@ setup(
     name='smarthome_server',  # package name, used at pip or tar.
     version='0.0.0',  # version Nr.... whatever
     packages=["shmc_basePackage",
-              "shmc_messages",
+              "messages",
               "shmc_routers",
               "shmc_server",
               "sql_access",

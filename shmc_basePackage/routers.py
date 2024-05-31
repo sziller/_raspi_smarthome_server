@@ -19,11 +19,10 @@ import time
 import logging
 import inspect
 from fastapi import APIRouter
-from shmc_messages import msg
+from messages import msg
 from shmc_basePackage.auth_services import *
 from sql_bases.sqlbase_measurement.sqlbase_measurement import Measurement as sqlMeasurement
 from sql_access import sql_interface as sqli
-
 
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger("shmc")
@@ -59,7 +58,7 @@ class AuthorizedRouter(BaseRouter):
     Autorized Router class for the SHMC development.
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
-    
+
     def __init__(self,
                  name: str,
                  alias: str,
@@ -199,7 +198,7 @@ class SkeletonRouter(DBHandlerRouter):
         return response
         # responding ENDED                                                                          -   ENDED   -
 
-    async def GET_full_db_data(self, 
+    async def GET_full_db_data(self,
                                current_user: UserInDB = Depends(AuthService.get_current_active_user)):
         """=== Endpoint-method name: GET_full_db_data ===  
         Endpoint returns the usual response format, where 'payload' is the entire content of the DB  

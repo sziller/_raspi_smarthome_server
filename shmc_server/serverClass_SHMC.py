@@ -5,6 +5,11 @@ import uvicorn
 import logging
 import importlib
 from fastapi.staticfiles import StaticFiles
+from sql_access import sql_interface as sqli
+from sql_bases.sqlbase_user.sqlbase_user import User as sqlUser
+from sql_access.sql_interface import createSession
+from sqlalchemy.orm import Session
+
 
 # Setting up logger                                         logger                      -   START   -
 lg = logging.getLogger()
@@ -36,10 +41,17 @@ class Server:
     session_style_shmc: str
     session_name_auth: str
     session_style_auth: str
+    default_user_list: list
     # Class parameters:                                                                     -   ENDED   -
+    
+    # AuthService:                                                                          -   START   -
+    auth_service: object
+    # AuthService:                                                                          -   ENDED   -
     
     def __init__(self):
         # Define instance parameters                                    -   START   -
+        # auth:
+        
         # classes defined
         self.server: FastAPI or None = None
         self.app: FastAPI or None = None
@@ -120,8 +132,32 @@ class Server:
         # -------------------------------------------------------------------------------------------------------
         
         self.process_server_data()
+        self.process_db()
+        # auth_service
         self.process_endpoints()
-        
+
+    def db(self, session: Session, user_list: list) -> bool:
+        """
+
+        :param session: 
+        :param user_list: 
+        :return: 
+        """
+        lg.warning("user db   : entering default users - if not included!")
+        sqli.ADD_rows_to_table(primary_key="username", data_list=user_list, row_obj=sqlUser, session=session)
+        return True
+    
+    def process_db(self):
+        # server base DB session:                                                           -   START   -
+        session_shmc = createSession(db_fullname=self.session_name_shmc, tables=None, style=self.session_style_shmc)
+        session_auth = createSession(db_fullname=self.session_name_auth, tables=[sqlUser.__table__],
+                                     style=self.session_style_auth)
+        self.db(session=session_auth, user_list=self.default_user_list)
+        session_shmc.close()
+        session_auth.close()
+
+        # server base DB session:                                                           -   ENDED   -
+    
     def process_server_data(self):
         # server data processing:                                                           -   START   -
         lg.info("arrange   : tags_metadata")
@@ -148,6 +184,8 @@ class Server:
                     # we import the class named: (change here to modify class name definition)
                     class_name = data['module'].split(sep=".")[1].split(sep="_")[0]
                     # we import the class from the <module>:
+                    print(data['module'])
+                    print(class_name)
                     router_class = getattr(importlib.import_module(data['module']), class_name)
                     # we instantiate it:
                     alias = data["prefix"][1:]

@@ -33,8 +33,7 @@ from fastapi.staticfiles import StaticFiles
 from sql_access.sql_interface import createSession
 from sql_access import sql_interface as SQLi
 from sql_bases.sqlbase_user.sqlbase_user import User as sqlUser
-from sqlalchemy.orm import sessionmaker
-# from shmc_server import session_preparation as prepare
+from sqlalchemy.orm import Session
 
 # -------------------------------------------------------------------------------------------------------------------
 # - Additional functions                                                                                -   START   -
@@ -70,7 +69,7 @@ def read_yaml_data(source: str):
             raise exc
 
 
-def db(session: sessionmaker.object_session, user_list: list) -> bool:
+def db(session: Session, user_list: list) -> bool:
     """
 
     :param session: 

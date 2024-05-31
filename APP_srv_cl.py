@@ -9,9 +9,20 @@ import os
 import inspect
 import logging
 import config as conf
+import config_prv as conf_prv
 from dotenv import load_dotenv
 from time_format import TimeFormat as TiFo
 from shmc_server import serverClass_SHMC
+
+from shmc_basePackage.auth_services import AuthService
+
+# Create a glorified config-type class, with functions in it to be used with Depends()
+AuthService.secret_key = os.getenv("AUTH_SECRET_KEY")
+AuthService.algo = os.getenv("AUTH_ALGO")
+AuthService.token_expire_mins = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
+
+AuthService.db_fullname_auth = os.getenv("DB_FULLNAME_AUTH")
+AuthService.db_style_auth = os.getenv("DB_STYLE_AUTH")
 
 
 def app_server(**data_passed):
@@ -65,7 +76,9 @@ if __name__ == "__main__":
     for k, v in {param: arg for param, arg in vars(conf).items() if not param.startswith('__')}.items():
         lg.debug("{:>20}: {}".format(k, v))
     # Setting up logger                                                                     -   ENDED   -
-
+    
+    
+    
     kwargs_server = {
         "app_path": conf.APP_PATH,
         "srv_ip": os.getenv("SRV_IP"),
@@ -74,6 +87,7 @@ if __name__ == "__main__":
         "session_style_shmc": os.getenv("DB_STYLE_SHMC"),
         "session_name_auth": os.getenv("DB_FULLNAME_AUTH"),
         "session_style_auth": os.getenv("DB_STYLE_AUTH"),
+        "default_user_list": conf_prv.DEFAULT_USER_LIST,
         "lng": conf.LANGUAGE_CODE,
         "fsh_dir_info": conf.NECESSARY_DIRECTORIES,
         "path_root": conf.PATH_ROOT,
@@ -81,7 +95,8 @@ if __name__ == "__main__":
         "path_app_doc": conf.PATH_APP_INFO.format(conf.PATH_ROOT),
         "path_mount_static_from": conf.PATH_STATIC_FROM,
         "path_mount_static_to": conf.PATH_STATIC_TO,
-        "router_info": conf.APP_ROUTER_INFO
+        "router_info": conf.APP_ROUTER_INFO,
+        'auth_service': AuthService
         }
     
     app_server(**kwargs_server)

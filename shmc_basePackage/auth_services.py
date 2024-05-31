@@ -14,16 +14,6 @@ from sql_bases.sqlbase_user.sqlbase_user import User as sqlUser
 
 load_dotenv()
 
-# AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY")
-# AUTH_ALGO = os.getenv("AUTH_ALGO")
-# AUTH_TOKEN_EXPIRE_MINS = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
-# 
-# DB_FULLNAME_AUTH = os.getenv("DB_FULLNAME_AUTH")
-# DB_STYLE_AUTH = os.getenv("DB_STYLE_AUTH")
-
-OAUTH_2_SCHEME = OAuth2PasswordBearer(tokenUrl="auth/token")
-PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 class User(BaseModel):
     """=== Model name: User(BaseModel) ===================================  
@@ -57,12 +47,18 @@ class TokenData(BaseModel):
     username: str or None = None
 
 
-class AuthService:
-    secret_key: str
-    algo: str
-    token_expire_mins: int
+class AuthService(object):
+    """
+    Experimental class to handle authentication related stuff
+    """
+    auth_secret_key: str
+    auth_algo: str
+    auth_token_expire_mins: int
     db_fullname_auth: str
     db_style_auth: str
+
+    oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     def __init__(self):
         pass
@@ -87,7 +83,7 @@ class AuthService:
         :param psswd_hsh: str - hash to check against
         :return: boolean - True for match, False if doesn't
         ============================================================================================== by Sziller ==="""
-        return PWD_CONTEXT.verify(plain_psswd, psswd_hsh)
+        return AuthService.pwd_context.verify(plain_psswd, psswd_hsh)
 
     @staticmethod
     def get_user_data(db_lines: list[dict], username: str) -> UserInDB or False:
@@ -119,7 +115,7 @@ class AuthService:
         return usr_data
 
     @staticmethod
-    async def get_current_user(token: str = Depends(OAUTH_2_SCHEME)):
+    async def get_current_user(token: str = Depends(oauth_2_scheme)):
         """=== Function name: get_current_user =========================================================================
         Function - as dependency - checks Bearer token. Raises exceptions if Token doesn't fit.
         :param token: JWT token
@@ -130,7 +126,7 @@ class AuthService:
                                              detail="Couldnt validate",
                                              headers={"WWW-Authenticate": "Bearer"})
         try:
-            payload = jwt.decode(token, AuthService.secret_key, algorithms=[AuthService.algo])
+            payload = jwt.decode(token, AuthService.auth_secret_key, algorithms=[AuthService.auth_algo])
             username: str = payload.get("sub")
             if username is None:
                 raise credential_exception

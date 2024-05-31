@@ -24,17 +24,17 @@ from shmc_basePackage.auth_services import *
 from sql_bases.sqlbase_measurement.sqlbase_measurement import Measurement as sqlMeasurement
 from sql_access import sql_interface as sqli
 
+
 # Setting up logger                                                                     -   START   -
 lg = logging.getLogger("shmc")
 # Setting up logger                                                                     -   ENDED   -
 
 
-class ShmcBaseRouter(APIRouter):
+class BaseRouter(APIRouter):
     """=== Class name: ShmcBaseRouter(APIRouter) =======================================================================
     Default Router parent class for the SHMC development. 
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
-    auth_service: AuthService
     
     def __init__(self,
                  name: str,
@@ -54,12 +54,12 @@ class ShmcBaseRouter(APIRouter):
         pass
     
     
-class AuthorizedRouter(ShmcBaseRouter):
+class AuthorizedRouter(BaseRouter):
     """=== Class name: ShmcBaseRouter(APIRouter) =======================================================================
     Autorized Router class for the SHMC development.
     ============================================================================================== by Sziller ==="""
     ccn = inspect.currentframe().f_code.co_name  # current class name
-
+    
     def __init__(self,
                  name: str,
                  alias: str,
@@ -167,7 +167,7 @@ class SkeletonRouter(DBHandlerRouter):
         pass
     
     async def GET_basic_config(self, 
-                               current_user: UserInDB = Depends(ShmcBaseRouter.auth_service.get_current_active_user)):
+                               current_user: UserInDB = Depends(AuthService.get_current_active_user)):
         """=== Endpoint-method name: GET_basic_config ===  
         Endpoint returns minimal router data. This method is defined on parent level, thus all shmc routers provide
         some sort of actual state info under this path.  
@@ -200,7 +200,7 @@ class SkeletonRouter(DBHandlerRouter):
         # responding ENDED                                                                          -   ENDED   -
 
     async def GET_full_db_data(self, 
-                               current_user: UserInDB = Depends(ShmcBaseRouter.auth_service.get_current_active_user)):
+                               current_user: UserInDB = Depends(AuthService.get_current_active_user)):
         """=== Endpoint-method name: GET_full_db_data ===  
         Endpoint returns the usual response format, where 'payload' is the entire content of the DB  
         === by Sziller ==="""

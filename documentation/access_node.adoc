@@ -1,0 +1,26 @@
+[[remote:access]]
+=== access Node
+[%interactive]
+* [ ] establish connection to Node
+
+==== ssh
+If you want to access any of the Nodes using ssh, enter:
+
+ ssh <username>@<ip-address>
+
+Then you enter the *password* realted to <username>. +
+In the SHMC development we stick to username = `pi` as this is the default Raspberry username.
+
+[IMPORTANT]
+====
+Passwords have been changed!
+For local _ssh_ login you need a different password to the one stored with _id_rsa_!
+====
+
+==== remote desktop
+...to be extended...
+
+==== telnet
+...to be extended...
+
+

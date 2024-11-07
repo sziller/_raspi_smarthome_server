@@ -5,28 +5,6 @@ However: If you use it from venv, and want to have it in the venv, you can insta
 
  pip install "fastapi[all]"
 
-=== Run server
-If you want to run the server in venv: Switch to local virtual environment! Then...
-
-* activate virtual environment
-
- source ./venv/bin/activate
-
-* Run the server, picking one of the EntryPoints...
-** ...either from a terminal, allowing reload on changes:
-
- uvicorn serverClass_SHMC:server --reload
- uvicorn serverFunction_SHMC:server --reload
-
-** ...or by running one of the Python wrapper scripts:
-
- pyhton3 APP_srv_cl.py
- pyhton3 APP_srv_fn.py
-
-as <app> is a sub-api mounted under <server> when starting <server>, <app> also starts.
-API included here is - as of now - mosty describint <app> - the sub-api.
-So to access the docs of <app> you need to add the '/app' prefix. +
-(or redefine in `config.py` under _APP_PATH_)
 
 === Swagger
 Use Swagger simplified Frontend to demo, test and dev-use default Endpoints: +

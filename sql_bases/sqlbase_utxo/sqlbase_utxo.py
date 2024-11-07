@@ -9,7 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 # imports for general Base handling ENDED                                                   -   ENDED   -
 
 # imports for local Base handling   START                                                   -   START   -
-from shmc_basePackage import models
+from shmc_api_classes import models
 # imports for local Base handling   ENDED                                                   -   ENDED   -
 
 Base = declarative_base()

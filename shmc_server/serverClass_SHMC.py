@@ -184,8 +184,6 @@ class Server:
                     # we import the class named: (change here to modify class name definition)
                     class_name = data['module'].split(sep=".")[1].split(sep="_")[0]
                     # we import the class from the <module>:
-                    print(data['module'])
-                    print(class_name)
                     router_class = getattr(importlib.import_module(data['module']), class_name)
                     # we instantiate it:
                     alias = data["prefix"][1:]

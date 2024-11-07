@@ -1,8 +1,8 @@
 [[TOP]]
 = Smart Home my Castle
-Szilard Gabor LADANYI <szillerke@gmail.com>
+//Szilard Gabor LADANYI <szillerke@gmail.com>
 :doctype: book
-:author: Szilard Gabor LADANYI
+:author: Szilard Gabor LADANYI - 2024
 :description: Documentation of the SmartHome my Castle 
 :toc: left
 :toclevels: 2
@@ -10,7 +10,8 @@ Szilard Gabor LADANYI <szillerke@gmail.com>
 :iconsdir: ./icons
 :imagesdir: ./images/shmc
 :stylesdir: ./css
-:stylesheet: plain.css
+//:stylesheet: plain.css
+:stylesheet: adoc-rocket-panda.css
 :hide-uri-scheme: true
 :sectnums:
 :figure-caption:
@@ -18,7 +19,9 @@ Szilard Gabor LADANYI <szillerke@gmail.com>
 :icons: image
 
 [[TableOfContents]]
-*http://sziller.eu* - *Szilard Gabor LADANYI* - 2024
+*_http://sziller.eu_*
+
+---
 
 [[shmc:server:intro]]
 include::shmc_intro.adoc[]
@@ -28,6 +31,9 @@ include::shmc_function_modules.adoc[]
 
 [[readme:shmc]]
 include::../README.adoc[]
+
+[[shmc::start]]
+include::shmc_run.adoc[]
 
 [[shmc:aqua:intro]]
 //include::.adoc[]

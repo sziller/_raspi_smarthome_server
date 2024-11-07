@@ -1,0 +1,9 @@
+[[start:https]]
+=== start https
+Inside the `tmux` session, +
+
+[%interactive]
+* [ ] start `nginx`, to forward and certify https requests:
+
+ sudo systemctl start nginx
+

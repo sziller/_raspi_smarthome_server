@@ -1,0 +1,23 @@
+[[run:node]]
+== Node start-up
+This is a quick, step-by-step description on how to activate a well-set-up Node.
+
+=== turn on Node
+Assuming each of the units are headless:
+
+[%interactive]
+* [ ] turn on Raspberry / restart if running or having issues
+* [ ] check IP address
+* [ ] check if local area network sees hardware and doublecheck IP
+* [ ] ping IP from one of the locally connected Nodes
+
+include::access_node.adoc[]
+
+include::start_tmux.adoc[]
+
+include::start_https.adoc[]
+
+include::start_server.adoc[]
+
+
+

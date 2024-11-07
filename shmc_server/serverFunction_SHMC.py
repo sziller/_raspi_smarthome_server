@@ -122,7 +122,7 @@ if not os.path.exists(log_path): os.mkdir(log_path)
 lg = logging.getLogger("shmc")
 # Using config.py data - configurate logger:
 logging.basicConfig(filename=log_fullfilename, level=log_level, format=log_format, datefmt=log_tf, filemode="w")
-# initial messages
+# initial sz_messages
 lg.warning("FILE: {:>86} <<<".format(__file__))
 lg.warning("LOGGER namespace: {:>74} <<<".format(__name__))
 lg.debug("listing   : config settings:")
@@ -130,7 +130,7 @@ for k, v in {param: arg for param, arg in vars(conf).items() if not param.starts
     lg.debug("{:>20}: {}".format(k, v))
 # Setting up logger                                                                     -   ENDED   -
 
-# Main App messages:
+# Main App sz_messages:
 lg.warning("          : ============================================")
 lg.warning({True:  "          : =               LIVE SESSION               =",
             False: "          : =               DEV  SESSION               ="}[conf.isLIVE])

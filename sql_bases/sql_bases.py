@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import time
 import random as rnd
 from cryptography import HashFunctions as HaFu
-from shmc_basePackage import models
+from shmc_api_classes import models
 
 # imports for local Base handling   ENDED                                                   -   ENDED   -
 

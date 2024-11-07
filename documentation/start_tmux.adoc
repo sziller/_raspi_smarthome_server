@@ -1,0 +1,9 @@
+[[start:tmux]]
+=== start tmux
+Once logged in, +
+
+[%interactive]
+* [ ] create and activate `tmux` session:
+
+ tmux new -d -s <serversession>
+ tmux attach -t <serversession>

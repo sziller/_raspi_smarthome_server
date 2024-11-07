@@ -14,12 +14,14 @@ from dotenv import load_dotenv
 from time_format import TimeFormat as TiFo
 from shmc_server import serverClass_SHMC
 
-from shmc_basePackage.auth_services import AuthService
+from shmc_api_classes.auth_services import AuthService
 
 # Create a glorified config-type class, with functions in it to be used with Depends()
-AuthService.secret_key = os.getenv("AUTH_SECRET_KEY")
-AuthService.algo = os.getenv("AUTH_ALGO")
-AuthService.token_expire_mins = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
+# This is basically the same exact approach we use in the function-based version.
+
+AuthService.auth_secret_key = os.getenv("AUTH_SECRET_KEY")
+AuthService.auth_algo = os.getenv("AUTH_ALGO")
+AuthService.auth_token_expire_mins = os.getenv("AUTH_TOKEN_EXPIRE_MINS")
 
 AuthService.db_fullname_auth = os.getenv("DB_FULLNAME_AUTH")
 AuthService.db_style_auth = os.getenv("DB_STYLE_AUTH")
@@ -69,15 +71,13 @@ if __name__ == "__main__":
                         format=log_format,
                         datefmt=log_tf,
                         filemode="w")
-    # initial messages
+    # initial sz_messages
     lg.warning("FILE: {:>86} <<<".format(__file__))
     lg.warning("LOGGER namespace: {:>74} <<<".format(__name__))
     lg.debug("listing   : config settings:")
     for k, v in {param: arg for param, arg in vars(conf).items() if not param.startswith('__')}.items():
         lg.debug("{:>20}: {}".format(k, v))
     # Setting up logger                                                                     -   ENDED   -
-    
-    
     
     kwargs_server = {
         "app_path": conf.APP_PATH,

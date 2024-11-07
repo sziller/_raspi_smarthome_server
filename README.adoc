@@ -91,6 +91,8 @@ Use one of the following Pyhton3 scripts to run the Server:
 
 All `config.py` and `.env` contents are compatible with both Entry-Points.
 
+Use our checklist in order to start up a given Node: <<run:node>> 
+
 === how can you contribute?
 
 * Writing tests

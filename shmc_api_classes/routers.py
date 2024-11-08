@@ -34,6 +34,8 @@ class BaseRouter(APIRouter):
     """=== Extended (APIRouter) class ==================================================================================
     Default Router parent class for Sziller's developments.
     ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+
     def __init__(self,
                  name: str,
                  alias: Optional[str],
@@ -44,30 +46,33 @@ class BaseRouter(APIRouter):
         self.alias: str                         = alias if alias else name[:4]
         self.ip: str                            = ip  # ip of remote Engine and Message handler (zmq socket endpoint)
         self.port: int                          = port  # port remote server runs on - for DB communication
-        lg.info(f"Initialized BaseRouter with"
-                f"name='{self.name}', alias='{self.alias}', ip='{self.ip}', port='{self.port}'")
+        lg.info("init.ed   : {} - name='{}', alias='{}', ip='{}', port='{}'"
+                .format(self.ccn, self.name, self.alias, self.ip, self.port))
 
     def reinit(self):
         """=== Instance method =========================================================================================
         Reinitialization method for future use, depending on dynamic requirements.
         ========================================================================================== by Sziller ==="""
-        lg.debug(f"{self.__class__.__name__} reinitialization called.")
+        lg.debug("reinit    : for {} called.".format(self.ccn))
     
     
 class AuthorizedRouter(BaseRouter):
-    """=== Extended class ==============================================================================================
+    """=== Extended (BaseRouter) class =================================================================================
     Extended Router class for for Sziller's developments.:
     - authorization logic added
     ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
     def __init__(self,
                  name: str,
-                 alias: str,
+                 alias: Optional[str],
                  ip: str = "0.0.0.0",
                  port: int = 0,
-                 auth_dict: dict or None = None):
+                 # -------------------------------------- extension
+                 auth_dict: Optional[dict] = None):
         super().__init__(name, alias, ip, port)
-        self.auth_dict: dict = auth_dict
-        lg.info(f"{self.__class__.__name__} initialized with auth_dict='{self.auth_dict}'")
+        self.auth_dict: dict                    = auth_dict
+        lg.info("init.ed   :  {} - auth_dict={}".format(self.ccn, self.auth_dict))
         
     def check_authorization(self, auth_code: int, nth_switch: int):
         """=== Instance method =========================================================================================
@@ -77,39 +82,43 @@ class AuthorizedRouter(BaseRouter):
         Function (6, 2) checks for position 2. and returns True
         Function (6, 0) checks for position 0. and returns False
         ========================================================================================== by Sziller ==="""
+        cmn = inspect.currentframe().f_code.co_name  # current method name
         lg.debug("authorize : using: {}".format(self.auth_dict))
         lg.debug("{} performing authorization check with auth_code={}, nth_switch={}"
-                 .format(self.__class__.__name__, auth_code, nth_switch))
+                 .format(self.ccn, auth_code, nth_switch))
         result = auth_code & (1 << nth_switch) != 0
-        lg.debug(f"Auth res. : {result}")
+        lg.debug(f"auth res. : {result}")
         return result
     
 
 class DBHandlerRouter(AuthorizedRouter):
-    """=== Extended class ==============================================================================================
+    """=== Extended (AuthorizedRouter) class ===========================================================================
     Extended Router class for for Sziller's developments.:
-    -  handling database connections and data
+    - handling database connections and data
     ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
     def __init__(self,
                  name: str,
-                 alias: str,
-                 ip: str = "0.0.0.0",
-                 port: int = 0,
-                 auth_dict: dict or None = None,
-                 db_fullname: str or None = None,
-                 db_style: str or None = None
+                 alias: Optional[str]           = None,
+                 ip: str                        = "0.0.0.0",
+                 port: int                      = 0,
+                 auth_dict: Optional[dict]      = None,
+                 # -------------------------------------- extension
+                 db_fullname: Optional[str]     = None,
+                 db_style: Optional[str]        = None
                  ):
         super().__init__(name, alias, ip, port, auth_dict)
-        self.db: list[dict] or None = None
-        self.db_fullname: str       = db_fullname
-        self.db_style: str          = db_style
+        self.db: Optional[list[dict]]           = None
+        self.db_fullname: str                   = db_fullname
+        self.db_style: str                      = db_style
     
     def reinit(self):
         """=== Method name: reinit =====================================================================================
         to generate initial arguments depending on changed parameters
         ========================================================================================== by Sziller ==="""
         super().reinit()
-        lg.debug(f"{self.__class__.__name__} checking database file '{self.db_fullname}'")
+        lg.debug("checking  : database file '{}' - says {}".format(self.db_fullname, self.ccn))
         if self.db_fullname:
             if os.path.isfile(self.db_fullname):
                 lg.info("found DB  : {} - says {}".format(self.db_fullname, self.__class__.__name__))
@@ -123,7 +132,7 @@ class DBHandlerRouter(AuthorizedRouter):
         One time reading of the DB, defined by db_* parameters.
         Local session fot r this very method is created and closed right after reading out data into self.db
         ========================================================================================== by Sziller ==="""
-        lg.debug(f"{self.__class__.__name__} attempting to read from DB '{self.db_fullname}'")
+        lg.debug("reading DB: '{}'".format(self.db_fullname, self.ccn))
         try:
             loc_session = sqli.createSession(db_fullname=self.db_fullname, style=self.db_style, tables=None)
             self.db = sqli.QUERY_entire_table(ordered_by="timestamp", row_obj=row_obj, session=loc_session)
@@ -134,10 +143,10 @@ class DBHandlerRouter(AuthorizedRouter):
 
 
 class SkeletonRouter(DBHandlerRouter):
-    """=== Class name: SkeletonRouter(DBHandlerRouter) =================================================================
-    Router to include default Endpoints.
-    Subclass of DBHandlerRouter.
-    ============================================================================================== by Sziller ==="""    
+    """=== Extended (DBHandlerRouter) class ============================================================================
+    Extended Router class for Sziller's developments.:
+    - includeing default Endpoints.
+    ============================================================================================== by Sziller ==="""
     def __init__(self,
                  name: str,
                  alias: str,
@@ -166,9 +175,9 @@ class SkeletonRouter(DBHandlerRouter):
     
     async def GET_basic_config(self, 
                                current_user: UserInDB = Depends(AuthService.get_current_active_user)):
-        """=== Endpoint-method name: GET_basic_config ===  
+        """=== Endpoint-method name: GET_basic_config ===
         Endpoint returns minimal router data. This method is defined on parent level, thus all shmc routers provide
-        some sort of actual state info under this path.  
+        some sort of actual state info under this path.
         === by Sziller ==="""
         timestamp = time.time()
         lg.info(f"GET_full_db_data called on router '{self.name}' at timestamp={timestamp}")
@@ -192,8 +201,12 @@ class SkeletonRouter(DBHandlerRouter):
 
         # responding START                                                                          -   START   -
         response = msg.ExtRespMsg(payload=payload,
-                                  message="OK - says {} on router: {}".format(cmn, self.ccn),
+                                  message="OK - says {} on router: {}".
+                                  format(self.__class__.__dict__[self].__func__.__name__,
+                                         self.__class__.__name__),
                                   timestamp=timestamp)
+        lg.debug("prepared  : {} response - with payload: {}".
+                 format(self.__class__.__dict__[self].__func__.__name__, payload))
         return response
         # responding ENDED                                                                          -   ENDED   -
 

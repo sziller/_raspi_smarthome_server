@@ -4,6 +4,7 @@ by Sziller"""
 from pydantic import BaseModel
 from typing import Any
 
+
 class MsgObject:
     """=== Class name: MsgObject ====================================================================================
     Two way communication Object between Server and Engine, Server and Subservers
@@ -18,7 +19,7 @@ class MsgObject:
         self.timestamp: float               = timestamp
 
     def as_dict(self) -> dict:
-        """=== Method name: as_dict ====================================================================================
+        """=== Instance method =========================================================================================
         Returns actual state of instance as a dictionary.
         :return dict: parameter: args <- in current state
         ========================================================================================== by Sziller ==="""
@@ -33,15 +34,16 @@ class MsgObject:
 
 
 class InternalMsg(MsgObject):
-    """
+    """=== Extended (MsgObject) class ==================================================================================
     :param instant: bool -  if True:    we wait for the Engine to process the call, and return Engine response to API:
                                         Request-Response message management.
                             if False:   we return a default answer to API, in oorder not to block socket data flow.:
                                         Fire-and-Forget message management.
-    """
+    ============================================================================================== by Sziller ==="""
     def __init__(self,
                  payload: Any,
                  timestamp: float   = 0.0,
+                 # -------------------------------------- extension
                  synced: bool       = False,
                  email: str         = "",
                  signature: bytes   = b'',

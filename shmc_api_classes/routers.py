@@ -1,4 +1,4 @@
-"""These are Router buliding blocks, responsible to create a Parent router for any usecase we use in SHMC development
+"""These are Router buliding blocks, responsible to create a Parent router for any usecase we use in Szillers devs.
 Here is the hierarchical buildup.
 
 # Hierarchy: (Attention! Endpoint authentication is not Router scope!)
@@ -46,14 +46,14 @@ class BaseRouter(APIRouter):
         self.alias: str                         = alias if alias else name[:4]
         self.ip: str                            = ip  # ip of remote Engine and Message handler (zmq socket endpoint)
         self.port: int                          = port  # port remote server runs on - for DB communication
-        lg.info("init.ed   : {} - name='{}', alias='{}', ip='{}', port='{}'"
-                .format(self.ccn, self.name, self.alias, self.ip, self.port))
+        lg.info("init.ed   : with name='{}', alias='{}', ip='{}', port='{}' - says {}"
+                .format(self.name, self.alias, self.ip, self.port, self.ccn))
 
     def reinit(self):
         """=== Instance method =========================================================================================
         Reinitialization method for future use, depending on dynamic requirements.
         ========================================================================================== by Sziller ==="""
-        lg.debug("reinit    : for {} called.".format(self.ccn))
+        lg.debug("reinit    : - says {}".format(self.ccn))
     
     
 class AuthorizedRouter(BaseRouter):
@@ -72,7 +72,7 @@ class AuthorizedRouter(BaseRouter):
                  auth_dict: Optional[dict] = None):
         super().__init__(name, alias, ip, port)
         self.auth_dict: dict                    = auth_dict
-        lg.info("init.ed   :  {} - auth_dict={}".format(self.ccn, self.auth_dict))
+        lg.info("init.ed   :  with auth_dict={} - says {}".format(self.auth_dict, self.ccn))
         
     def check_authorization(self, auth_code: int, nth_switch: int):
         """=== Instance method =========================================================================================
@@ -112,6 +112,8 @@ class DBHandlerRouter(AuthorizedRouter):
         self.db: Optional[list[dict]]           = None
         self.db_fullname: str                   = db_fullname
         self.db_style: str                      = db_style
+        lg.info(f"init.ed   : with db='{self.db}', db_fullname='{self.db_fullname}', db_style='{self.db_style}'"
+                f" - says {self.ccn}")
     
     def reinit(self):
         """=== Method name: reinit =====================================================================================
@@ -128,7 +130,7 @@ class DBHandlerRouter(AuthorizedRouter):
             lg.warning("undefined : database name - says {}".format(self.__class__.__name__))
     
     def read_db_table(self, row_obj: sqli.Base):
-        """=== Method name: read_db ====================================================================================
+        """=== Instance method =========================================================================================
         One time reading of the DB, defined by db_* parameters.
         Local session fot r this very method is created and closed right after reading out data into self.db
         ========================================================================================== by Sziller ==="""
@@ -145,16 +147,19 @@ class DBHandlerRouter(AuthorizedRouter):
 class SkeletonRouter(DBHandlerRouter):
     """=== Extended (DBHandlerRouter) class ============================================================================
     Extended Router class for Sziller's developments.:
-    - includeing default Endpoints.
+    - including default Endpoints.
     ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
     def __init__(self,
                  name: str,
-                 alias: str,
-                 ip: str                    = "0.0.0.0",
-                 port: int                  = 0,
-                 auth_dict: dict or None    = None,
-                 db_fullname: str or None   = None,
-                 db_style: str or None      = None):
+                 alias: Optional[str]           = None,
+                 ip: str                        = "0.0.0.0",
+                 port: int                      = 0,
+                 auth_dict: Optional[dict]      = None,
+                 db_fullname: Optional[str]     = None,
+                 db_style: Optional[str]        = None
+                 ):
         super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style)
         # list of default endpoints for all child Router class-objects                              -   START   -
         self.add_api_route(path="/v0/basic-config",
@@ -166,12 +171,13 @@ class SkeletonRouter(DBHandlerRouter):
                            response_model=msg.ExtRespMsg,
                            methods=["GET"])
         # list of default endpoints for all child Router class-objects                              -   ENDED   -
+        lg.info(f"init.ed   : with default endpoints - says {self.ccn}")
 
     def reinit(self):
         """=== Instance method =========================================================================================
         Reinitialization method for future use, depending on dynamic requirements.
         ========================================================================================== by Sziller ==="""
-        lg.debug(f"{self.__class__.__name__} reinitialization called.")
+        lg.debug("reinit    : - says {}".format(self.ccn))
     
     async def GET_basic_config(self, 
                                current_user: UserInDB = Depends(AuthService.get_current_active_user)):
@@ -179,6 +185,7 @@ class SkeletonRouter(DBHandlerRouter):
         Endpoint returns minimal router data. This method is defined on parent level, thus all shmc routers provide
         some sort of actual state info under this path.
         === by Sziller ==="""
+        cepn = inspect.currentframe().f_code.co_name  # current class name
         timestamp = time.time()
         lg.info(f"GET_full_db_data called on router '{self.name}' at timestamp={timestamp}")
         # request processing START                                                                  -   START   -
@@ -202,8 +209,7 @@ class SkeletonRouter(DBHandlerRouter):
         # responding START                                                                          -   START   -
         response = msg.ExtRespMsg(payload=payload,
                                   message="OK - says {} on router: {}".
-                                  format(self.__class__.__dict__[self].__func__.__name__,
-                                         self.__class__.__name__),
+                                  format(cepn, self.ccn),
                                   timestamp=timestamp)
         lg.debug("prepared  : {} response - with payload: {}".
                  format(self.__class__.__dict__[self].__func__.__name__, payload))
@@ -215,7 +221,7 @@ class SkeletonRouter(DBHandlerRouter):
         """=== Endpoint-method name: GET_full_db_data ===  
         Endpoint returns the usual response format, where 'payload' is the entire content of the DB  
         === by Sziller ==="""
-        cmn = inspect.currentframe().f_code.co_name  # current method name
+        cepn = inspect.currentframe().f_code.co_name  # current class name
         # request processing START                                                                  -   START   -
         timestamp = time.time()
         data_dict = {"command": "GET_full_db_data",
@@ -236,33 +242,37 @@ class SkeletonRouter(DBHandlerRouter):
 
         # responding START                                                                          -   START   -
         response = msg.ExtRespMsg(payload=payload,
-                                  message="OK - says {} on router: {}".format(cmn, self.ccn),
+                                  message="OK - says {} on router: {}".format(cepn, self.ccn),
                                   timestamp=timestamp)
         return response
         # responding ENDED                                                                          -   ENDED   -
 
 
 class EngineMngrRouter(SkeletonRouter):
-    """=== Extended class ==============================================================================================
-    Extended Router class for for Sziller's developments.:
+    """=== Extended (SkeletonRouter) class =============================================================================
+    Extended Router class for Sziller's developments.:
     -  handling background Engines
     ============================================================================================== by Sziller ==="""
+    ccn = inspect.currentframe().f_code.co_name  # current class name
+    
     def __init__(self,
                  name: str,
-                 alias: str,
-                 ip: str                    = "0.0.0.0",
-                 port: int                  = 0,
-                 auth_dict: Optional[dict]  = None,
-                 db_fullname: Optional[str] = None,
-                 db_style: Optional[str]    = None,
-                 zmq_port: int              = 0):       # port of remote Message handler (zmq socket endpoint)
+                 alias: Optional[str]           = None,
+                 ip: str                        = "0.0.0.0",
+                 port: int                      = 0,
+                 auth_dict: Optional[dict]      = None,
+                 db_fullname: Optional[str]     = None,
+                 db_style: Optional[str]        = None,
+                 # -------------------------------------- extension
+                 zmq_port: int                  = 0):       # port of remote Message handler (zmq socket endpoint)
         super().__init__(name, alias, ip, port, auth_dict, db_fullname, db_style)
-        self.zmq_port: int          = zmq_port
-        lg.info(f"{self.__class__.__name__} initialized with zmq_port='{self.zmq_port}'")
+        self.zmq_port: int                      = zmq_port
+        lg.info(f"init.ed   : with zmq_port='{self.zmq_port}' - says {self.ccn}")
 
     def reinit(self):
-        """=== Method name: reinit =====================================================================================
-        Possible script meant to be run right after instantiation.
+        """=== Instance method =========================================================================================
+        Reinitialization method for future use, depending on dynamic requirements.
         ========================================================================================== by Sziller ==="""
+        lg.debug("reinit    : with zmq_port={} - says {}".format(self.zmq_port, self.ccn))
         super().reinit()
-        lg.debug(f"{self.__class__.__name__} reinitialization: zmq_port={self.zmq_port}")
+        
